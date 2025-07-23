@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Desk_Count_For_Deposit__c</fullName>
+    <inlineHelpText>Temporary products desk count are excluded</inlineHelpText>
+    <label>Desk Count</label>
+    <summarizedField>OpportunityLineItem.Desk_Count__c</summarizedField>
+    <summaryFilterItems>
+        <field>OpportunityLineItem.Temporary__c</field>
+        <operation>equals</operation>
+        <value>False</value>
+    </summaryFilterItems>
+    <summaryFilterItems>
+        <field>OpportunityLineItem.Products_Type__c</field>
+        <operation>equals</operation>
+        <value>Standard Products</value>
+    </summaryFilterItems>
+    <summaryForeignKey>OpportunityLineItem.OpportunityId</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <type>Summary</type>
+</CustomField>

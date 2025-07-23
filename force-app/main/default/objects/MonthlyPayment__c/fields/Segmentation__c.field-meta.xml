@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Segmentation__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+    AND(NOT(ISPICKVAL(Contract__r.Origin__c, &apos;Renewal&apos;)) ,MonthIndex__c = 1, NOT(ISBLANK(OrderItem__c))),
+    &apos;New business&apos;,
+    IF(
+        AND(
+            MonthIndex__c &gt; 1,
+            Access_Type__c = &apos;Monthly&apos;,
+            ISNULL(OrderItem__r.Contract__r.Contract_Termination_Date__c),
+            NOT(ISBLANK(OrderItem__c))
+        ),
+        &apos;Monthly/recurring revenue&apos;,
+        IF(
+            AND(
+                ISBLANK(OrderItem__c),
+                ISPICKVAL(OpportunityLineItem__r.Opportunity.Type, &apos;New Business&apos;),   NOT(ISPICKVAL(OpportunityLineItem__r.Opportunity.StageName ,&apos;Closed Won&apos;)), NOT(ISPICKVAL(OpportunityLineItem__r.Opportunity.StageName ,&apos;Closed Lost&apos;)),
+                MonthIndex__c &gt; 0,
+                MonthIndex__c &lt; 4
+            ),
+            &apos;Potential new business&apos;,
+            IF(
+                AND(
+                    NOT(ISNULL(OrderItem__r.Contract__r.Contract_Termination_Date__c)),
+                    NOT(ISBLANK(OrderItem__c))
+                ),
+                &apos;Confirmed exit dates&apos;,
+                IF(
+                    AND(
+                        MonthIndex__c &gt; 1,
+                        Access_Type__c = &apos;Periodic&apos;,
+                        NOT(Contract__r.Auto_Renewal__c), Contract__r.StartDate &gt;=TODAY(),
+                        NOT(ISBLANK(OrderItem__c))
+                    ),
+                    &apos;Periodic without renewal&apos;,
+                    IF(
+                        AND(
+                             MonthIndex__c &gt; 1,
+                             Access_Type__c = &apos;Periodic&apos;,
+                             Contract__r.Auto_Renewal__c,
+                             NOT(ISBLANK(OrderItem__c)),  ISNULL(Contract__r.Contract_Termination_Date__c) ,  Start_date__c &lt;  Contract__r.Auto_Renewal_Cancellation_Deadline__c 
+                            ), &apos;Periodic with potential renewal&apos;,IF(AND(   ISPICKVAL(Contract__r.Origin__c, &apos;Renewal&apos;)  ),&apos;Potential renewal&apos;,&apos;None&apos;)
+                       )
+                )
+            )
+        )
+    )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Segmentation</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

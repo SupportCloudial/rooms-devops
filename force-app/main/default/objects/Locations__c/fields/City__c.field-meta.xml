@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>City__c</fullName>
+    <label>City</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Tel Aviv</fullName>
+                <default>false</default>
+                <label>Tel Aviv</label>
+            </value>
+            <value>
+                <fullName>Bnei Brak</fullName>
+                <default>false</default>
+                <label>Bnei Brak</label>
+            </value>
+            <value>
+                <fullName>Ra&apos;anana</fullName>
+                <default>false</default>
+                <label>Ra&apos;anana</label>
+            </value>
+            <value>
+                <fullName>Modiin</fullName>
+                <default>false</default>
+                <label>Modiin</label>
+            </value>
+            <value>
+                <fullName>Ramat Gan</fullName>
+                <default>false</default>
+                <label>Ramat Gan</label>
+            </value>
+            <value>
+                <fullName>Petah Tikva</fullName>
+                <default>false</default>
+                <label>Petah Tikva</label>
+            </value>
+            <value>
+                <fullName>Rishon LeZion</fullName>
+                <default>false</default>
+                <label>Rishon LeZion</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Set_Up_Fee_empty_after_negotiating</fullName>
+    <active>true</active>
+    <description>Set up fee is required after negotiating stage</description>
+    <errorConditionFormula>AND(
+    OR(
+        ISPICKVAL(StageName, &quot;Contract Review&quot;),
+        ISPICKVAL(StageName, &quot;Contract sent&quot;),
+        ISPICKVAL(StageName, &quot;Deposit and Documents received&quot;)
+    ),
+    ISBLANK(Set_Up_Fee__c)
+)</errorConditionFormula>
+    <errorDisplayField>Set_Up_Fee__c</errorDisplayField>
+    <errorMessage>Set up Fee is required on this stage</errorMessage>
+</ValidationRule>

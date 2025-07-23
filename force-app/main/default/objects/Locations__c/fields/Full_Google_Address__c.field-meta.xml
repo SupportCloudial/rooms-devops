@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Full_Google_Address__c</fullName>
+    <defaultValue>(&quot;please read the tooltip&quot;)</defaultValue>
+    <description>Used in Tour Scheduler automations. please fill it the way it appears in a calendar event:</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Used in Tour Scheduler automations. Please fill it in the way it appears in a calendar event:
+Look for the location name in the Location field on the calendar event and copy the result</inlineHelpText>
+    <label>Full Google Address</label>
+    <length>255</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

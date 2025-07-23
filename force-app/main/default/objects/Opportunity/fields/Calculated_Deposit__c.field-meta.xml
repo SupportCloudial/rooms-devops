@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Calculated_Deposit__c</fullName>
+    <formula>IF(
+    NOT(ISBLANK(TEXT(Contract_Type__c))),
+    IF(
+        ISPICKVAL(Contract_Type__c, &quot;Monthly&quot;),
+       ( Total_Monthly_Amount_For_Deposit__c * 1.5)*1.18,
+        IF(
+            Desk_Count_For_Deposit__c &lt;= 20,
+          (  Total_Monthly_Amount_For_Deposit__c * 1.5)*1.18,
+            IF(
+                Desk_Count_For_Deposit__c &lt;= 75,
+                IF(
+                    FLOOR(
+                        ((YEAR(End_Date__c) - YEAR(Start_Date__c)) * 12) + MONTH(End_Date__c) - MONTH(Start_Date__c)
+                    ) &lt;= 12,
+                   (Total_Monthly_Amount_For_Deposit__c * 2)*1.18,
+                   (Total_Monthly_Amount_For_Deposit__c * 3)*1.18
+                ),
+             ( Total_Monthly_Amount_For_Deposit__c * 4)*1.18
+            )
+        )
+    ),
+    0
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Calculated Deposit</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <type>Currency</type>
+</CustomField>

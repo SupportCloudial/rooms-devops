@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Email_or_Company_not_valid</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( OR (  Company =&apos;NEED TO UPDATE&apos;,Company =&apos;Need To Update&apos;,  Email = &apos;voicenter@voicenter.com&apos;),   ISPICKVAL(Status , &apos;Converted&apos;))</errorConditionFormula>
+    <errorMessage>Company Value name cannot be &apos;NEED TO UPDATE&apos; and Email can not be &apos;voicenter@voicenter.com&apos;</errorMessage>
+</ValidationRule>

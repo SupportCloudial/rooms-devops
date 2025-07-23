@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Must_fill_reminderDate_if_lost_future</fullName>
+    <active>false</active>
+    <description>Must fill reminderDate if lost reason egale future potential deal
+Duplicate with another picklist</description>
+    <errorConditionFormula>ispickval(Loss_Reason__c, &quot;Future potiential deal&quot;) &amp;&amp;  ISBLANK(Reminder_Date__c )</errorConditionFormula>
+    <errorMessage>Please enter a Reminder Date</errorMessage>
+</ValidationRule>

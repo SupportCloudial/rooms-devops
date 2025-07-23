@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>fsc_openUrl_Action_1</name>
+        <label>fsc_openUrl Action 1</label>
+        <locationX>176</locationX>
+        <locationY>242</locationY>
+        <actionName>c:fsc_openUrl</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>url</name>
+            <value>
+                <elementReference>Formula_URL</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>c:fsc_openUrl</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <apiVersion>63.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <customProperties>
+        <name>ScreenProgressIndicator</name>
+        <value>
+            <stringValue>{&quot;location&quot;:&quot;top&quot;,&quot;type&quot;:&quot;simple&quot;}</stringValue>
+        </value>
+    </customProperties>
+    <environments>Default</environments>
+    <formulas>
+        <name>Formula_URL</name>
+        <dataType>String</dataType>
+        <expression>&quot;https://calendar.google.com/calendar/u/0/r/eventedit?add=&quot; &amp; 
+ {!Get_opportunity_contact_role.Contact.Email} &amp; &quot;,&quot; &amp;
+  {!recordId.Owner.Email} &amp; &quot;,orka@working-rooms.com&quot; &amp;
+  &quot;&amp;location=&quot; &amp; URLENCODE({!recordId.Location__r.Full_Google_Address__c}) &amp;
+  &quot;&amp;text=&quot; &amp; URLENCODE(&quot;ROOMS TOUR: &quot; &amp;  UPPER({!Get_opportunity_contact_role.Contact.FirstName}) &amp;  &quot; &amp; &quot; &amp; UPPER({!recordId.Owner.FirstName})) &amp;
+  &quot;&amp;details=&quot; &amp; URLENCODE({!GoogleCalendarDetails})</expression>
+    </formulas>
+    <formulas>
+        <name>OpportunityMaskId</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!recordId.Id}, 4) &amp; &apos;&apos;</expression>
+    </formulas>
+    <formulas>
+        <name>VAR_ENDDATIME</name>
+        <dataType>DateTime</dataType>
+        <expression>DATETIMEVALUE($Flow.CurrentDateTime + (60 / 1440))</expression>
+    </formulas>
+    <interviewLabel>Opportunity - Schedule Tour URL {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity - Schedule Tour URL</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <name>Get_opportunity_contact_role</name>
+        <label>Get opportunity contact role</label>
+        <locationX>176</locationX>
+        <locationY>134</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>fsc_openUrl_Action_1</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OpportunityId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>OpportunityContactRole</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_opportunity_contact_role</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <name>GoogleCalendarDetails</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>‫היי,‬
+‫‬
+‫תואם לך סיור במתחם ROOMS {!recordId.Location__r.Hebrew_Name__c} עם {!recordId.Owner.Hebrew_First_Name__c}.‬
+‫יש להגיע ל{!recordId.Location_Address__c} קומה {!recordId.Location__r.Floor__c}
+‫‬
+‫בסיור נציג את מגוון האופציות המתאימות ביותר עבורך.‬
+‫‬
+‫אני זמין לכל שאלה או עדכון - 050-5231089‬
+‫‬
+‫תודה והמשך יום נעים,‬
+‫‬
+‫שובל‬
+Parent ID: {!recordId.Opportunity_Invitation_Id__c}‫‬</text>
+    </textTemplates>
+    <textTemplates>
+        <name>Var_descriptiontemplate</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p style=&quot;text-align: right;&quot;&gt;&amp;nbsp;‫היי,&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;text-align: right;&quot;&gt;‫תואם לך סיור במתחם {!recordId.Location__r.Name} עם {!recordId.Owner.FirstName}.&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;text-align: right;&quot;&gt;‫יש להגיע ל{!recordId.Location_Address__c} ‬&lt;/p&gt;&lt;p style=&quot;text-align: right;&quot;&gt;‫בסיור נציג את מגוון האופציות המתאימות ביותר עבורך. ‬&lt;/p&gt;&lt;p style=&quot;text-align: right;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: right;&quot;&gt;‫אני זמין לכל שאלה או עדכון (: ‬&lt;/p&gt;&lt;p style=&quot;text-align: right;&quot;&gt;‫תודה והמשך יום נעים ,&amp;nbsp;&lt;/p&gt;&lt;p style=&quot;text-align: right;&quot;&gt;‫שובל‬&lt;/p&gt;&lt;p style=&quot;text-align: right;&quot;&gt;( Opportunity ID: {!recordId.Id})&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>Var_Subject</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>ROOMS TOUR: UPPER({!recordId.Primary_Contact_Name__c}) UPPER(&amp;)  UPPER({!recordId.Owner.FirstName})</text>
+    </textTemplates>
+    <textTemplates>
+        <name>Var_URLplain</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>https://calendar.google.com/calendar/u/0/r/eventedit?add={!recordId.Primary_Contact_Email_Address__c},{!recordId.Owner.Email},orka@working-rooms.com&amp;location={!recordId.Location_Address__c}&amp;text=ROOMS TOUR: {!recordId.Owner.FirstName} and {!recordId.Primary_Contact_Name__c}
+&amp;details=׳הסיור יתקיים ביום שישי&amp;וביום שלישי׳</text>
+    </textTemplates>
+    <textTemplates>
+        <name>Var_URLrich</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;https://calendar.google.com/calendar/u/0/r/eventedit?add={!recordId.Primary_Contact_Email_Address__c}&amp;amp;text=Tour of {!&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;recordId&lt;/span&gt;.Name} in {!&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;recordId&lt;/span&gt;.Location__c}&amp;amp;details=Please feel free to call us for any question: {! &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;recordId&lt;/span&gt;.OwnerPhone }&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</text>
+    </textTemplates>
+    <variables>
+        <name>recordId</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Opportunity</objectType>
+    </variables>
+</Flow>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fix_CPI_Notice_period_deposit</fullName>
+    <columns>CONTRACT.CONTRACT_NUMBER</columns>
+    <columns>SALES.ACCOUNT.NAME</columns>
+    <columns>CONTRACT.STATUS</columns>
+    <columns>CONTRACT.START_DATE</columns>
+    <columns>CONTRACT.END_DATE</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>Track_CPI__c</columns>
+    <columns>Track_CPI_Date__c</columns>
+    <columns>Depusit_Amount_DM__c</columns>
+    <columns>Lease_Termination_Notice_Months__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>Fix CPI , Notice period, deposit</label>
+</ListView>

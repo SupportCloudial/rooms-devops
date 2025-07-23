@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Account_Contract__c</fullName>
+    <externalId>false</externalId>
+    <formula>HYPERLINK(
+    &quot;/lightning/r/Contract/&quot; &amp; Order.ContractId &amp; &quot;/view&quot;,
+    Order.Contract.Account.Name,
+    &quot;_blank&quot;
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Account Contract</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

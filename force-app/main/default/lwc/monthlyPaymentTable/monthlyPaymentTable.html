@@ -1,0 +1,288 @@
+<!--
+  @description       :
+  @author            : Samuel Krissi (skrissi@baybridgedigital.com)
+  @group             :
+  @last modified on  : 2024-08-28
+  @last modified by  : Samuel Krissi (skrissi@baybridgedigital.com)
+-->
+<template>
+    <lightning-card>
+        <div class=" slds-grid slds-text-align_center" style="justify-content: space-around;">
+            <div style="width: 45%;">
+                <lightning-button variant="base" label={customLabels.priceAdjBlockTitle} name="discount"
+                    title={customLabels.priceAdjBlockTitle} onclick={handleToggle} icon-name={iconNameToggle}
+                    icon-position="right"></lightning-button>
+                <div class={containerClass} style="max-height: 380px;">
+                    <lightning-button-icon class="resetButton" alternative-text="Reset Data" icon-class=""
+                        icon-name="utility:refresh" onclick={resetPriceOptimizerBlock} size="medium" value=""
+                        variant="brand"></lightning-button-icon>
+                    <div lwc:if={products} class="" style="align-items: center; justify-content:space-around">
+                        <div style="position: relative;" class="slds-grid slds-grid_vertical">
+                            <lightning-radio-group type="button" style="margin: auto;padding-bottom:5px;"
+                                name="discountApplyChoice" options={optionsDateDiscount} value={discountApplyChoice}
+                                onchange={handleFormatDiscount}></lightning-radio-group>
+
+                            <!-- Year Input -->
+                            <div class="">
+                                <div lwc:if={isYear}>
+                                    <lightning-combobox name="yearToApplyDiscount"
+                                        label={customLabels.yearToApplyDiscount} placeholder="Choose year"
+                                        value={yearToApplyDiscount} options={yearsDate}
+                                        onchange={handleDiscountMultipleValue} required>
+                                    </lightning-combobox>
+                                </div>
+                                <div lwc:else class="slds-grid slds-grid_vertical ">
+                                    <div class="slds-grid slds-grid_align-space"
+                                        style="justify-content: space-between;">
+                                        <lightning-combobox class="multipleDiscountDate" name="startMonth"
+                                            label={customLabels.startMonth_label} placeholder="Month"
+                                            onchange={handleDiscountMultipleValue} value={startMonth}
+                                            options={monthsDate} required>
+                                        </lightning-combobox>
+                                        <lightning-combobox class="multipleDiscountDate" name="startYear"
+                                            label={customLabels.startYear_label} placeholder="Year" value={startYear}
+                                            options={yearsDate} onchange={handleDiscountMultipleValue} required>
+                                        </lightning-combobox>
+                                    </div>
+                                    <div class="slds-grid slds-grid_align-space"
+                                        style="justify-content: space-between;">
+                                        <lightning-combobox class="multipleDiscountDate" name="endMonth"
+                                            label={customLabels.endMonth_label} placeholder="Month" value={endMonth}
+                                            options={monthsDate} onchange={handleDiscountMultipleValue} required>
+                                        </lightning-combobox>
+                                        <lightning-combobox class="multipleDiscountDate" name="endYear"
+                                            label={customLabels.endYear_label} placeholder="Year" value={endYear}
+                                            options={yearsDate} onchange={handleDiscountMultipleValue} required>
+                                        </lightning-combobox>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <c-multi-select-combobox name="productSelected" label={customLabels.productsLabel}
+                                placeholder="Select Products" options={productsDate} value={selectedProducts}
+                                onchange={handleProductsChange} required>
+                            </c-multi-select-combobox>
+
+
+
+                            <div class="slds-grid"
+                                style="align-items: end; justify-content: space-between; padding-left: 1vw;">
+                                <fieldset>
+                                    <div class="slds-grid"
+                                        style="justify-content: space-between;width: 116%;margin-top: -26px;">
+                                        <span>
+                                            <input disabled={globalFinalPriceForProductSelected}
+                                                onchange={handleFormatDiscount} type="radio" id="Amount"
+                                                name="discountFormat" value="Amount" />
+                                            <label for="Amount"> {customLabels.amountInput}</label>
+                                        </span>
+                                        <span>
+                                            <input onchange={handleFormatDiscount} type="radio" id="Percentage"
+                                                name="discountFormat" value="Percentage" checked />
+                                            <label for="Percentage"> {customLabels.percentageOpt_btnRadio}</label>
+                                        </span>
+                                    </div>
+                                </fieldset>
+                                <!-- percentage -->
+                                <lightning-input style="width: 65%;" type="number" step="any"
+                                    field-level-help={customLabels.helpText} label={discountFormat}
+                                    name="globalDiscount" value={globalDiscount} onchange={handleFormatDiscount}
+                                    disabled={globalFinalPriceForProductSelected}>
+                                </lightning-input>
+                            </div>
+                            <lightning-input lwc:if={isGlobalFinalPriceDisplayed} style="text-align: start;" type="text"
+                                label={customLabels.finalPriceToApply} name="globalFinalPriceForProductSelected"
+                                value={globalFinalPriceForProductSelected} onchange={handleDiscountMultipleValue}
+                                disabled={discountEnter}>
+                            </lightning-input>
+                        </div>
+                    </div>
+                    <lightning-button class="applyButton" style="width: 100%;" variant="brand" onclick={saveRecords}
+                        label={customLabels.applyDiscount_btn} disabled={isApplyDiscountDisabled}>
+                    </lightning-button>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div style="width: 45%;">
+                <lightning-button variant="base" label="Filters" name="filters" title={customLabels.filtersTitle_label}
+                    onclick={handleToggle} icon-name={iconNameFiltersToggle} icon-position="right"></lightning-button>
+                <div class={containerFiltersClass}>
+                    <b>{customLabels.displayFilter}</b>
+                    <lightning-button-icon class="resetButton" alternative-text="Reset Filters" icon-class=""
+                        icon-name="utility:refresh" onclick={resetFilters} size="medium" value=""
+                        variant="brand"></lightning-button-icon>
+                    <div lwc:if={products} class="slds-grid slds-grid_vertical "
+                        style=" align-Items: center; justify-content:space-around">
+                        <div class="slds-grid slds-grid_vertical" style="width: 100%;">
+                            <div style="margin:0;"
+                                class="slds-grid slds-grid_vertical slds-grid_align-space slds-m-right_medium">
+                                <div class="slds-grid slds-grid_align-space" style="justify-content: space-between;">
+                                    <lightning-combobox class="multipleDiscountDate" name="startMonthFilter"
+                                        label={customLabels.startMonth_label} placeholder="Month"
+                                        onchange={handleDiscountMultipleValue} value={startMonthFilter}
+                                        options={months}>
+                                    </lightning-combobox>
+                                    <lightning-combobox class="multipleDiscountDate" name="startYearFilter"
+                                        label={customLabels.startYear_label} placeholder="Year" value={startYearFilter}
+                                        options={years} onchange={handleDiscountMultipleValue}>
+                                    </lightning-combobox>
+                                </div>
+                                <div class="slds-grid slds-grid_align-space" style="justify-content: space-between;">
+                                    <lightning-combobox class="multipleDiscountDate" name="endMonthFilter"
+                                        label={customLabels.endMonth_label} placeholder="Month" value={endMonthFilter}
+                                        options={months} onchange={handleDiscountMultipleValue}>
+                                    </lightning-combobox>
+                                    <lightning-combobox class="multipleDiscountDate" name="endYearFilter"
+                                        label={customLabels.endYear_label} placeholder="Year" value={endYearFilter}
+                                        options={years} onchange={handleDiscountMultipleValue}>
+                                    </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-text-align_center slds-m-top_large">
+                            <b style="margin: auto;">AND/OR</b>
+                        </div>
+                        <div style="width: 100%;">
+                            <lightning-combobox name="productSelectedFilter" label="Product" placeholder="Product"
+                                value={productSelectedFilter} options={products} onchange={handleFormatDiscount}>
+                            </lightning-combobox>
+                        </div>
+
+                        <lightning-button class="applyButton" style="width: 100%;" variant="brand"
+                            onclick={applyFilters} label={customLabels.applyFilter_btn}></lightning-button>
+                    </div>
+                </div>
+            </div> -->
+
+        <div class="slds-grid test" style="display: block; text-align: center; padding-top: 50px;">
+            <b class="slds-m-right_small">{customLabels.orderByDate}</b>
+            <lightning-radio-group type="button" style="margin: auto;" name="sortOrder" options={optionsSortOrder}
+                value={sortOrder} onchange={handleFormatDiscount}></lightning-radio-group>
+        </div>
+
+        <!-- Table for Monthly Pricing Summary -->
+        <div class="slds-m-around_medium table-container">
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer custom-table">
+                <caption class="caption-style">{customLabels.monthlySaving_caption}</caption>
+                <thead>
+                    <tr>
+                        <th class="narrow-column">{customLabels.roomTitle}</th>
+                        <th class="narrow-column">{customLabels.totalPrice}</th>
+                        <th class="narrow-column">{customLabels.calcPriceAdj}</th>
+                        <template for:each={filteredMonthlyPayments} for:item="monthData">
+                            <th key={monthData}>
+                                {monthData.month}/{monthData.year}
+                            </th>
+                        </template>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={dataByRoom} for:item="roomData">
+                        <tr key={roomData.room} class="room-row">
+                            <td data-room={roomData.room}>
+                                <div class="room-name">
+                                    <a class="room-link" data-room={roomData.room} onclick={redirectToRoom}>
+                                        {roomData.displayName}
+                                    </a>
+                                </div>
+                                <div class="desk-count">
+                                    <small style="font-size: 0.8rem;">{roomData.deskcount} desks</small>
+                                </div>
+                            </td>
+                            <td class="highlighted-cell narrow-column">
+                                <b>{roomData.Total}</b>
+                            </td>
+                            <td class="highlighted-cell narrow-column">
+                                <b>{roomData.calculateListPriceAdj}%</b>
+                            </td>
+                            <template for:each={roomData.values} for:item="value">
+                                <template lwc:if={value.listPrice}>
+                                    <td key={value.room} class="price-cell">
+                                        <div class="cell-container">
+                                            <div class="label-block">
+                                                <div style="margin-top: -5px;">{customLabels.listPrice}</div>
+                                                <!-- Discount name input -->
+                                                <div>
+                                                    {customLabels.priceAdj}
+                                                    <label for="discount">
+                                                        <span class="tooltip">
+                                                            <span class="info-icon">i</span>
+                                                            <span class="tooltiptext">{customLabels.helpText}</span>
+                                                        </span>
+                                                    </label>
+                                                    <template lwc:if={value.discount}>
+                                                        <svg if:false={value.isDiscountArrow}
+                                                            xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                                            viewBox="0 0 24 24" style="fill:green;">
+                                                            <path d="M12 4l-8 8h6v8h4v-8h6z" />
+                                                        </svg>
+                                                        <svg if:true={value.isDiscountArrow}
+                                                            xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                                            viewBox="0 0 24 24" style="fill:red;">
+                                                            <path d="M12 20l8-8h-6v-8h-4v8h-6z" />
+                                                        </svg>
+                                                    </template>
+                                                </div>
+                                                <div style="padding-top: 5px;">{customLabels.finalPrice}</div>
+                                            </div>
+                                            <div class="value-block">
+                                                <div>{value.listPrice}</div>
+                                                <div class="discount-input-wrapper">
+
+
+                                                    <!-- Discount input -->
+                                                    <input name="discount" onkeydown={handleKeyDown}
+                                                        title={customLabels.helpText} type="text"
+                                                        data-month={value.month} data-year={value.year}
+                                                        data-room={roomData.room} data-roomid={roomData.roomId}
+                                                        class="discount-input" onchange={handleDiscountChange}
+                                                        value={value.discount} />
+
+
+                                                    <span class="discount-symbol">%</span>
+                                                </div>
+                                                <div>
+                                                    <input name="finalPrice" type="text" onkeydown={handleKeyDown}
+                                                        data-month={value.month} data-year={value.year}
+                                                        data-room={roomData.room} class="final-price-input"
+                                                        onchange={handleFinalPriceChange} value={value.finalPrice} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </template>
+                                <template lwc:else>
+                                    <td key={value} class="price-cell"><!-- empty cell to keep layout --></td>
+                                </template>
+                            </template>
+                        </tr>
+                    </template>
+                    <tr class="total-row">
+                        <td><b>Total</b></td>
+                        <td class="highlighted-cell narrow-column">
+                            <b>{sumTotalPrice}</b>
+                        </td>
+                        <td class="highlighted-cell narrow-column">
+                            <b>{totalCalculatedPriceAdj}%</b>
+                        </td>
+                        <template for:each={totalsByMonth} for:item="total">
+                            <td key={total} class="total-cell price-cell">
+                                <b>
+                                    <template lwc:if={total.totalListPrice}>
+                                        <div>{customLabels.listPrice} {total.totalListPrice}</div>
+                                        <div>{customLabels.labelDiscount} {total.totalDiscount}%</div>
+                                        <div>{customLabels.finalPrice} {total.totalFinalPrice}</div>
+                                    </template>
+                                    <template lwc:else>
+                                        {total}
+                                    </template>
+                                </b>
+                            </td>
+                        </template>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </lightning-card>
+</template>

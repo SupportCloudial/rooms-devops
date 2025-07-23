@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Must_send_quote_to_pass_Proposal_Stage</fullName>
+    <active>false</active>
+    <errorConditionFormula>NOT(ispickval(StageName,&apos;Proposal&apos;)) &amp;&amp;  ISBLANK(SyncedQuoteId) &amp;&amp; ischanged(StageName)</errorConditionFormula>
+    <errorMessage>Please, insert your quote befor pass the stage</errorMessage>
+</ValidationRule>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Product_Access_Type__c</fullName>
+    <label>Product Access Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Product_Sub_Type__c</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Hourly</fullName>
+                <default>false</default>
+                <label>Hourly</label>
+            </value>
+            <value>
+                <fullName>Daily</fullName>
+                <default>false</default>
+                <label>Daily</label>
+            </value>
+            <value>
+                <fullName>Hourly Multi-Pass</fullName>
+                <default>false</default>
+                <label>Hourly Multi-Pass</label>
+            </value>
+            <value>
+                <fullName>Daily Multi-Pass</fullName>
+                <default>false</default>
+                <label>Daily Multi-Pass</label>
+            </value>
+            <value>
+                <fullName>Periodic</fullName>
+                <default>false</default>
+                <label>Periodic</label>
+            </value>
+            <value>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+                <label>Monthly</label>
+            </value>
+            <value>
+                <fullName>One-Time</fullName>
+                <default>false</default>
+                <label>One-Time</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Cleaning</controllingFieldValue>
+            <controllingFieldValue>Electricity</controllingFieldValue>
+            <controllingFieldValue>Management Fee</controllingFieldValue>
+            <controllingFieldValue>Other- (all other fee)</controllingFieldValue>
+            <controllingFieldValue>Podcast Room</controllingFieldValue>
+            <controllingFieldValue>Mini Cinema</controllingFieldValue>
+            <controllingFieldValue>Classroom</controllingFieldValue>
+            <controllingFieldValue>Parking spot</controllingFieldValue>
+            <controllingFieldValue>Capsules</controllingFieldValue>
+            <controllingFieldValue>Food / Refreshements</controllingFieldValue>
+            <controllingFieldValue>IP/VLAN</controllingFieldValue>
+            <controllingFieldValue>Credits(Meeting rooms windows)</controllingFieldValue>
+            <controllingFieldValue>Print Units</controllingFieldValue>
+            <controllingFieldValue>Storage Space</controllingFieldValue>
+            <controllingFieldValue>Hot Desk</controllingFieldValue>
+            <controllingFieldValue>Open Space</controllingFieldValue>
+            <controllingFieldValue>Office</controllingFieldValue>
+            <controllingFieldValue>Suite</controllingFieldValue>
+            <controllingFieldValue>Rent</controllingFieldValue>
+            <controllingFieldValue>Meeting Rooms</controllingFieldValue>
+            <controllingFieldValue>Event Space-Balcony, roof, Lounge</controllingFieldValue>
+            <controllingFieldValue>Arnona</controllingFieldValue>
+            <valueName>Periodic</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cleaning</controllingFieldValue>
+            <controllingFieldValue>Electricity</controllingFieldValue>
+            <controllingFieldValue>Management Fee</controllingFieldValue>
+            <controllingFieldValue>Other- (all other fee)</controllingFieldValue>
+            <controllingFieldValue>Podcast Room</controllingFieldValue>
+            <controllingFieldValue>Mini Cinema</controllingFieldValue>
+            <controllingFieldValue>Classroom</controllingFieldValue>
+            <controllingFieldValue>Parking spot</controllingFieldValue>
+            <controllingFieldValue>Capsules</controllingFieldValue>
+            <controllingFieldValue>Food / Refreshements</controllingFieldValue>
+            <controllingFieldValue>IP/VLAN</controllingFieldValue>
+            <controllingFieldValue>Credits(Meeting rooms windows)</controllingFieldValue>
+            <controllingFieldValue>Print Units</controllingFieldValue>
+            <controllingFieldValue>Storage Space</controllingFieldValue>
+            <controllingFieldValue>Hot Desk</controllingFieldValue>
+            <controllingFieldValue>Open Space</controllingFieldValue>
+            <controllingFieldValue>Office</controllingFieldValue>
+            <controllingFieldValue>Suite</controllingFieldValue>
+            <controllingFieldValue>Rent</controllingFieldValue>
+            <controllingFieldValue>Meeting Rooms</controllingFieldValue>
+            <controllingFieldValue>Event Space-Balcony, roof, Lounge</controllingFieldValue>
+            <controllingFieldValue>Arnona</controllingFieldValue>
+            <valueName>Monthly</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Podcast Room</controllingFieldValue>
+            <controllingFieldValue>Mini Cinema</controllingFieldValue>
+            <controllingFieldValue>Classroom</controllingFieldValue>
+            <controllingFieldValue>Meeting Rooms</controllingFieldValue>
+            <controllingFieldValue>Event Space-Balcony, roof, Lounge</controllingFieldValue>
+            <valueName>Hourly</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Podcast Room</controllingFieldValue>
+            <controllingFieldValue>Mini Cinema</controllingFieldValue>
+            <controllingFieldValue>Classroom</controllingFieldValue>
+            <controllingFieldValue>Meeting Rooms</controllingFieldValue>
+            <controllingFieldValue>Event Space-Balcony, roof, Lounge</controllingFieldValue>
+            <valueName>Hourly Multi-Pass</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mini Cinema</controllingFieldValue>
+            <controllingFieldValue>Classroom</controllingFieldValue>
+            <controllingFieldValue>Daily HD</controllingFieldValue>
+            <controllingFieldValue>Daily Office</controllingFieldValue>
+            <controllingFieldValue>Meeting Rooms</controllingFieldValue>
+            <controllingFieldValue>Event Space-Balcony, roof, Lounge</controllingFieldValue>
+            <valueName>Daily Multi-Pass</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parking spot</controllingFieldValue>
+            <controllingFieldValue>Capsules</controllingFieldValue>
+            <controllingFieldValue>Food / Refreshements</controllingFieldValue>
+            <controllingFieldValue>Credits(Meeting rooms windows)</controllingFieldValue>
+            <controllingFieldValue>Print Units</controllingFieldValue>
+            <controllingFieldValue>Set Up Fee</controllingFieldValue>
+            <controllingFieldValue>Restoration Fee</controllingFieldValue>
+            <valueName>One-Time</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Daily HD</controllingFieldValue>
+            <controllingFieldValue>Daily Office</controllingFieldValue>
+            <valueName>Daily</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

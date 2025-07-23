@@ -1,0 +1,70 @@
+<template>
+
+    <lightning-card >
+        <div class="custom-card-title">{customLabels.forecastTitle}</div>
+        <div class="graph-filters slds-p-around_medium">
+            <c-monthly-payment-filters onsubmitfilters={handleSubmitFilters} onforecastdisplaychange={forecastDisplayChange} onordinateformatchange={ordinateFormatChange} ></c-monthly-payment-filters>
+            <div>
+                <div class="chart-title slds-text-heading_medium slds-text-align_center slds-m-bottom_small">{customLabels.forecast_container_title}</div>
+                <div class="chart-container slds-box slds-m-around_medium" style="position: relative; height:60vh; width:85%;margin:auto; overflow: auto; padding-bottom:5vh;">
+                    <canvas class="barchart" lwc:dom="manual"></canvas>
+                    <div lwc:dom="manual" class="chartjs-tooltip" style="opacity: 0;"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div if:true={isLocation}>
+            <div if:false={isEmptyTable} class="slds-grid slds-grid_align-spread slds-wrap slds-gutters slds-p-around_medium" style="padding:0 200px;">
+                <div class="graph-titles slds-size_1-of-1 slds-text-align_left">
+                    <h2 class="chart-title">{customLabels.renewalCanvasTitle}</h2>
+                </div>
+                <!-- <div class="graph-titles slds-size_1-of-1 slds-text-align_right">
+                    <h2 class="chart-title">{customLabels.statusIncomesTitle}</h2>
+                </div> -->
+            </div>
+            <div class="slds-grid slds-wrap slds-gutters slds-p-around_medium" style="padding:0 200px;">
+                <div class="graph-details slds-size_1-of-1 slds-p-around_x-small">
+                    <c-forecast-detail-donuts detail-data={dataDetail}></c-forecast-detail-donuts>
+                </div>
+                <!-- <div class="graph-details slds-size_1-of-1 slds-p-around_x-small">
+                    <c-forecast-grouped-bar-chart detail-data={dataDetail}></c-forecast-grouped-bar-chart>
+                </div> -->
+            </div>
+
+        </div>
+
+        <div if:false={isEmptyTable} class="slds-p-around_large" style="padding:70px 180px;">
+            <div lwc:if={dataDetail} class="table-title slds-text-heading_medium slds-m-bottom_small">{customLabels.table_detail_title}</div>
+            <table lwc:if={tableBody} class="slds-table slds-table_bordered slds-table_cell-buffer">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <template for:each={columnsTable} for:item="col">
+                            <th key={col} scope="col" class="fixed-width">
+                                <div class="slds-truncate">{col}</div>
+                            </th>
+                        </template>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={tableBody} for:item="rowData">
+                        <tr key={rowData.id}>
+                            <template for:each={rowData.row} for:item="cellData">
+                                <td key={cellData} class="fixed-width">
+                                    <div class="cell-content">
+                                        <lightning-formatted-rich-text value={cellData}></lightning-formatted-rich-text>
+                                    </div>
+                                </td>
+                            </template>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <!--  -->
+        </div>
+
+
+    </lightning-card>
+
+
+</template>

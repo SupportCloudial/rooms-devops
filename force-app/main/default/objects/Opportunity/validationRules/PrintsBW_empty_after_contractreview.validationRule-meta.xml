@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PrintsBW_empty_after_contractreview</fullName>
+    <active>true</active>
+    <description>contractreview is required after contractreview stage</description>
+    <errorConditionFormula>AND(
+    OR(
+        ISPICKVAL(StageName, &quot;Contract Review&quot;),
+        ISPICKVAL(StageName, &quot;Contract sent&quot;),
+        ISPICKVAL(StageName, &quot;Deposit and Documents received&quot;)
+    ),
+    ISBLANK( Prints_B_W__c )
+)</errorConditionFormula>
+    <errorDisplayField>Prints_B_W__c</errorDisplayField>
+    <errorMessage>Prints B&amp;W is required on this stage</errorMessage>
+</ValidationRule>

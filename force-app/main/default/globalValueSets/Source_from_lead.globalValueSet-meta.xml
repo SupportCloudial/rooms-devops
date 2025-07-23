@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Facebook</fullName>
+        <default>false</default>
+        <label>Facebook</label>
+    </customValue>
+    <customValue>
+        <fullName>Linkedin</fullName>
+        <default>false</default>
+        <label>Linkedin</label>
+    </customValue>
+    <customValue>
+        <fullName>Direct calls</fullName>
+        <default>false</default>
+        <label>Direct calls</label>
+    </customValue>
+    <customValue>
+        <fullName>Outbound calls</fullName>
+        <default>false</default>
+        <label>Outbound calls</label>
+    </customValue>
+    <customValue>
+        <fullName>Word of mouth</fullName>
+        <default>false</default>
+        <label>Word of mouth</label>
+    </customValue>
+    <customValue>
+        <fullName>Spacing</fullName>
+        <default>false</default>
+        <label>Spacing</label>
+    </customValue>
+    <customValue>
+        <fullName>Spacenter</fullName>
+        <default>false</default>
+        <label>Spacenter</label>
+    </customValue>
+    <customValue>
+        <fullName>Flexspace</fullName>
+        <default>false</default>
+        <label>Flexspace</label>
+    </customValue>
+    <customValue>
+        <fullName>Marketing emails</fullName>
+        <default>false</default>
+        <label>Marketing emails</label>
+    </customValue>
+    <customValue>
+        <fullName>Telidelet</fullName>
+        <default>false</default>
+        <label>Telidelet</label>
+    </customValue>
+    <customValue>
+        <fullName>Instagram</fullName>
+        <default>false</default>
+        <label>Instagram</label>
+    </customValue>
+    <customValue>
+        <fullName>Broker</fullName>
+        <default>false</default>
+        <label>Broker</label>
+    </customValue>
+    <customValue>
+        <fullName>Kishourit</fullName>
+        <default>false</default>
+        <label>Kishourit</label>
+    </customValue>
+    <customValue>
+        <fullName>Site</fullName>
+        <default>false</default>
+        <label>Site</label>
+    </customValue>
+    <customValue>
+        <fullName>Flyers</fullName>
+        <default>false</default>
+        <label>Flyers</label>
+    </customValue>
+    <customValue>
+        <fullName>Roll Up</fullName>
+        <default>false</default>
+        <label>Roll Up</label>
+    </customValue>
+    <customValue>
+        <fullName>Friend Bring Friend</fullName>
+        <default>false</default>
+        <label>Friend Bring Friend</label>
+    </customValue>
+    <customValue>
+        <fullName>Linkedin Inmails</fullName>
+        <default>false</default>
+        <label>Linkedin Inmails</label>
+    </customValue>
+    <customValue>
+        <fullName>Walkin</fullName>
+        <default>false</default>
+        <label>Walkin</label>
+    </customValue>
+    <customValue>
+        <fullName>Returning costummer</fullName>
+        <default>false</default>
+        <label>Returning costummer</label>
+    </customValue>
+    <customValue>
+        <fullName>Landing Page</fullName>
+        <default>false</default>
+        <label>Landing Page</label>
+    </customValue>
+    <customValue>
+        <fullName>Meetingz</fullName>
+        <default>false</default>
+        <label>Meetingz</label>
+    </customValue>
+    <customValue>
+        <fullName>Referral( from ROOMS)</fullName>
+        <default>false</default>
+        <label>Referral( from ROOMS)</label>
+    </customValue>
+    <customValue>
+        <fullName>Abandonned Calls</fullName>
+        <default>false</default>
+        <label>Abandonned Calls</label>
+    </customValue>
+    <customValue>
+        <fullName>Manual</fullName>
+        <default>false</default>
+        <label>Manual</label>
+    </customValue>
+    <customValue>
+        <fullName>No Answer</fullName>
+        <default>false</default>
+        <label>No Answer</label>
+    </customValue>
+    <customValue>
+        <fullName>Yad 2</fullName>
+        <default>false</default>
+        <label>Yad 2</label>
+    </customValue>
+    <masterLabel>Source from lead</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

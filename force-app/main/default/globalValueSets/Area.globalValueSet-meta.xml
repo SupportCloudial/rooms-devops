@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Tel Aviv - Modiin</fullName>
+        <default>false</default>
+        <label>Tel Aviv - Modiin</label>
+    </customValue>
+    <customValue>
+        <fullName>Ra&apos;anana</fullName>
+        <default>false</default>
+        <label>Ra&apos;anana</label>
+    </customValue>
+    <customValue>
+        <fullName>Petah Tikva - Ramat Gan - Bnei Brak</fullName>
+        <default>false</default>
+        <label>Petah Tikva - Ramat Gan - Bnei Brak</label>
+    </customValue>
+    <customValue>
+        <fullName>Tel Aviv</fullName>
+        <default>false</default>
+        <label>Tel Aviv</label>
+    </customValue>
+    <customValue>
+        <fullName>Modiin</fullName>
+        <default>false</default>
+        <label>Modiin</label>
+    </customValue>
+    <customValue>
+        <fullName>Petah Tikva</fullName>
+        <default>false</default>
+        <label>Petah Tikva</label>
+    </customValue>
+    <customValue>
+        <fullName>Bne Brak</fullName>
+        <default>false</default>
+        <label>Bne Brak</label>
+    </customValue>
+    <customValue>
+        <fullName>Ramat Gan</fullName>
+        <default>false</default>
+        <label>Ramat Gan</label>
+    </customValue>
+    <customValue>
+        <fullName>Rishon LeZion</fullName>
+        <default>false</default>
+        <label>Rishon LeZion</label>
+    </customValue>
+    <customValue>
+        <fullName>Glilot Allied City</fullName>
+        <default>false</default>
+        <label>Glilot Allied City</label>
+    </customValue>
+    <masterLabel>Area</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Voicenter_Name_Validation__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Validation that if marked prevents users from changing account name. Created by Voicenter in order to prevent users from changing the name of the default entity.</description>
+    <inlineHelpText>במידה ומסומנת התיבה, לא יהיה ניתן לשנות את שם החשבון.</inlineHelpText>
+    <label>Voicenter Name Validation</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

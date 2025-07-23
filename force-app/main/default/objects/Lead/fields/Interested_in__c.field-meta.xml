@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Interested_in__c</fullName>
+    <label>Interested in</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Product_Type__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>Interested_in</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Standard</controllingFieldValue>
+            <valueName>Hot Desk</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Standard</controllingFieldValue>
+            <valueName>Open Space</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Standard</controllingFieldValue>
+            <valueName>Private Office for 1-4</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Standard</controllingFieldValue>
+            <valueName>Private Office for 5-8</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Standard</controllingFieldValue>
+            <valueName>Private Office for 9-14</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Standard</controllingFieldValue>
+            <valueName>Private Office for 15+</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Standard</controllingFieldValue>
+            <valueName>Suite</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Standard</controllingFieldValue>
+            <valueName>Rent</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Standard</controllingFieldValue>
+            <valueName>Other</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>On_demand</controllingFieldValue>
+            <valueName>Daily Office</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>On_demand</controllingFieldValue>
+            <valueName>Meeting Room</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>On_demand</controllingFieldValue>
+            <valueName>Event Space</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>On_demand</controllingFieldValue>
+            <valueName>Daily HD</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>On_demand</controllingFieldValue>
+            <valueName>Classroom</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>On_demand</controllingFieldValue>
+            <valueName>Mini Cinema</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>On_demand</controllingFieldValue>
+            <valueName>Daily Service</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

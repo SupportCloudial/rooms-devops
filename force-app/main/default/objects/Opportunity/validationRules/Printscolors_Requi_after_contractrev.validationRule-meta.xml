@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Printscolors_Requi_after_contractrev</fullName>
+    <active>true</active>
+    <description>prints is required after contract review stage</description>
+    <errorConditionFormula>AND(
+    OR(
+        ISPICKVAL(StageName, &quot;Contract Review&quot;),
+        ISPICKVAL(StageName, &quot;Contract sent&quot;),
+        ISPICKVAL(StageName, &quot;Deposit and Documents received&quot;)
+    ),
+    ISBLANK(Prints_Color__c )
+)</errorConditionFormula>
+    <errorDisplayField>Prints_Color__c</errorDisplayField>
+    <errorMessage>Prints Color field is required on this stage</errorMessage>
+</ValidationRule>

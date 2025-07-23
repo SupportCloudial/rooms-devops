@@ -1,0 +1,10 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
+    <aura:html tag="style">
+        flexipage-component2[data-component-id="c_platformEventRefreshPageData"] {
+            margin-bottom: 0 !important;
+        }
+    </aura:html>
+    <aura:attribute name="recordId" type="Id" />
+    <c:platformEventRefreshPageDataListener recordId="{!v.recordId}" onrefreshpagedata="{!c.handleRefreshPageData}">
+    </c:platformEventRefreshPageDataListener>
+</aura:component>

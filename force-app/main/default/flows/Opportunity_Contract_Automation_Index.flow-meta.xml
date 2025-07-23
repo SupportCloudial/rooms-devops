@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <formulas>
+        <name>dateOfinDEX</name>
+        <dataType>Date</dataType>
+        <expression>IF(
+    DAY({!$Flow.CurrentDate}) &gt;= 15,
+    DATE(
+        YEAR({!$Flow.CurrentDate}),
+        MONTH({!$Flow.CurrentDate}),
+        15
+    ),
+    DATE(
+        YEAR({!$Flow.CurrentDate}) - IF(MONTH({!$Flow.CurrentDate}) = 1, 1, 0),
+        IF(MONTH({!$Flow.CurrentDate}) = 1, 12, MONTH({!$Flow.CurrentDate}) - 1),
+        15
+    )
+)</expression>
+    </formulas>
+    <interviewLabel>Opportunity-Contract - Automation Index {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Opportunity-Contract - Automation Index</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_index_date</name>
+        <label>Update index date</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <inputAssignments>
+            <field>Track_CPI_Date__c</field>
+            <value>
+                <elementReference>dateOfinDEX</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update_index_date</targetReference>
+        </connector>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>StageName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Contract sent</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Track_CPI__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <object>Opportunity</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

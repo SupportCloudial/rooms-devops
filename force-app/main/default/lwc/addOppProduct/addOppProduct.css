@@ -1,0 +1,16 @@
+.button-container {
+    display: flex;
+    justify-content: flex-end; /* pushes button to the right */
+    margin-top: 10px; /* adjust as needed */
+}
+
+.table-height {
+    height: 40vh;     /* 40% of viewport height */
+    overflow-y: auto;    /* scroll if content overflows */
+}
+
+.datatable-border {
+    border: 1px solid #ddd; 
+    border-radius: 0.3rem;
+    background-color: #ffffff; /* Optional, for contrast */
+}

@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>61.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <decisions>
+        <name>Interested_in_value</name>
+        <label>Interested in value</label>
+        <locationX>578</locationX>
+        <locationY>911</locationY>
+        <defaultConnector>
+            <targetReference>Update_Records_3</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Meeting room or event space, classroom daily office</defaultConnectorLabel>
+        <rules>
+            <name>Daily_service</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Product_Type_From_Web__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Daily Service</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Assign_Null</targetReference>
+            </connector>
+            <label>Daily service</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>interested_in_value_for_standard</name>
+        <label>interested in value for standard</label>
+        <locationX>1106</locationX>
+        <locationY>911</locationY>
+        <defaultConnector>
+            <targetReference>Update_Interested_in_Standard</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Hotel_Desk</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Product_Type_From_Web__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Hot Desk</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Records_Hot_Desk</targetReference>
+            </connector>
+            <label>Hot Desk</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Lead_from_web</name>
+        <label>Lead from web ?</label>
+        <locationX>1326</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>Assign_location_area</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Location_from_web__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_the_location_from_web_ID</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Product_Type</name>
+        <label>Product Type</label>
+        <locationX>842</locationX>
+        <locationY>803</locationY>
+        <defaultConnector>
+            <targetReference>interested_in_value_for_standard</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Standard</defaultConnectorLabel>
+        <rules>
+            <name>On_Demnad</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Product_Type_From_Web__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Daily Service</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Product_Type_From_Web__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Event Space</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Product_Type_From_Web__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Meeting Room</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Product_Type_From_Web__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Daily Office</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Product_Type_From_Web__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Classroom</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Interested_in_value</targetReference>
+            </connector>
+            <label>On Demnad</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>sppacing values should be change with the following order:
+Coworkingspace - 	Open Space  (Standart)
+Meetingroom - Meeting Room (ondemand)
+Office - Private Office for 1-4 (standard)
+Event → 	Event Space (on demand)
+Class Room → 	Classroom (On demand)
+Other → 	Open Space (standart)</description>
+        <name>Spacing_values</name>
+        <label>Spacing values?</label>
+        <locationX>842</locationX>
+        <locationY>503</locationY>
+        <defaultConnector>
+            <targetReference>Product_Type</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Spacing</defaultConnectorLabel>
+        <rules>
+            <name>Values_for_Open_Space</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Product_Type_From_Web__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>CoworkingSpace</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Product_Type_From_Web__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>MonthlyOpenSpace</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Open_space</targetReference>
+            </connector>
+            <label>Values for Open Space</label>
+        </rules>
+        <rules>
+            <name>values_for_Meetingroom</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Product_Type_From_Web__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Meetingroom</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Meeting_Room</targetReference>
+            </connector>
+            <label>values for Meetingroom</label>
+        </rules>
+        <rules>
+            <name>Values_for_Office</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Product_Type_From_Web__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Office</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Product_Type_From_Web__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>MonthlyOffice</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Private_Office_1_4</targetReference>
+            </connector>
+            <label>Values for Office</label>
+        </rules>
+        <rules>
+            <name>values_for_Event</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Product_Type_From_Web__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Event</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Event_Space</targetReference>
+            </connector>
+            <label>values for Event</label>
+        </rules>
+        <rules>
+            <name>Values_for_Daily_Service</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Product_Type_From_Web__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>DailyOpenSpace</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Product_Type_From_Web__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>DailyOffice</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_daily_Service_Value</targetReference>
+            </connector>
+            <label>Values for Daily Service</label>
+        </rules>
+        <rules>
+            <name>Values_for_Other</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Product_Type_From_Web__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Other</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Product_Type_From_Web__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Unknown</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Other_Value</targetReference>
+            </connector>
+            <label>Values for Other</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
+    <formulas>
+        <name>AutomaticProductTypeValue</name>
+        <dataType>String</dataType>
+        <expression>IF(
+    OR(
+        ISPICKVAL({!$Record.Interested_in__c}, &quot;Hot Desk&quot;),
+        ISPICKVAL({!$Record.Interested_in__c}, &quot;Open Space&quot;),
+        ISPICKVAL({!$Record.Interested_in__c}, &quot;Private Office for 1-4&quot;),
+        ISPICKVAL({!$Record.Interested_in__c}, &quot;Private Office for 5-8&quot;),
+        ISPICKVAL({!$Record.Interested_in__c}, &quot;Private Office for 9-14&quot;),
+        ISPICKVAL({!$Record.Interested_in__c}, &quot;Private Office for 15+&quot;),
+        ISPICKVAL({!$Record.Interested_in__c}, &quot;Suite&quot;),
+        ISPICKVAL({!$Record.Interested_in__c}, &quot;Large unit (price/m2)&quot;)
+    ),
+    &quot;Standard&quot;,
+    &quot;On demand&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>FromIntegrationUserFormula</name>
+        <dataType>Boolean</dataType>
+        <expression>if( {!$Record.CreatedBy.Name} = &quot;Integration User&quot;, true, false)</expression>
+    </formulas>
+    <interviewLabel>Lead - Assign Location from Desired Location {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Lead - Assign Location from Desired Location</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_the_location_from_web_ID</name>
+        <label>Get the location from web ID</label>
+        <locationX>842</locationX>
+        <locationY>395</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Spacing_values</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Site_Name__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Location_from_web__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Locations__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <name>Assign_location_area</name>
+        <label>Assign location area</label>
+        <locationX>1810</locationX>
+        <locationY>395</locationY>
+        <inputAssignments>
+            <field>Location_Area__c</field>
+            <value>
+                <elementReference>$Record.Desired_Location__r.Area__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Event_Space</name>
+        <label>Event Space</label>
+        <locationX>842</locationX>
+        <locationY>611</locationY>
+        <connector>
+            <targetReference>Product_Type</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Product_Type_From_Web__c</field>
+            <value>
+                <stringValue>Event Space</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Meeting_Room</name>
+        <label>Meeting Room</label>
+        <locationX>314</locationX>
+        <locationY>611</locationY>
+        <connector>
+            <targetReference>Product_Type</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Product_Type_From_Web__c</field>
+            <value>
+                <stringValue>Meeting Room</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Open_space</name>
+        <label>Open space</label>
+        <locationX>50</locationX>
+        <locationY>611</locationY>
+        <connector>
+            <targetReference>Product_Type</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Product_Type_From_Web__c</field>
+            <value>
+                <stringValue>Open Space</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Private_Office_1_4</name>
+        <label>Private Office 1-4</label>
+        <locationX>578</locationX>
+        <locationY>611</locationY>
+        <connector>
+            <targetReference>Product_Type</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Product_Type_From_Web__c</field>
+            <value>
+                <stringValue>Private Office for 1-4</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Assign_Null</name>
+        <label>Update Assign Null</label>
+        <locationX>446</locationX>
+        <locationY>1019</locationY>
+        <inputAssignments>
+            <field>Desired_Location__c</field>
+            <value>
+                <elementReference>Get_the_location_from_web_ID.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>From_Integration_User__c</field>
+            <value>
+                <elementReference>FromIntegrationUserFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interested_in__c</field>
+            <value>
+                <elementReference>$Record.Product_Type_From_Web__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Location_Area__c</field>
+            <value>
+                <elementReference>Get_the_location_from_web_ID.Area__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product_Type__c</field>
+            <value>
+                <stringValue>On_demand</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_daily_Service_Value</name>
+        <label>Update daily Service Value</label>
+        <locationX>1106</locationX>
+        <locationY>611</locationY>
+        <connector>
+            <targetReference>Product_Type</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Product_Type_From_Web__c</field>
+            <value>
+                <stringValue>Daily Service</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Interested_in_Standard</name>
+        <label>Update Interested in Standard</label>
+        <locationX>1238</locationX>
+        <locationY>1019</locationY>
+        <inputAssignments>
+            <field>Desired_Location__c</field>
+            <value>
+                <elementReference>Get_the_location_from_web_ID.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>From_Integration_User__c</field>
+            <value>
+                <elementReference>FromIntegrationUserFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interested_in__c</field>
+            <value>
+                <elementReference>$Record.Product_Type_From_Web__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Location_Area__c</field>
+            <value>
+                <elementReference>Get_the_location_from_web_ID.Area__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product_Type__c</field>
+            <value>
+                <stringValue>Standard</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Other_Value</name>
+        <label>Update Other Value</label>
+        <locationX>1370</locationX>
+        <locationY>611</locationY>
+        <connector>
+            <targetReference>Product_Type</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Product_Type_From_Web__c</field>
+            <value>
+                <stringValue>Other</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Records_3</name>
+        <label>Update Interested In</label>
+        <locationX>710</locationX>
+        <locationY>1019</locationY>
+        <inputAssignments>
+            <field>Desired_Location__c</field>
+            <value>
+                <elementReference>Get_the_location_from_web_ID.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>From_Integration_User__c</field>
+            <value>
+                <elementReference>FromIntegrationUserFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interested_in__c</field>
+            <value>
+                <elementReference>$Record.Product_Type_From_Web__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Location_Area__c</field>
+            <value>
+                <elementReference>Get_the_location_from_web_ID.Area__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product_Type__c</field>
+            <value>
+                <stringValue>On_demand</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Records_Hot_Desk</name>
+        <label>Update - Hot Desk</label>
+        <locationX>974</locationX>
+        <locationY>1019</locationY>
+        <inputAssignments>
+            <field>Desired_Location__c</field>
+            <value>
+                <elementReference>Get_the_location_from_web_ID.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>From_Integration_User__c</field>
+            <value>
+                <elementReference>FromIntegrationUserFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Interested_in__c</field>
+            <value>
+                <stringValue>Hot Desk</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Location_Area__c</field>
+            <value>
+                <elementReference>Get_the_location_from_web_ID.Area__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Product_Type__c</field>
+            <value>
+                <stringValue>Standard</stringValue>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>1200</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Lead_from_web</targetReference>
+        </connector>
+        <object>Lead</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>IntrestedInVar</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>LeadVar</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Lead</objectType>
+    </variables>
+    <variables>
+        <name>ValidProductFromWebVlaueChoosen</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

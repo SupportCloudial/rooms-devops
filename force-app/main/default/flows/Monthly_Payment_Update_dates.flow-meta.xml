@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <environments>Default</environments>
+    <formulas>
+        <name>NewEndDate</name>
+        <dataType>Date</dataType>
+        <expression>IF(
+  ISBLANK({!$Record.OrderItem__c}), 
+  IF(
+    TEXT({!$Record.OpportunityLineItem__r.Access_Type__c})=&quot;Periodic&quot; &amp;&amp;
+    {!$Record.MonthIndex__c}=((YEAR({!$Record.OpportunityLineItem__r.End_date__c})-YEAR({!$Record.OpportunityLineItem__r.Entry_Date__c}))*12+
+    MONTH({!$Record.OpportunityLineItem__r.End_date__c})-MONTH({!$Record.OpportunityLineItem__r.Entry_Date__c})+1),
+    {!$Record.OpportunityLineItem__r.End_date__c},
+    ADDMONTHS(DATE(YEAR({!$Record.OpportunityLineItem__r.Entry_Date__c}), MONTH({!$Record.OpportunityLineItem__r.Entry_Date__c}), 1), {!$Record.MonthIndex__c}) - 1
+  ),
+IF(
+  OR(  TEXT({!$Record.OrderItem__r.Access_Type__c})= &quot;Periodic&quot;,TEXT({!$Record.OrderItem__r.Access_Type__c})= &apos;Monthly&apos;) &amp;&amp;
+    AND(
+MONTH({!NewStartDate})= MONTH({!$Record.OrderItem__r.EndDate}), YEAR({!NewStartDate})= YEAR({!$Record.OrderItem__r.EndDate})
+),
+    {!$Record.OrderItem__r.EndDate},
+    ADDMONTHS( DATE( YEAR ( {!$Record.OrderItem__r.ServiceDate} ) , MONTH( {!$Record.OrderItem__r.ServiceDate} ) ,1 ), 
+  {!$Record.MonthIndex__c}
+) - 1
+
+  )
+)</expression>
+    </formulas>
+    <formulas>
+        <name>NewStartDate</name>
+        <dataType>Date</dataType>
+        <expression>IF(
+    ISBLANK({!$Record.OrderItem__c}),
+    IF(
+        NOT(OR(
+            TEXT({!$Record.OpportunityLineItem__r.Access_Type__c}) = &quot;Periodic&quot;,
+            TEXT({!$Record.OpportunityLineItem__r.Access_Type__c}) = &quot;Monthly&quot;
+        )),
+        {!$Record.OpportunityLineItem__r.Entry_Date__c},
+        IF(
+            {!$Record.MonthIndex__c} = 1,
+            {!$Record.OpportunityLineItem__r.Entry_Date__c},
+            DATE(
+                YEAR({!$Record.OpportunityLineItem__r.Entry_Date__c}) + FLOOR((MONTH({!$Record.OpportunityLineItem__r.Entry_Date__c}) + {!$Record.MonthIndex__c} - 2) / 12),
+                MOD(MONTH({!$Record.OpportunityLineItem__r.Entry_Date__c}) + {!$Record.MonthIndex__c} - 2, 12) + 1,
+                1
+            )
+        )
+    ),
+    IF(
+        NOT(OR(
+            TEXT({!$Record.OrderItem__r.Access_Type__c}) = &quot;Periodic&quot;,
+            TEXT({!$Record.OrderItem__r.Access_Type__c}) = &quot;Monthly&quot;
+        )),
+        {!$Record.OrderItem__r.ServiceDate},
+        IF(
+            {!$Record.MonthIndex__c} = 1,
+            {!$Record.OrderItem__r.ServiceDate},
+            DATE(
+                YEAR({!$Record.OrderItem__r.ServiceDate}) + FLOOR((MONTH({!$Record.OrderItem__r.ServiceDate}) + {!$Record.MonthIndex__c} - 2) / 12),
+                MOD(MONTH({!$Record.OrderItem__r.ServiceDate}) + {!$Record.MonthIndex__c} - 2, 12) + 1,
+                1
+            )
+        )
+    )
+)</expression>
+    </formulas>
+    <interviewLabel>Monthly Payment - Update dates {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Monthly Payment - Update dates</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update</name>
+        <label>Update</label>
+        <locationX>176</locationX>
+        <locationY>287</locationY>
+        <inputAssignments>
+            <field>End_Date_trigger__c</field>
+            <value>
+                <elementReference>NewEndDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Stat_Date_Trigger__c</field>
+            <value>
+                <elementReference>NewStartDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputReference>$Record</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Update</targetReference>
+        </connector>
+        <object>MonthlyPayment__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

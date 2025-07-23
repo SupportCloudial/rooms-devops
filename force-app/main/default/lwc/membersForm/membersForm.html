@@ -1,0 +1,102 @@
+<template>
+    <div style="display: flex; justify-content: center; align-items: center; height: 18vh;">
+        <div class="slds-m-top_medium">
+            <img src={logoUrl} alt="Rooms" style="width: 170px; height: 70px;" />
+        </div>
+        
+    </div>
+    <template if:true={membersRegistred}>
+        <div class="slds-text-align_center" style="font-size: 24px;">
+            {customLabels.yetEnregistred}        </div>
+    </template>
+    <template if:true={sendContact}>
+        <div class="slds-text-align_center" style="font-size: 24px;">
+            {customLabels.MessageAfter1} ({members.length}) {customLabels.MessageAfter2}        </div>
+    </template>
+    <lightning-card if:true={memberIsNotEmpty}  style={getCardStyle}>
+        <template if:true={showToast}>
+            <c-show-toast-event toast-title={toastMessage} toast-type={toastTheme} onclosetoast={handleCloseToast}> </c-show-toast-event>
+        </template>
+        <template if:false={sendContact}>
+        <template if:false={membersRegistred}>
+        <div style=" padding-left: 20px; padding-right: 20px; margin-top: 20px; margin-bottom: 20px;">
+            <p style="font-family: Arial; font-size: 14px; justify-content: left; align-items: left;">
+                {customLabels.Description_0}
+            </p> <br/>
+            <p style="font-family: Arial; font-size: 14px; justify-content: left; align-items: left;">
+                {customLabels.Description_1}
+            </p> <br/>
+            <p style="font-family: Arial; font-size: 14px; justify-content: left; align-items: left;">
+                {customLabels.Description_2}
+            </p> <br/>
+            <p style="font-family: Arial; font-size: 14px; justify-content: left; align-items: left;">
+                {customLabels.Description_3}
+            </p> <br/>
+            <p style="font-family: Arial; font-size: 14px; font-style: italic; color: #555555; justify-content: left; align-items: left;">
+                <strong> {customLabels.Description_4} </strong>
+            </p>
+        </div>
+        <div >
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_col-bordered slds-table_striped slds-max-medium-table_stacked-horizontal">
+                <thead>
+                    <tr>
+                        <th style={getRead}>{customLabels.NumberMembers}</th>
+                        <th style={getRead}>{customLabels.Firstname}</th>
+                        <th style={getRead}>{customLabels.LastName}</th>
+                        <th style={getRead}>{customLabels.Phone}</th>
+                        <th style={getRead}>{customLabels.Email}</th>
+                        <th style={getRead}>{customLabels.Birthdate}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={members} for:item="member" for:index="index">
+                        <tr key={member.memberId}>
+                            <td>
+                                <label if:true={isMobile} style={getRead} >{customLabels.NumberMembers}</label>
+                                <lightning-layout-item  data-index={index} value={member.numberOfMembers} padding="around-small" class="slds-size_xxx-small;">
+                                    <p style={getRead}>{member.Index}</p>
+                                </lightning-layout-item>
+                            </td>
+
+                            <td>
+                                <label  if:true={isMobile} style={getRead}>{customLabels.Firstname}</label>
+                                <lightning-input variant="label-hidden" data-index={index} data-field="FirstName" onchange={handleSave} name="FirstName" value={member.FirstName}></lightning-input>
+                                <span class="error-message a" data-index={index} data-field="FirstNameError"></span>     
+                            </td>
+                            <td>
+                                <label  if:true={isMobile} style={getRead} >{customLabels.LastName}</label>
+                                <lightning-input variant="label-hidden" data-index={index} data-field="LastName" onchange={handleSave} name="LastName" value={member.LastName}></lightning-input>
+                                
+                                <span class="error-message" data-index={index} data-field="LastNameError"></span>
+                           </td>
+                            <td>
+                                <label if:true={isMobile} style={getRead} >{customLabels.Phone}</label>
+                                <lightning-input variant="label-hidden" data-index={index} data-field="MobilePhone" onchange={handleSave} name="MobilePhone" value={member.MobilePhone}></lightning-input>
+                                <span class="error-message" data-index={index} data-field="PhoneError"></span>                            </td>
+                            <td>
+                                <label  if:true={isMobile} style={getRead} >{customLabels.Email}</label>
+                                <lightning-input variant="label-hidden" data-index={index} data-field="Email" onchange={handleSave} name="Email" value={member.Email}></lightning-input>
+                                <span class="error-message" data-index={index} data-field="EmailError"></span>                             </td>
+
+                            <td>
+                                <label  if:true={isMobile} style={getRead} >{customLabels.Birthdate}</label>
+                                <lightning-input variant="label-hidden" data-index={index} onchange={handleSave} name="Birthdate" value={member.Birthdate} type="date"  ></lightning-input>
+                            </td>
+
+                            <td>
+                                <lightning-button-icon data-index={index} style={getRead} icon-name="utility:delete" variant="container" alternative-text="Delete"   class="slds-m-left_xx-small" onclick={handleDelete}> </lightning-button-icon>
+
+                            </td>
+                            
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+        <div style={getButton}>
+            <lightning-button label={customLabels.ButtonSave} disabled={isButtonDisabled} variant="brand" onclick={handleRecordCreation}></lightning-button>
+        </div> 
+    </template>     
+    </template>     
+    </lightning-card>
+</template>

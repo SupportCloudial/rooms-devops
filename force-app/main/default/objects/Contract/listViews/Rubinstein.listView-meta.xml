@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rubinstein</fullName>
+    <columns>CONTRACT.CONTRACT_NUMBER</columns>
+    <columns>SALES.ACCOUNT.NAME</columns>
+    <columns>Agreement_Type__c</columns>
+    <columns>CONTRACT.STATUS</columns>
+    <columns>CONTRACT.START_DATE</columns>
+    <columns>CONTRACT.END_DATE</columns>
+    <columns>Auto_Renewal__c</columns>
+    <columns>CORE.USERS.ALIAS</columns>
+    <columns>Total_Amount__c</columns>
+    <columns>Auto_Renewal_Cancellation_Deadline__c</columns>
+    <columns>Contract_has_started__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Location__c</field>
+        <operation>equals</operation>
+        <value>Rubinstein</value>
+    </filters>
+    <filters>
+        <field>Agreement_Type__c</field>
+        <operation>equals</operation>
+        <value>Periodic,Monthly</value>
+    </filters>
+    <label>Rubinstein</label>
+</ListView>

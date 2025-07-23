@@ -1,0 +1,351 @@
+/* General Styling */
+.card {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  position: relative;
+  overflow: hidden;
+  height: 0;
+  transition: height 0.5s ease;
+}
+
+.container.expanded {
+  padding: 11px 11px 0;
+  height: 500px;
+  overflow: visible;
+}
+
+.highlighted-cell {
+  text-align: center;
+}
+
+.resetButton,
+.applyButton {
+  position: absolute;
+}
+
+.resetButton {
+  top: 6px;
+  right: 12px;
+}
+
+.applyButton {
+  width: 100%;
+  bottom: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.caption-style {
+  font-weight: bold;
+  font-size: 22px;
+  text-align: left;
+  margin-bottom: 15px;
+  color: #4a4a4a;
+}
+
+/* Table Styling */
+.narrow-column {
+  max-width: 100px;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.table-container {
+  overflow-x: auto;
+  position: relative;
+  max-width: 100%;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.custom-table th,
+.custom-table td {
+  font-size: 12px;
+  padding: 4px 8px;
+}
+
+.custom-table th:nth-child(1),
+.custom-table td:nth-child(1) {
+  left: 0;
+  width: 140px;
+  min-width: 100px;
+  max-width: 100px;
+  background-color: #f3f3f3;
+  border-right: 1px solid #dcdcdc;
+}
+
+.custom-table th:nth-child(2),
+.custom-table td:nth-child(2) {
+  left: 100px; /* = largeur de la colonne 1 */
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  background-color: #f3f3f3;
+  border-right: 1px solid #dcdcdc;
+}
+
+.custom-table th:nth-child(3),
+.custom-table td:nth-child(3) {
+  left: 200px; /* = largeur col 1 + col 2 */
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  background-color: #f3f3f3;
+  border-right: 1px solid #dcdcdc;
+}
+
+/* Cell Styles */
+.price-cell,
+.highlighted-cell {
+  border-right: 1px solid #dcdcdc;
+}
+
+.highlighted-cell {
+  background-color: #fff7e6;
+}
+
+.price-cell input,
+.discount-input,
+.final-price-input {
+  width: 35px;
+  border-radius: 5px;
+  border: 1px solid #dcdcdc;
+}
+
+/* Total Row */
+.total-row {
+  background-color: #f3f3f3;
+}
+
+.total-cell {
+  font-weight: bold;
+}
+
+/* Combobox and Inputs */
+.lightning-combobox,
+.lightning-button-icon:focus-visible {
+  outline: none !important;
+}
+
+.slds-combobox {
+  z-index: 1000;
+}
+
+lightning-helptext {
+  z-index: 0;
+}
+
+c-multi-select-combobox {
+  z-index: 1001;
+}
+
+/* Miscellaneous */
+.multipleDiscountDate {
+  width: 47%;
+}
+
+.label-block {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.value-block input {
+  text-align: left;
+  margin-bottom: 3px;
+}
+
+.cell-container {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.room-link {
+  color: #0070d2;
+  text-decoration: none;
+}
+
+.room-link:hover {
+  text-decoration: underline;
+}
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+}
+
+/* Info icon bubble */
+.info-icon {
+  display: inline-block;
+  margin-left: 5px;
+  width: 13px;
+  height: 13px;
+  background-color: #747474;
+  color: white;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 9px;
+  line-height: 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 10vw;
+  background-color: #032d60;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1002;
+  bottom: 125%;
+  left: 50%;
+  font-weight: normal;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show tooltip text on hover */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.discount-input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+}
+
+.discount-input {
+  padding-right: 2px;
+  text-align: right;
+}
+
+.discount-symbol {
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: #4a4a4a;
+}
+/* Freeze first row */
+.custom-table th {
+  position: sticky;
+  top: 0;
+  z-index: 3; /* Ensures header row is above other content when scrolling */
+  background-color: #f4f6f9; /* Match background color to header */
+}
+
+/* Freeze first three columns */
+.custom-table td:nth-child(1),
+.custom-table th:nth-child(1) {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background-color: #f3f3f3;
+}
+
+.custom-table td:nth-child(2),
+.custom-table th:nth-child(2) {
+  position: sticky;
+  left: 80px; /* Adjust this value based on column width */
+  z-index: 2;
+  background-color: #f3f3f3;
+}
+
+.custom-table td:nth-child(3),
+.custom-table th:nth-child(3) {
+  position: sticky;
+  left: 158px; /* Adjust this value based on column width */
+  z-index: 2;
+  background-color: #f3f3f3;
+}
+
+/* Freeze first row */
+.custom-table th {
+  position: sticky;
+  top: 0;
+  z-index: 3; /* Ensures header row is above other content when scrolling */
+  background-color: #f4f6f9; /* Match background color to header */
+}
+
+/* Freeze first three columns with a right border to prevent gaps */
+.custom-table td:nth-child(1),
+.custom-table th:nth-child(1) {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background-color: #f3f3f3;
+  border-right: 1px solid #dcdcdc; /* Adds border to avoid gaps */
+}
+
+.custom-table td:nth-child(2),
+.custom-table th:nth-child(2) {
+  position: sticky;
+  left: 80px; /* Adjust this value based on column width */
+  z-index: 2;
+  background-color: #f3f3f3;
+  border-right: 1px solid #dcdcdc; /* Adds border to avoid gaps */
+}
+
+.custom-table td:nth-child(3),
+.custom-table th:nth-child(3) {
+  position: sticky;
+  left: 158px; /* Adjust this value based on cumulative column width */
+  z-index: 2;
+  background-color: #f3f3f3;
+  border-right: 1px solid #dcdcdc; /* Adds border to avoid gaps */
+}
+
+/* Freeze first row */
+.custom-table th {
+  position: sticky;
+  top: 0;
+  z-index: 3; /* Ensures header row is above other content when scrolling */
+  background-color: #f4f6f9; /* Match background color to header */
+}
+
+/* Freeze first three columns with a right border to prevent gaps */
+.custom-table th:nth-child(1),
+.custom-table td:nth-child(1) {
+  position: sticky;
+  left: 0;
+  z-index: 4; /* Higher z-index to overlay other content */
+  background-color: #f3f3f3;
+  border-right: 1px solid #dcdcdc; /* Adds border to avoid gaps */
+}
+
+.custom-table th:nth-child(2),
+.custom-table td:nth-child(2) {
+  position: sticky;
+  left: 80px; /* Adjust this value based on column width */
+  z-index: 4;
+  background-color: #f3f3f3;
+  border-right: 1px solid #dcdcdc;
+}
+
+.custom-table th:nth-child(3),
+.custom-table td:nth-child(3) {
+  position: sticky;
+  left: 158px; /* Adjust this value based on cumulative column width */
+  z-index: 4;
+  background-color: #f3f3f3;
+  border-right: 1px solid #dcdcdc;
+}

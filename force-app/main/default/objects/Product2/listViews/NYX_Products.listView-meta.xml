@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NYX_Products</fullName>
+    <columns>PRODUCT2.ACTIVE</columns>
+    <columns>PRODUCT2.NAME</columns>
+    <columns>PRODUCT2.FAMILY</columns>
+    <columns>Type__c</columns>
+    <columns>Sub_Type__c</columns>
+    <columns>State__c</columns>
+    <columns>State_description__c</columns>
+    <columns>Capacity_Desks__c</columns>
+    <columns>Destination_Price__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Location__c</field>
+        <operation>equals</operation>
+        <value>NYX</value>
+    </filters>
+    <label>NYX Products</label>
+</ListView>

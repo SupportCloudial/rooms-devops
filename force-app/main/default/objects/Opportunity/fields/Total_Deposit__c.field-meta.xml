@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Deposit__c</fullName>
+    <description>Formula for total of deposit for pikadone (panda docs)</description>
+    <formula>IF(
+    OR(ISBLANK(Calculated_Deposit__c), Calculated_Deposit__c = 0),
+    IF(
+        ISBLANK(DepositAmount__c),
+        0,
+        DepositAmount__c
+    ),
+    Calculated_Deposit__c
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Total Deposit</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <type>Currency</type>
+</CustomField>

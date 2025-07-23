@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Renewal_And_Periodic__c</fullName>
+    <description>If its renewal and periodic (panda docs)</description>
+    <externalId>false</externalId>
+    <formula>IF(
+    AND(
+        TEXT(Contract_Type__c) = &quot;Periodic&quot;,
+        Automatic_Renewal__c = TRUE
+    ),
+    &quot;true&quot;,
+    &quot;false&quot;
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Renewal And Periodic</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,5 @@
+.modal-body-relative-height {
+    height: 60vh;        /* 60% of viewport height */
+    overflow-y: auto;    /* scroll if content overflows */
+    padding: 1rem;
+}

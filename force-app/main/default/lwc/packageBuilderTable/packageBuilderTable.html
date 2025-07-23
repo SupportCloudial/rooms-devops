@@ -1,0 +1,122 @@
+<template>
+  <!-- Package Builder Summary Table -->
+  <lightning-card>
+    <div>
+      <lightning-layout multiple-rows>
+        <!-- Standard Products -->
+        <lightning-layout-item size="8" padding="around-small" class="slds-align_absolute-left">
+          <h3 class="slds-text-heading_small">Standard Products Summary</h3>
+          <lightning-layout>
+            <lightning-layout-item size="3" class="slds-p-around_x-small slds-theme_info">
+              <div>
+                <p class="slds-text-color_inverse">{labels.ListPriceSum}</p>
+                <p class="slds-text-color_inverse">{oppMonthlyPrice}₪</p>
+              </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="3" class="slds-p-around_x-small slds-theme_info">
+              <div>
+                <p class="slds-text-color_inverse">{labels.Desks}</p>
+                <p class="slds-text-color_inverse">{oppDesks}</p>
+              </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="3" class="slds-p-around_x-small slds-theme_info">
+              <div>
+                <p class="slds-text-color_inverse">{labels.AverageDeskPrice}</p>
+                <p class="slds-text-color_inverse">{oppAverageDeskPrice}₪</p>
+              </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="3" class="slds-p-around_x-small slds-theme_info">
+              <div>
+                <p class="slds-text-color_inverse">{labels.MonthlyPrice}</p>
+                <p class="slds-text-color_inverse">{oppListPriceSum}₪</p>
+              </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="3" class="slds-p-around_x-small slds-theme_info">
+              <div>
+                <p class="slds-text-color_inverse">{labels.ListPriceAdjustment}</p>
+                <p class="slds-text-color_inverse">{oppListPriceAdjustment}%</p>
+              </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="3" class="slds-p-around_x-small slds-theme_info">
+              <div>
+                <p class="slds-text-color_inverse">{labels.TemporaryProductCheck}</p>
+                <p class="slds-text-color_inverse">{oppTemporaryProductCheck}</p>
+              </div>
+            </lightning-layout-item>
+          </lightning-layout>
+        </lightning-layout-item>
+        <!-- General Products -->
+        <lightning-layout-item size="12" padding="around-small" class="slds-align_absolute-left">
+          <h3 class="slds-text-heading_small">General Products Summary</h3>
+          <lightning-layout multiple-rows>
+            <lightning-layout-item size="2" class="slds-p-around_x-small slds-theme_success">
+              <div>
+                <p class="slds-text-color_inverse">{labels.QuantitySum}</p>
+                <p class="slds-text-color_inverse">{oppQuantitySum}</p>
+              </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="2" class="slds-p-around_x-small slds-theme_success">
+              <div>
+                <p class="slds-text-color_inverse">{labels.TotalPriceOther}</p>
+                <p class="slds-text-color_inverse">{oppTotalPriceNonStandard}₪</p>
+              </div>
+            </lightning-layout-item>
+          </lightning-layout>
+        </lightning-layout-item>
+      </lightning-layout>
+    </div>
+  </lightning-card>
+  <lightning-card>
+    <div class="slds-p-around_medium">
+
+      <!-- Form Inputs Grid -->
+      <div class="slds-grid slds-wrap slds-gutters">
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+          <lightning-combobox class="slds-m-bottom_small" name="AccessType" label={labels.AccessType}
+            value={selectedAccessType} placeholder={labels.AccessTypePHLabel} options={accessTypeOptions}
+            onchange={handleAccessTypeChange}>
+          </lightning-combobox>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+          <lightning-input class="slds-m-bottom_small" type="date" date-style="short" label={labels.Entry}
+            name="entryInput" value={selectedEntryDate} onchange={handleEntryDateChange}>
+          </lightning-input>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+          <lightning-input class="slds-m-bottom_small" type="date" date-style="short" label={labels.Exit}
+            name="exitInput" value={selectedEndDate} onchange={handleEndDateChange}>
+          </lightning-input>
+        </div>
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-4">
+          <lightning-input class="slds-m-bottom_small" type="number" label={labels.DeskPrice} name="numberInput" min="0"
+            step="any" value={selectedDesksPrice} onchange={handleDesksUnitsChange}>
+          </lightning-input>
+        </div>
+      </div>
+      <!-- Buttons -->
+      <div class="slds-grid slds-wrap slds-grid_align-center slds-m_top_medium">
+        <div class="slds-col slds-size_12-of-12 slds-medium-size_auto">
+          <div class="slds-grid slds-grid_align-center slds-gutters_x-small">
+            <div class="slds-col">
+              <lightning-button label={labels.MassUpdateBtn} title={labels.MassUpdateBtn} onclick={handleMassUpdate}
+                variant="brand" disabled={disableMassUpdate}>
+              </lightning-button>
+            </div>
+            <div class="slds-col">
+              <lightning-button label={labels.MassDeleteBtn} title={labels.MassDeleteBtn} onclick={handleMassDelete}
+                variant="destructive" disabled={disableMassButtons}>
+              </lightning-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </lightning-card>
+  <!-- Datatable -->
+  <div class="table-container">
+    <lightning-datatable key-field="LineItemId" data={productsData} draft-values={draftValues} columns={columns}
+      errors={errors} onrowselection={handleRowSelection} onrowaction={handleRowAction} onsave={handleSave}
+      oncancel={handleCancel} onchange={handleChanged}>
+    </lightning-datatable>
+  </div>
+</template>

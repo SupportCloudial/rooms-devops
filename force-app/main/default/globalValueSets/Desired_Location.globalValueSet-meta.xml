@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Raanana - Gav Yam</fullName>
+        <default>false</default>
+        <label>Raanana - Gav Yam</label>
+    </customValue>
+    <customValue>
+        <fullName>ROOMS Acro Tower Tel Aviv</fullName>
+        <default>false</default>
+        <label>ROOMS Acro Tower Tel Aviv</label>
+    </customValue>
+    <customValue>
+        <fullName>Beit Robinstein Tel Aviv</fullName>
+        <default>false</default>
+        <label>Beit Robinstein Tel Aviv</label>
+    </customValue>
+    <customValue>
+        <fullName>ROOMS NYX Tel Aviv</fullName>
+        <default>false</default>
+        <label>ROOMS NYX Tel Aviv</label>
+    </customValue>
+    <customValue>
+        <fullName>ROOMS Trade Tower Tel Aviv</fullName>
+        <default>false</default>
+        <label>ROOMS Trade Tower Tel Aviv</label>
+    </customValue>
+    <customValue>
+        <fullName>ROOMS DONA MODI&apos;IN</fullName>
+        <default>false</default>
+        <label>ROOMS DONA MODI&apos;IN</label>
+    </customValue>
+    <customValue>
+        <fullName>ROOMS Bnei Brak</fullName>
+        <default>false</default>
+        <label>ROOMS Bnei Brak</label>
+    </customValue>
+    <customValue>
+        <fullName>One Tower Ramat Gan</fullName>
+        <default>false</default>
+        <label>One Tower Ramat Gan</label>
+    </customValue>
+    <customValue>
+        <fullName>ROOMS Basel Park Petah Tikva</fullName>
+        <default>false</default>
+        <label>ROOMS Basel Park Petah Tikva</label>
+    </customValue>
+    <customValue>
+        <fullName>BSR CITY PETACH TIKVA</fullName>
+        <default>false</default>
+        <label>BSR CITY PETACH TIKVA</label>
+    </customValue>
+    <customValue>
+        <fullName>ROOMS Raanana</fullName>
+        <default>false</default>
+        <label>ROOMS Raanana</label>
+    </customValue>
+    <customValue>
+        <fullName>BEIT HAMILLENNIUM‏</fullName>
+        <default>false</default>
+        <label>BEIT HAMILLENNIUM‏</label>
+    </customValue>
+    <customValue>
+        <fullName>Sky Tower</fullName>
+        <default>false</default>
+        <label>Sky Tower</label>
+    </customValue>
+    <customValue>
+        <fullName>Glilot - Allied</fullName>
+        <default>false</default>
+        <label>Glilot - Allied</label>
+    </customValue>
+    <customValue>
+        <fullName>ROOMS EXCHANGE RAMAT GAN</fullName>
+        <default>false</default>
+        <label>ROOMS EXCHANGE RAMAT GAN</label>
+    </customValue>
+    <customValue>
+        <fullName>Rishon LeZion</fullName>
+        <default>false</default>
+        <label>Rishon LeZion</label>
+    </customValue>
+    <customValue>
+        <fullName>TEST</fullName>
+        <default>false</default>
+        <label>TEST</label>
+    </customValue>
+    <customValue>
+        <fullName>Hasolelim - Tel Aviv</fullName>
+        <default>false</default>
+        <label>Hasolelim - Tel Aviv</label>
+    </customValue>
+    <customValue>
+        <fullName>One Tower</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>One Tower</label>
+    </customValue>
+    <customValue>
+        <fullName>Dona</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Dona</label>
+    </customValue>
+    <customValue>
+        <fullName>BBC</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>BBC</label>
+    </customValue>
+    <customValue>
+        <fullName>Acro - Raanana</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Acro - Raanana</label>
+    </customValue>
+    <customValue>
+        <fullName>BSR City</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>BSR City</label>
+    </customValue>
+    <customValue>
+        <fullName>SKY</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>SKY</label>
+    </customValue>
+    <customValue>
+        <fullName>NYX</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>NYX</label>
+    </customValue>
+    <customValue>
+        <fullName>Rubinstein</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Rubinstein</label>
+    </customValue>
+    <customValue>
+        <fullName>Acro - TLV</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Acro - TLV</label>
+    </customValue>
+    <customValue>
+        <fullName>Neve Tzedek</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Neve Tzedek</label>
+    </customValue>
+    <masterLabel>Desired Location</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

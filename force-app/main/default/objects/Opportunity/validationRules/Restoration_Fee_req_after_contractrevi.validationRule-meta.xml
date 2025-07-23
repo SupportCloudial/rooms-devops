@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Restoration_Fee_req_after_contractrevi</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    OR(
+       
+        ISPICKVAL(StageName, &quot;Contract Review&quot;),
+        ISPICKVAL(StageName, &quot;Contract sent&quot;),
+        ISPICKVAL(StageName, &quot;Deposit and Documents received&quot;)
+    ),
+    ISBLANK(Restoration_Fee__c)
+)</errorConditionFormula>
+    <errorDisplayField>Restoration_Fee__c</errorDisplayField>
+    <errorMessage>Restoration Fee is required on this stage</errorMessage>
+</ValidationRule>

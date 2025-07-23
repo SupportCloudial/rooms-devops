@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CompanyID_empty_Contractreview</fullName>
+    <active>false</active>
+    <description>Company Id is required from contract review stage</description>
+    <errorConditionFormula>AND(
+    OR(
+        ISPICKVAL(StageName, &quot;Contract Review&quot;),
+        ISPICKVAL(StageName, &quot;Contract sent&quot;),
+        ISPICKVAL(StageName, &quot;Deposit and Documents received&quot;)
+    ),
+    ISBLANK(Set_Up_Fee__c)
+)</errorConditionFormula>
+    <errorMessage>Company Id is required on this stage</errorMessage>
+</ValidationRule>

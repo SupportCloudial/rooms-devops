@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UiFormatSpecificationSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <field>Locations__c.Full_Google_Address__c</field>
+    <formatType>ICON</formatType>
+    <masterLabel>IMPORTANTFIELDS</masterLabel>
+    <sobjectType>Locations__c</sobjectType>
+    <uiFormatSpecifications>
+        <formatProperties>{&quot;icon&quot;:&quot;sad_face&quot;,&quot;iconColor&quot;:&quot;gray&quot;}</formatProperties>
+        <formatType>ICON</formatType>
+        <order>1</order>
+        <visibilityRule>
+            <criteria>
+                <leftValue>{!Record.Full_Google_Address__c}</leftValue>
+                <operator>EQUAL</operator>
+                <rightValue>null</rightValue>
+            </criteria>
+        </visibilityRule>
+    </uiFormatSpecifications>
+    <uiFormatSpecifications>
+        <formatProperties>{&quot;icon&quot;:&quot;happy_face&quot;,&quot;iconColor&quot;:&quot;green&quot;}</formatProperties>
+        <formatType>ICON</formatType>
+        <order>2</order>
+        <visibilityRule>
+            <criteria>
+                <leftValue>{!Record.Full_Google_Address__c}</leftValue>
+                <operator>CONTAINS</operator>
+                <rightValue>ROOMS</rightValue>
+            </criteria>
+        </visibilityRule>
+    </uiFormatSpecifications>
+</UiFormatSpecificationSet>

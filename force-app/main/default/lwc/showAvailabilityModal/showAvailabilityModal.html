@@ -1,0 +1,35 @@
+<template>
+
+    <lightning-modal-header label={header}></lightning-modal-header>
+
+    <lightning-modal-body class="scrollable modal-body"> 
+        <div class="modal-body-relative-height">
+            <!--c-add-opp-product record-id={recordId} onaddproducts={handleAddProducts}></c-add-opp-product-->
+            <div class="table-height datatable-border">
+                <lightning-datatable
+                    key-field="LineItemId"
+                    data={contracts}
+                    columns={columns}
+                    hide-checkbox-column
+                >
+                </lightning-datatable>
+            </div>
+        </div>
+    </lightning-modal-body>
+    
+    <lightning-modal-footer>
+        <div class="slds-grid slds-grid_align-center">
+            <template for:each={btnOptions} for:item="option">
+                <lightning-button
+                        class="slds-m-around_xx-small"  
+                        onclick={handleOptionClick}
+                        data-id={option.val}
+                        key={option.val} 
+                        variant={option.variant}
+                        label={option.label}>
+                </lightning-button>
+            </template>
+        </div>
+    </lightning-modal-footer>
+
+</template>

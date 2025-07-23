@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Hot Desk</fullName>
+        <default>false</default>
+        <label>Hot Desk</label>
+    </customValue>
+    <customValue>
+        <fullName>Open Space</fullName>
+        <default>false</default>
+        <label>Open Space</label>
+    </customValue>
+    <customValue>
+        <fullName>Private Office for 1-4</fullName>
+        <default>false</default>
+        <label>Private Office for 1-4</label>
+    </customValue>
+    <customValue>
+        <fullName>Private Office for 5-8</fullName>
+        <default>false</default>
+        <label>Private Office for 5-8</label>
+    </customValue>
+    <customValue>
+        <fullName>Private Office for 9-14</fullName>
+        <default>false</default>
+        <label>Private Office for 9-14</label>
+    </customValue>
+    <customValue>
+        <fullName>Private Office for 15+</fullName>
+        <default>false</default>
+        <label>Private Office for 15+</label>
+    </customValue>
+    <customValue>
+        <fullName>Daily Office</fullName>
+        <default>false</default>
+        <label>Daily Office</label>
+    </customValue>
+    <customValue>
+        <fullName>Meeting Room</fullName>
+        <default>false</default>
+        <label>Meeting Room</label>
+    </customValue>
+    <customValue>
+        <fullName>Event Space</fullName>
+        <default>false</default>
+        <label>Event Space</label>
+    </customValue>
+    <customValue>
+        <fullName>Daily HD</fullName>
+        <default>false</default>
+        <label>Daily HD</label>
+    </customValue>
+    <customValue>
+        <fullName>Classroom</fullName>
+        <default>false</default>
+        <label>Classroom</label>
+    </customValue>
+    <customValue>
+        <fullName>Suite</fullName>
+        <default>false</default>
+        <label>Suite</label>
+    </customValue>
+    <customValue>
+        <fullName>Rent</fullName>
+        <default>false</default>
+        <label>Rent</label>
+    </customValue>
+    <customValue>
+        <fullName>Mini Cinema</fullName>
+        <default>false</default>
+        <label>Mini Cinema</label>
+    </customValue>
+    <customValue>
+        <fullName>Daily Service</fullName>
+        <default>false</default>
+        <label>Daily Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </customValue>
+    <masterLabel>Interested in</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

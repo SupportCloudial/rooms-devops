@@ -1,0 +1,9 @@
+<apex:page showHeader="false" sidebar="false" standardcontroller="Opportunity" lightningStylesheets="true">
+
+ <flow:interview name="Package_Builder_Opporunity" finishLocation="{!Opportunity.Id}" buttonLocation="bottom">
+        
+   <apex:param name="OpportunityId" value="{!Opportunity.Id}"/> 
+    
+ </flow:interview> 
+
+</apex:page>

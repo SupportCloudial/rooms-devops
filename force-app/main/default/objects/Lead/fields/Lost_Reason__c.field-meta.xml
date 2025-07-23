@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Lost_Reason__c</fullName>
+    <label>Lost Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Status</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Incorrect Details</fullName>
+                <default>false</default>
+                <label>Incorrect Details</label>
+            </value>
+            <value>
+                <fullName>Looking for Hotel In Fattal</fullName>
+                <default>false</default>
+                <label>Looking for Hotel In Fattal</label>
+            </value>
+            <value>
+                <fullName>No Response</fullName>
+                <default>false</default>
+                <label>No Response</label>
+            </value>
+            <value>
+                <fullName>System Check</fullName>
+                <default>false</default>
+                <label>System Check</label>
+            </value>
+            <value>
+                <fullName>Not relevant to the Sales Department</fullName>
+                <default>false</default>
+                <label>Not relevant to the Sales Department</label>
+            </value>
+            <value>
+                <fullName>Customer stopped answering - after 6 attempts</fullName>
+                <default>false</default>
+                <label>Customer stopped answering - after 6 attempts</label>
+            </value>
+            <value>
+                <fullName>Duplicate</fullName>
+                <default>false</default>
+                <label>Duplicate</label>
+            </value>
+            <value>
+                <fullName>Cancelled Lead</fullName>
+                <default>false</default>
+                <label>Cancelled Lead</label>
+            </value>
+            <value>
+                <fullName>Moked - City without ROOMS sites</fullName>
+                <default>false</default>
+                <label>Moked - City without ROOMS sites</label>
+            </value>
+            <value>
+                <fullName>Moked - Low budget</fullName>
+                <default>false</default>
+                <label>Moked - Low budget</label>
+            </value>
+            <value>
+                <fullName>Moked - Looking for an independent office</fullName>
+                <default>false</default>
+                <label>Moked - Looking for an independent office</label>
+            </value>
+            <value>
+                <fullName>Moked - Customer changed their mind</fullName>
+                <default>false</default>
+                <label>Moked - Customer changed their mind</label>
+            </value>
+            <value>
+                <fullName>Moked - Customer signed with competitor</fullName>
+                <default>false</default>
+                <label>Moked - Customer signed with competitor</label>
+            </value>
+            <value>
+                <fullName>Moked - Site didnt open yet</fullName>
+                <default>false</default>
+                <label>Moked - Site didnt open yet</label>
+            </value>
+            <value>
+                <fullName>Complex s Service request</fullName>
+                <default>false</default>
+                <label>Complex s Service request</label>
+            </value>
+            <value>
+                <fullName>Customer stopped responding</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Customer stopped responding</label>
+            </value>
+            <value>
+                <fullName>Duplicate lead</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Duplicate lead</label>
+            </value>
+            <value>
+                <fullName>Incorrect information</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Incorrect information</label>
+            </value>
+            <value>
+                <fullName>Maybe in the future</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Maybe in the future</label>
+            </value>
+            <value>
+                <fullName>Not relevant</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Not relevant</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>Incorrect Details</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>Looking for Hotel In Fattal</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>No Response</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>System Check</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>Not relevant to the Sales Department</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>Customer stopped answering - after 6 attempts</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>Duplicate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>Cancelled Lead</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>Moked - City without ROOMS sites</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>Moked - Low budget</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>Moked - Looking for an independent office</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>Moked - Customer changed their mind</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>Moked - Customer signed with competitor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>Moked - Site didnt open yet</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Unqualified</controllingFieldValue>
+            <valueName>Complex s Service request</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

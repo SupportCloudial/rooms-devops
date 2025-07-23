@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Renewal_Due_Date_Status_15__c</fullName>
+    <formula>AND ( ISPICKVAL(Renewal_Status__c, &apos;Renewed - pending&apos;), Calculated_Number_Of_Desks__c &gt;14 )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Renewal Due Date Status 15+</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

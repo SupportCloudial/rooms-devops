@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Moked_cant_pass_Tour_Stage</fullName>
+    <active>false</active>
+    <description>Moked User can&apos;t pass the tour stage to without pass the opportunity owner to an Sale Reps !</description>
+    <errorConditionFormula>NOT(ISPICKVAL(StageName, &apos;Moked&apos;)) &amp;&amp; NOT(ISPICKVAL(StageName, &apos;New&apos;)) &amp;&amp; Owner.Title = &quot;MOKED&quot; &amp;&amp; RecordType.Name = &quot;Standard Opportunity&quot;</errorConditionFormula>
+    <errorMessage>You can&apos;t pass to the next stage without pass the opportunity owner to an Sale Reps ! Please choose a adequat opportunity owner.</errorMessage>
+</ValidationRule>

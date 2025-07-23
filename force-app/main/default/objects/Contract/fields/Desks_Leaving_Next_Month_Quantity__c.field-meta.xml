@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Desks_Leaving_Next_Month_Quantity__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(
+  AND(
+    MONTH(Calculated_End_Date__c) = MONTH(TODAY()),
+    YEAR(Calculated_End_Date__c) = YEAR(TODAY())
+  ),
+  Calculated_Number_Of_Desks__c,
+  0
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Desks Leaving Next Month Quantity</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackHistory>false</trackHistory>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

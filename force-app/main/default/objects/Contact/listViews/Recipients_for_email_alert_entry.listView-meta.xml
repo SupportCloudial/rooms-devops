@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Recipients_for_email_alert_entry</fullName>
+    <columns>FULL_NAME</columns>
+    <columns>ACCOUNT.NAME</columns>
+    <columns>CONTACT.PHONE3</columns>
+    <columns>CONTACT.TITLE</columns>
+    <columns>IS_EMAIL_ADDRESS_BOUNCED</columns>
+    <columns>CONTACT.EMAIL</columns>
+    <columns>Date_of_birth__c</columns>
+    <columns>National_ID__c</columns>
+    <columns>CORE.USERS.FIRST_NAME</columns>
+    <columns>CORE.USERS.LAST_NAME</columns>
+    <columns>ACCOUNT.PHONE1</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>ACCOUNT.NAME</field>
+        <operation>equals</operation>
+        <value>Rooms</value>
+    </filters>
+    <filters>
+        <field>Recipient_of_Entry_Alert__c</field>
+        <operation>equals</operation>
+        <value>1</value>
+    </filters>
+    <label>Recipients Alert: entry date less than 3</label>
+    <sharedTo>
+        <group>Rooms_Admins</group>
+    </sharedTo>
+</ListView>

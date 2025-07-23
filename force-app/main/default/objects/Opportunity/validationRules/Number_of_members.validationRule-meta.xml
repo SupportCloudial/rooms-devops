@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Number_of_members</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND( ISNULL(Number_of_members__c),  ISPICKVAL( StageName , &apos;Negotiation&apos;)  )</errorConditionFormula>
+    <errorDisplayField>Number_of_members__c</errorDisplayField>
+    <errorMessage>Add Number of members before moving to the negotiation Stage</errorMessage>
+</ValidationRule>

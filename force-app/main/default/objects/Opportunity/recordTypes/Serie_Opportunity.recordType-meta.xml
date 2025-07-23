@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Serie_Opportunity</fullName>
+    <active>true</active>
+    <businessProcess>Serie sales process</businessProcess>
+    <label>Series Opportunity</label>
+    <picklistValues>
+        <picklist>Agreement_language__c</picklist>
+        <values>
+            <fullName>English</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hebrew</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Change_Opportunity_Type__c</picklist>
+        <values>
+            <fullName>New Contract</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Old Contract</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Contract_Type__c</picklist>
+        <values>
+            <fullName>Monthly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Periodic</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Contract_language__c</picklist>
+        <values>
+            <fullName>English</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hebrew</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DB_Competitor__c</picklist>
+        <values>
+            <fullName>Competitor A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Competitor B</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Competitor C</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ForecastCategoryName</picklist>
+        <values>
+            <fullName>Best Case</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Closed</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Omitted</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pipeline</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Interested_in__c</picklist>
+        <values>
+            <fullName>Classroom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Daily HD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Daily Office</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Event Space</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hot Desk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting Room</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mini Cinema</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Open Space</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Private Office for 1-4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Private Office for 15%2B</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Private Office for 5-8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Private Office for 9-14</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rent</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Suite</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Internal_External__c</picklist>
+        <values>
+            <fullName>External</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Internal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MIX</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>LeadSource</picklist>
+        <values>
+            <fullName>BTL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data Migration</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digital</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Existing Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marketplace</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outbound leads</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Returning Customers</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Walk-in</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Lease_Termination_Notice_Monthes__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Loss_Reason__c</picklist>
+        <values>
+            <fullName>Customer changed their mind</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer signed with competitor</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Customer stopped responding</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Decided to stay in current office</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Future Potential Deal%2FTiming</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Looking for an independent office</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Looking for different location</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Low budget</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SYSTEM TEST</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unavailable Product</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unwilling to provide more details</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Non_Renewal_Reason__c</picklist>
+        <values>
+            <fullName>Budget Constraints</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Business Changes</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dissatisfaction</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Other</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Price Increase</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Service Issues</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Product_Access_Type__c</picklist>
+        <values>
+            <fullName>Hourly</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>One-Time</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Product_Sub_Type__c</picklist>
+        <values>
+            <fullName>Capsules</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Classroom</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Event Space-Balcony%2C roof%2C Lounge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Food %2F Refreshements</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting Rooms</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mini Cinema</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Parking spot</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Podcast Room</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Print Units</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Product_Type__c</picklist>
+        <values>
+            <fullName>Extra for all products</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>On demand Products</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Renewal_Iterations__c</picklist>
+        <values>
+            <fullName>0</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>9</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Endless</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Renewal_Start_Date__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SubSource__c</picklist>
+        <values>
+            <fullName>Abandoned Calls</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Broker</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Direct Calls</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Downgrade</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Facebook</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flexspace</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flyers</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Friend Bring Friend</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Instagram</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Kishourit</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Landing Page</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Linkedin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Linkedin Inmails</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marketing emails</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meetingz</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nioud</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No Answer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Outbound calls</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Referral%28 from ROOMS%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Returning customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Roll Up</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Site</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spacenter</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spacing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Telidelet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Upgrade</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Walkin</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Word of mouth</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Tour_Status__c</picklist>
+        <values>
+            <fullName>Canceled</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completed</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type</picklist>
+        <values>
+            <fullName>Changes from opportunity</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>New Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Renewal</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Returning Customer</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

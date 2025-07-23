@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Next_Renewal_Date__c</fullName>
+    <formula>IF(
+    AND(
+        TEXT(Current_Renewal_Iteration__c) = &quot;0&quot;,
+        NOT(ISBLANK(Renewal_Date_DM__c))
+    ),
+    Renewal_Date_DM__c+1,
+    EndDate - 
+    CASE(
+        TEXT(Renewal_Kickoff_Months__c),
+        &quot;1&quot;, 30,
+        &quot;2&quot;, 60,
+        &quot;3&quot;, 90,
+        &quot;4&quot;, 120,
+        &quot;5&quot;, 150,
+        &quot;6&quot;, 180,
+        0
+    )
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Next Renewal Date</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Date</type>
+</CustomField>

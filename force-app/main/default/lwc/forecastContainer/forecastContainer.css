@@ -1,0 +1,89 @@
+.chartjs-tooltip {
+    opacity: 1;
+    pointer-events: none;
+    background:#4d4d76;
+    color: white;
+    border-radius: 3px;
+    padding: 10px;
+    font-size: 12px;
+    text-align: center;
+    transform: translate(-50%, 0);
+    transition: all .1s ease;
+    position: absolute;
+    z-index: 9999;
+}
+
+.table-title, .chart-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 20px 0;
+    text-align: center;
+    color:#4d4d4d;
+}
+
+.graph-filters{
+    padding-top: 0;
+}
+
+.slds-table th,
+.slds-table td {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: left;
+}
+
+.slds-table th {
+    background-color: #f4f6f9;
+    color: #333;
+}
+
+.slds-table td {
+    background-color: #fff;
+    color: #666;
+}
+
+.slds-table tr:hover {
+    background-color: #f0f4f8;
+}
+
+.fixed-width {
+    width: 50px;
+    max-width: 50px;
+    min-width: 50px;
+    position: relative;
+}
+
+.cell-content {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.cell-content:hover,
+.fixed-width:focus-within .cell-content {
+    white-space: normal;
+    overflow: visible;
+    position: absolute;
+    background: white;
+    z-index: 10;
+    width: auto;
+    max-width: 300px; /* Adjust as needed */
+    border: 1px solid #ccc;
+    padding: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.custom-card-title {
+    color: #0070d2;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+.chart-title{
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin: 20px 0;
+    text-align: center;
+    color: #4d4d4d;
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Used to define Rooms recipients of a contract signed alert by email.
+
+Active= Only active users can receive the email alert
+Recipient = email adress
+Location = recipient with a location will receive only alerts of contracts signed from opportunities on the same location (only one location possible) - Recipient without any location will receive all alerts disrigarding the location</description>
+    <label>ROOMS Recipient for contract signed</label>
+    <pluralLabel>ROOMS Recipients for contract signed</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

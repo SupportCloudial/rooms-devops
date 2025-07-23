@@ -1,0 +1,16 @@
+.modal-body-relative-height {
+    /*height: 60vh;   */     /* 60% of viewport height */
+    overflow-y: auto;    /* scroll if content overflows */
+    padding: 1rem;
+}
+
+.table-height {
+    height: 30vh;     /* 40% of viewport height */
+    overflow-y: auto;    /* scroll if content overflows */
+}
+
+.datatable-border {
+    border: 1px solid #ddd; 
+    border-radius: 0.3rem;
+    background-color: #ffffff; /* Optional, for contrast */
+}

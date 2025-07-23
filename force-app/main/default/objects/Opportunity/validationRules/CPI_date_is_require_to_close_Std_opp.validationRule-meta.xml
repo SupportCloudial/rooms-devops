@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CPI_date_is_require_to_close_Std_opp</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+
+RecordType.Name = &apos;Standard Opportunity&apos;,
+Track_CPI__c ,
+
+ISPICKVAL(StageName, &quot;Closed Won&quot;),
+
+ISNULL(Track_CPI_Date__c) )</errorConditionFormula>
+    <errorDisplayField>Track_CPI_Date__c</errorDisplayField>
+    <errorMessage>You must provide this information to close the opportunity.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Loss_Reason__c</fullName>
+    <label>Loss Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>StageName</controllingField>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Low budget</fullName>
+                <default>false</default>
+                <label>Low budget</label>
+            </value>
+            <value>
+                <fullName>Looking for an independent office</fullName>
+                <default>false</default>
+                <label>Looking for an independent office</label>
+            </value>
+            <value>
+                <fullName>Customer changed their mind</fullName>
+                <default>false</default>
+                <label>Customer changed their mind</label>
+            </value>
+            <value>
+                <fullName>Customer stopped responding</fullName>
+                <default>false</default>
+                <label>Customer stopped responding</label>
+            </value>
+            <value>
+                <fullName>Customer signed with competitor</fullName>
+                <default>false</default>
+                <label>Customer signed with competitor</label>
+            </value>
+            <value>
+                <fullName>Looking for different location</fullName>
+                <default>false</default>
+                <label>Looking for different location</label>
+            </value>
+            <value>
+                <fullName>Decided to stay in current office</fullName>
+                <default>false</default>
+                <label>Decided to stay in current office</label>
+            </value>
+            <value>
+                <fullName>Unwilling to provide more details</fullName>
+                <default>false</default>
+                <label>Unwilling to provide more details</label>
+            </value>
+            <value>
+                <fullName>Unavailable Product</fullName>
+                <default>false</default>
+                <label>Unavailable Product</label>
+            </value>
+            <value>
+                <fullName>Future Potential Deal/Timing</fullName>
+                <default>false</default>
+                <label>Future Potential Deal/Timing</label>
+            </value>
+            <value>
+                <fullName>SYSTEM TEST</fullName>
+                <default>false</default>
+                <label>System test</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Low budget</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Looking for an independent office</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Customer changed their mind</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Customer stopped responding</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Customer signed with competitor</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Looking for different location</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Decided to stay in current office</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Unwilling to provide more details</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Unavailable Product</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>Future Potential Deal/Timing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Closed Lost</controllingFieldValue>
+            <valueName>SYSTEM TEST</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

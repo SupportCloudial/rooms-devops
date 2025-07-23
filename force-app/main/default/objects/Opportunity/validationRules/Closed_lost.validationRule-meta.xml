@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Closed_lost</fullName>
+    <active>true</active>
+    <description>closed_lost_without_loss_reason OR loss_reason = Future potiential deal WITHOUT REMINDER DATE</description>
+    <errorConditionFormula>OR(
+    AND(
+        ISPICKVAL(StageName, &quot;Closed Lost&quot;), 
+        ISBLANK(TEXT(Loss_Reason__c))
+    ),
+    AND(
+        ISPICKVAL(Loss_Reason__c, &quot;Future Potential Deal/Timing&quot;), 
+        ISBLANK(Reminder_Date__c)
+    )
+)</errorConditionFormula>
+    <errorDisplayField>Loss_Reason__c</errorDisplayField>
+    <errorMessage>Please provide a loss reason if the stage is &quot;Closed Lost&quot; or a reminder date if the loss reason is &quot;Future Potential Deal/Timing&quot;.</errorMessage>
+</ValidationRule>

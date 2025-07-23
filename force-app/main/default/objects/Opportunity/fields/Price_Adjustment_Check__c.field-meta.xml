@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Price_Adjustment_Check__c</fullName>
+    <formula>AND( Automatic_Renewal__c ,  Count_Standard_Products__c &gt;0, Count_Standard_Products__c !=  Count_standard_products_with_adjustment__c )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Price Adjustment Check</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

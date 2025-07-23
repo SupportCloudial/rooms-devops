@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Banking</fullName>
+        <default>false</default>
+        <label>Banking</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Liberal professions (lawyers, insurance consultants, architects, consultants)</fullName>
+        <default>false</default>
+        <label>Liberal professions (lawyers, insurance consultants, architects, consultants)</label>
+    </standardValue>
+    <standardValue>
+        <fullName>High-tech</fullName>
+        <default>false</default>
+        <label>High-tech</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Medicine</fullName>
+        <default>false</default>
+        <label>Medicine</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Research and development</fullName>
+        <default>false</default>
+        <label>Research and development</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Tourism</fullName>
+        <default>false</default>
+        <label>Tourism</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Foundations</fullName>
+        <default>false</default>
+        <label>Foundations</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Finances - insurance companies, fintech</fullName>
+        <default>false</default>
+        <label>Finances - insurance companies, fintech</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Marketing</fullName>
+        <default>false</default>
+        <label>Marketing</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Service provider</fullName>
+        <default>false</default>
+        <label>Service provider</label>
+    </standardValue>
+    <standardValue>
+        <fullName>IT</fullName>
+        <default>false</default>
+        <label>IT</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Law</fullName>
+        <default>false</default>
+        <label>Law</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Architecture and interior design</fullName>
+        <default>false</default>
+        <label>Architecture and interior design</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Designer</fullName>
+        <default>false</default>
+        <label>Designer</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Real Estate</fullName>
+        <default>false</default>
+        <label>Real Estate</label>
+    </standardValue>
+    <standardValue>
+        <fullName>architecture</fullName>
+        <default>false</default>
+        <label>architecture</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Pharma</fullName>
+        <default>false</default>
+        <label>Pharma</label>
+    </standardValue>
+</StandardValueSet>

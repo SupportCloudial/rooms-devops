@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Schedule_a_Tour</fullName>
+    <availability>online</availability>
+    <displayType>link</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <hasMenubar>false</hasMenubar>
+    <hasScrollbars>true</hasScrollbars>
+    <hasToolbar>false</hasToolbar>
+    <height>600</height>
+    <isResizable>true</isResizable>
+    <linkType>url</linkType>
+    <masterLabel>Schedule a Tour</masterLabel>
+    <openType>newWindow</openType>
+    <position>none</position>
+    <protected>false</protected>
+    <showsLocation>false</showsLocation>
+    <showsStatus>false</showsStatus>
+    <url>https://calendar.google.com/calendar/u/0/r/eventedit?add={!Opportunity.Primary_Contact_Email_Address__c}&amp;text=Tour of {!Opportunity.Name} in {!Opportunity.Location__c}&amp;details=Please feel free to call us for any question: {! Opportunity.OwnerPhone }</url>
+</WebLink>

@@ -1,0 +1,36 @@
+/* label{
+    float: left;
+}  */
+.label2{
+    float: right;
+} 
+/* .phone {
+    --dxp-s-body-small-font-size: 0px;
+} */
+
+.field-error {
+    border: 0.5px solid red;
+    background-color: #ffe7e7;
+}
+
+.error-input {
+    border-color: red;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    position: absolute;
+    bottom: 0;
+    text-wrap: wrap;
+}
+
+
+/* .slds-form-element__help {
+    color: red;
+    font-size: 12px;
+    margin-top: 2px;
+}
+.label.slds-form-element__label.slds-no-flex {
+    display: none;
+} */

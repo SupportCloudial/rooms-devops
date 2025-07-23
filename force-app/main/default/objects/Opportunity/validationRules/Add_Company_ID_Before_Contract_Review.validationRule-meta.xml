@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Add_Company_ID_Before_Contract_Review</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+RecordType.Name = &apos;Standard Opportunity&apos;,
+ISPICKVAL(StageName, &apos;Contract Review&apos;),
+ISBLANK(Account.Company_Id__c)
+)</errorConditionFormula>
+    <errorMessage>Please add the Account&apos;s Company Id before moving to &apos;Contract Review&apos; stage</errorMessage>
+</ValidationRule>

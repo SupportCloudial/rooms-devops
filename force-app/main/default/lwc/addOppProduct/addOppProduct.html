@@ -1,0 +1,74 @@
+<template>
+     <!-- Spinner container -->
+     <template if:true={isLoading}>
+        <lightning-spinner alternative-text={labels.Saving} size="medium"></lightning-spinner>
+    </template>
+
+    <lightning-card>
+        <!-- Filters -->
+        <div class="slds-grid slds-gutters slds-m-bottom_medium">
+            <div class="slds-col">
+                <lightning-combobox
+                    name="Type__c"
+                    label={labels.Type}
+                    value={selectedType}
+                    placeholder={labels.TypePH}
+                    options={typeOptions}
+                    onchange={handleTypeChange}
+                ></lightning-combobox>
+            </div>
+            <div class="slds-col">
+                <lightning-combobox
+                    name="Sub_Type__c"
+                    label={labels.SubType}
+                    value={selectedSubType}
+                    placeholder={labels.SubTypePH}
+                    options={subTypeOptions}
+                    onchange={handleSubTypeChange}
+                    disabled={disableSubTypeOptions}
+                ></lightning-combobox>
+            </div>
+            <div title={sliderToolTip} class="slds-col slds-grid slds-align-end">
+                <lightning-slider 
+                    label={labels.DesksNum}
+                    size="x-small" 
+                    min={minDeskVal} 
+                    max={maxDeskVal} 
+                    value={deskVal}
+                    onchange={handleDeskValChange}>
+                </lightning-slider>
+            
+                <!-- Plus Sign -->
+                <div class="slds-m-top_medium" style="font-size: 1rem; align-self: flex-end;" if:true={showPlus}>+</div>
+            </div>
+
+            <!-- Name Search -->
+            <div class="slds-col">
+                <lightning-input
+                    type="search"
+                    label={labels.NameSearch}
+                    placeholder={labels.NameSearchPH}
+                    value={searchKey}
+                    onchange={handleSearchKeyChange}
+                ></lightning-input>
+            </div>
+        </div>
+        
+        <div class="table-height datatable-border">
+            <lightning-datatable
+                data-id="datatable"
+                key-field="Id"
+                data={filteredProducts}
+                columns={columns}
+                onrowselection={handleRowSelection}
+                selected-rows={selectedRowIds}
+            >
+            </lightning-datatable>
+        </div>
+
+
+        <div class="button-container">
+            <lightning-button variant="brand" label={labels.AddProducts} title={labels.AddProducts} onclick={handleAddProducts} disabled={disableAddProducts}></lightning-button>
+        </div>
+    </lightning-card>
+</template>

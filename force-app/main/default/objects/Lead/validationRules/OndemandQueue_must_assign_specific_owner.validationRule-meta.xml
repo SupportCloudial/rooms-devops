@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OndemandQueue_must_assign_specific_owner</fullName>
+    <active>true</active>
+    <description>the lead owner is a queue until new lead stage. for pass this stage,  will be assigned specific owner</description>
+    <errorConditionFormula>text(Status)&lt;&gt; &quot;New Lead&quot;  &amp;&amp;  OR( Owner:Queue.QueueName = &quot;OD Petah Tikva-Ramat Gan-Bnei Brak Queue&quot;, Owner:Queue.QueueName =&quot;OD Tel Aviv - Modiin Queue&quot;, Owner:Queue.QueueName =&quot;OD Ra&apos;anana Queue&quot;)</errorConditionFormula>
+    <errorMessage>To move on to the next stage you must to assign this lead to a specific owner.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Renewal_oporutnity_Lost_reason</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(ISBLANK(TEXT(Non_Renewal_Reason__c )),ISPICKVAL(StageName , &apos;Closed Lost&apos;),  ISCHANGED( StageName ),  OR( ISPICKVAL( Type , &apos;Renewal&apos;)))</errorConditionFormula>
+    <errorDisplayField>Non_Renewal_Reason__c</errorDisplayField>
+    <errorMessage>For type Renewal opportunities, you must first choose the &apos;Non-Renewal Reason&apos; to be able to close lost</errorMessage>
+</ValidationRule>

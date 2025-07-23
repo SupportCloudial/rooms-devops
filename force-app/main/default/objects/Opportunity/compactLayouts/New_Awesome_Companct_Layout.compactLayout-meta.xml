@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>New_Awesome_Companct_Layout</fullName>
+    <fields>AccountId</fields>
+    <fields>Location__c</fields>
+    <fields>Total_Price_Monthly_And_Periodic__c</fields>
+    <fields>Mobile__c</fields>
+    <label>New Awesome Compact Layout</label>
+</CompactLayout>

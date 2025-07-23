@@ -1,0 +1,139 @@
+<template>
+    <div class="container-filters">
+        <div class="slds-p-around_medium" style="padding: 0 0 50px 0;">
+            <div class="slds-grid slds-wrap slds-gutters slds-m-top_large" style="padding: 0 5vw;">
+
+                <div class="slds-col slds-size_1-of-3">
+                    <div class="slds-card">
+                        <div class="slds-card__header slds-grid slds-text-align_center">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__body">
+                                    <h2 class="slds-text-heading_small slds-text-title_bold">
+                                        {customLabels.filtersCategory_Date}</h2>
+                                </div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body">
+                            <div class="slds-grid slds-wrap slds-gutters">
+                                <div class="slds-col slds-size_1-of-2 slds-p-horizontal_x-small">
+                                    <lightning-combobox name="startMonthFilter" label={customLabels.startMonth_label}
+                                        placeholder="Month" onchange={handleFiltersChange} value={startMonthFilter}
+                                        options={months}>
+                                    </lightning-combobox>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-p-horizontal_x-small">
+                                    <lightning-combobox name="startYearFilter" label={customLabels.startYear_label}
+                                        placeholder="Year" value={startYearFilter} options={years}
+                                        onchange={handleFiltersChange}>
+                                    </lightning-combobox>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-p-horizontal_x-small">
+                                    <lightning-combobox name="endMonthFilter" label={customLabels.endMonth_label}
+                                        placeholder="Month" value={endMonthFilter} options={months}
+                                        onchange={handleFiltersChange}>
+                                    </lightning-combobox>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2 slds-p-horizontal_x-small">
+                                    <lightning-combobox name="endYearFilter" label={customLabels.endYear_label}
+                                        placeholder="Year" value={endYearFilter} options={years}
+                                        onchange={handleFiltersChange}>
+                                    </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-col slds-size_1-of-3">
+                    <div class="slds-card">
+                        <div class="slds-card__header slds-grid slds-text-align_center">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__body">
+                                    <h2 class="slds-text-heading_small slds-text-title_bold">
+                                        {customLabels.filtersCategory_Product}</h2>
+                                </div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body">
+                            <div class="slds-grid slds-wrap slds-gutters">
+
+                                <div class="slds-col slds-size_2-of-2 slds-p-horizontal_x-small">
+                                    <lightning-combobox name="productTypeSelectedFilter"
+                                        label={customLabels.productType_label} value={productTypeSelectedFilter}
+                                        options={productTypeOptions} onchange={handleFiltersChange}>
+                                    </lightning-combobox>
+                                </div>
+                                <div class="slds-col slds-size_2-of-2 slds-p-horizontal_x-small">
+                                    <lightning-combobox name="productSubTypeSelectedFilter"
+                                        label={customLabels.productSubType_label} value={productSubTypeSelectedFilter}
+                                        options={productSubTypeOptions} onchange={handleFiltersChange}>
+                                    </lightning-combobox>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-col slds-size_1-of-3">
+                    <div class="slds-card">
+                        <div class="slds-card__header slds-grid slds-text-align_center">
+                            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                <div class="slds-media__body">
+                                    <h2 class="slds-text-heading_small slds-text-title_bold">
+                                        {customLabels.filtersCategory_location}
+                                        <lightning-button-icon icon-name="utility:info" alternative-text="Info"
+                                            style="margin-left: 2px; cursor: pointer;color: #0070d2;  position: relative;  top: -3px;"
+                                            size="x-small" variant="bare" title={customLabels.helpTextLocation}>
+                                        </lightning-button-icon>
+                                    </h2>
+                                </div>
+                            </header>
+                        </div>
+                        <div class="slds-card__body">
+                            <lightning-combobox name="areaSelectedFilter" label={customLabels.area_label}
+                                placeholder={customLabels.area_label} value={areaSelectedFilter} options={areas}
+                                onchange={handleAreaFilter} disabled={isAreaDisabled}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-card__body">
+                            <c-multi-select-combobox name="locationSelectedFilter" label={customLabels.location_label}
+                                placeholder={customLabels.location_label} options={locations}
+                                value={locationSelectedFilter} onchange={handleAreaFilter}
+                                disabled={isLocationDisabled}>
+                            </c-multi-select-combobox>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="slds-text-align_center slds-m-top_large"
+                style="display: flex; justify-content: center; margin-top: 2vh;">
+                <lightning-button variant="brand" onclick={applyFilters} label={customLabels.applyFilter_btn}>
+                </lightning-button>
+                <lightning-button-icon style="margin-left: 10px;" class="resetButton" alternative-text="Reset Filters"
+                    icon-class="" icon-name="utility:refresh" onclick={resetFilters} size="medium" value=""
+                    variant="brand">
+                </lightning-button-icon>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: flex;justify-content: center;gap: 1vw;">
+        <div class="slds-text-align_center">
+            <lightning-radio-group type="button" style="margin: auto;" name="forecast Display"
+                options={forecastDisplayOptions} value={forecastDisplay} onchange={handleDisplayChange}>
+            </lightning-radio-group>
+        </div>
+
+        <div class="slds-text-align_center">
+            <lightning-radio-group type="button" style="margin: auto;" name="ordinateFormat" options={optionsOrdinate}
+                value={ordinateFormat} onchange={handleOrdinateChange}>
+            </lightning-radio-group>
+        </div>
+
+    </div>
+
+</template>

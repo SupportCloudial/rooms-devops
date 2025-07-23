@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VoicenterDefaultContactNameValidation</fullName>
+    <active>true</active>
+    <description>Can not change default record name. Voicenter.</description>
+    <errorConditionFormula>AND(
+Voicenter_Name_Validation__c = TRUE,
+ISCHANGED(  FirstName )  || ISCHANGED(   LastName ) 
+)</errorConditionFormula>
+    <errorMessage>לא ניתן לשנות שם של חשבון דיפולטיבי. וויסנטר.</errorMessage>
+</ValidationRule>

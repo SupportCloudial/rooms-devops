@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exclude_User__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Use this checkbox on process, automation, validation and interactions to exclude where needed</description>
+    <label>Exclude User</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Checkbox</type>
+</CustomField>

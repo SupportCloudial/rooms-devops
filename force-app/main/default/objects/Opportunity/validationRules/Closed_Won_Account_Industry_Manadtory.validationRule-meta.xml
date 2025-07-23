@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Closed_Won_Account_Industry_Manadtory</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND (ISBLANK(TEXT(Account.Industry )) ,   ISPICKVAL(StageName , &apos;Closed Won&apos;),  ISCHANGED(StageName ))</errorConditionFormula>
+    <errorMessage>The Account&apos;s &apos;Industry&apos; Is mandatory before Close Won stage</errorMessage>
+</ValidationRule>

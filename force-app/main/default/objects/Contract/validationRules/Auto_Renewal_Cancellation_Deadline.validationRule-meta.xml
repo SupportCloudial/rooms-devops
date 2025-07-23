@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Auto_Renewal_Cancellation_Deadline</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND (  ISCHANGED(Auto_Renewal__c ) , NOT(Auto_Renewal__c ),  TODAY()&gt; Auto_Renewal_Cancellation_Deadline__c )</errorConditionFormula>
+    <errorDisplayField>Auto_Renewal__c</errorDisplayField>
+    <errorMessage>Cannot Cancel Auto-renewal if Auto Renewal Cancellation Deadline is past due</errorMessage>
+</ValidationRule>

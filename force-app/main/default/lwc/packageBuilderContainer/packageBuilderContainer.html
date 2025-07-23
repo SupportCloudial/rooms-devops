@@ -1,0 +1,33 @@
+<template>
+  <section class="container slds-p-around_medium">
+    <div class="slds-card">
+      <!-- Header with button on the right -->
+      <header class="slds-card__header slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+        <div class="slds-media slds-media_center slds-has-flexi-truncate">
+          <div class="slds-media__body">
+            <h2 class="slds-card__header-title">
+              <span class="slds-text-heading_medium slds-text-color_default">
+                📦 {title}
+              </span>
+            </h2>
+          </div>
+        </div>
+        <!-- Button at the top right -->
+        <div class="top-right-button">
+          <lightning-button 
+            label={buttonLabel} 
+            icon-name="utility:add"
+            onclick={handleAddProducts}
+            class="slds-m-right_small slds-m-top_small"
+            variant="brand"
+          ></lightning-button>
+        </div>
+      </header>
+
+      <!-- Contenu du composant enfant -->
+      <div class="slds-card__body slds-card__body_inner">
+        <c-package-builder-table record-id={recordId}></c-package-builder-table>
+      </div>
+    </div>
+  </section>
+</template>
