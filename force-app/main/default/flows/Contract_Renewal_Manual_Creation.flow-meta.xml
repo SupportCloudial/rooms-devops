@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Redirect_Open_Opportunity</name>
+        <label>Redirect To Open Opportunity</label>
+        <locationX>50</locationX>
+        <locationY>350</locationY>
+        <actionName>c:fsc_openUrl</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>mode</name>
+            <value>
+                <stringValue>replace</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>url</name>
+            <value>
+                <elementReference>OpenOpportunityLink</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>c:fsc_openUrl</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>61.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>Add_Ids_to_text</name>
         <label>Add Ids to text</label>
-        <locationX>314</locationX>
-        <locationY>458</locationY>
+        <locationX>578</locationX>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>VarOrderProductId</assignToReference>
             <operator>Add</operator>
@@ -21,8 +45,8 @@
     <assignments>
         <name>Assign_records_and_add_to_collection</name>
         <label>Assign records and add to collection</label>
-        <locationX>490</locationX>
-        <locationY>1190</locationY>
+        <locationX>754</locationX>
+        <locationY>1298</locationY>
         <assignmentItems>
             <assignToReference>VarOrderLine.Access_Type__c</assignToReference>
             <operator>Assign</operator>
@@ -196,10 +220,49 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Has_Exsiting_Open_Opportunity</name>
+        <label>Has Exsiting Open Opportunity?</label>
+        <locationX>270</locationX>
+        <locationY>134</locationY>
+        <defaultConnector>
+            <targetReference>RenewalScreen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Exsiting_Open_Opportunity_Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>recordId.Original_Contract__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>recordId.Original_Contract__r.Opportunity__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>recordId.Original_Contract__r.Opportunity__r.IsClosed</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Redirect_To_Open_Opportunity</targetReference>
+            </connector>
+            <label>Exsiting Open Opportunity Exist</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Overlapping_Dates</name>
         <label>Overlapping Dates</label>
-        <locationX>226</locationX>
-        <locationY>758</locationY>
+        <locationX>490</locationX>
+        <locationY>866</locationY>
         <defaultConnector>
             <targetReference>Create_Renewal_Contract</targetReference>
         </defaultConnector>
@@ -220,6 +283,7 @@
             <label>Found</label>
         </rules>
     </decisions>
+    <description>24/07: Added open opportunity check and re-direct</description>
     <environments>Default</environments>
     <formulas>
         <name>AdvanceIteration</name>
@@ -329,13 +393,18 @@ IF(
         <expression>IF( AND ({!recordId.Auto_Renewal__c}, TEXT({!recordId.Current_Renewal_Iteration__c}) != TEXT({!recordId.Renewal_Total_Iterations__c})),  {!recordId.Renewal_Period_Months__c},0 )</expression>
         <scale>2</scale>
     </formulas>
+    <formulas>
+        <name>OpenOpportunityLink</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!$Api.Partner_Server_URL_260}, FIND( &apos;/services&apos;, {!$Api.Partner_Server_URL_260}))+&apos;/&apos;+{!recordId.Original_Contract__r.Opportunity__c}</expression>
+    </formulas>
     <interviewLabel>Contract - Renewal Manual Creation {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Contract - Renewal Manual Creation</label>
     <loops>
         <name>Loop_and_add_products</name>
         <label>Loop and add products</label>
-        <locationX>402</locationX>
-        <locationY>1082</locationY>
+        <locationX>666</locationX>
+        <locationY>1190</locationY>
         <collectionReference>Get_Original_Order_line_Items</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -348,8 +417,8 @@ IF(
     <loops>
         <name>Loop_order_line_items_and_add_Ids</name>
         <label>Loop order line items and add Ids</label>
-        <locationX>226</locationX>
-        <locationY>350</locationY>
+        <locationX>490</locationX>
+        <locationY>458</locationY>
         <collectionReference>Get_Original_Order_line_Items</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -381,8 +450,8 @@ IF(
     <recordCreates>
         <name>Create_Original_Order</name>
         <label>Create Original Order</label>
-        <locationX>402</locationX>
-        <locationY>974</locationY>
+        <locationX>666</locationX>
+        <locationY>1082</locationY>
         <connector>
             <targetReference>Loop_and_add_products</targetReference>
         </connector>
@@ -444,8 +513,8 @@ IF(
     <recordCreates>
         <name>Create_Original_Order_Line_Items</name>
         <label>Create Original Order Line Items</label>
-        <locationX>402</locationX>
-        <locationY>1382</locationY>
+        <locationX>666</locationX>
+        <locationY>1490</locationY>
         <connector>
             <targetReference>Change_Renewal_Contract_Status</targetReference>
         </connector>
@@ -458,8 +527,8 @@ IF(
     <recordCreates>
         <name>Create_Renewal_Contract</name>
         <label>Create Renewal Contract</label>
-        <locationX>402</locationX>
-        <locationY>866</locationY>
+        <locationX>666</locationX>
+        <locationY>974</locationY>
         <connector>
             <targetReference>Create_Original_Order</targetReference>
         </connector>
@@ -706,8 +775,8 @@ IF(
     <recordLookups>
         <name>Get_Original_Order_line_Items</name>
         <label>Get Original Order line Items</label>
-        <locationX>226</locationX>
-        <locationY>242</locationY>
+        <locationX>490</locationX>
+        <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Loop_order_line_items_and_add_Ids</targetReference>
@@ -748,8 +817,8 @@ IF(
     <recordLookups>
         <name>Get_Overlapping_order_Line_Items</name>
         <label>Get Overlapping order Line Items</label>
-        <locationX>226</locationX>
-        <locationY>650</locationY>
+        <locationX>490</locationX>
+        <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Overlapping_Dates</targetReference>
@@ -832,8 +901,8 @@ IF(
     <recordUpdates>
         <name>Change_Renewal_Contract_Status</name>
         <label>Change Renewal Contract Status</label>
-        <locationX>402</locationX>
-        <locationY>1490</locationY>
+        <locationX>666</locationX>
+        <locationY>1598</locationY>
         <connector>
             <targetReference>Update_Original_Contract_Renewal_Status</targetReference>
         </connector>
@@ -860,8 +929,8 @@ IF(
     <recordUpdates>
         <name>Update_Original_Contract_Renewal_Status</name>
         <label>Update Original Contract Renewal Status</label>
-        <locationX>402</locationX>
-        <locationY>1598</locationY>
+        <locationX>666</locationX>
+        <locationY>1706</locationY>
         <connector>
             <targetReference>Renewal_Success_Screen</targetReference>
         </connector>
@@ -894,8 +963,8 @@ IF(
     <screens>
         <name>Availability_Issue_Screen</name>
         <label>Availability Issue</label>
-        <locationX>50</locationX>
-        <locationY>974</locationY>
+        <locationX>314</locationX>
+        <locationY>1082</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -918,8 +987,8 @@ IF(
     <screens>
         <name>ErrorScreen</name>
         <label>ErrorScreen</label>
-        <locationX>1722</locationX>
-        <locationY>974</locationY>
+        <locationX>1986</locationX>
+        <locationY>1082</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -940,10 +1009,38 @@ IF(
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Redirect_To_Open_Opportunity</name>
+        <label>Redirect To Open Opportunity</label>
+        <locationX>50</locationX>
+        <locationY>242</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Redirect_Open_Opportunity</targetReference>
+        </connector>
+        <fields>
+            <name>RedirectScreenMessage</name>
+            <fieldText>&lt;p class=&quot;ql-indent-2&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p class=&quot;ql-indent-2&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;An open opportunity already exist for this contract.&lt;/span&gt;&lt;/p&gt;&lt;p class=&quot;ql-indent-2&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Please click open to view the opportunity.&lt;/span&gt;&lt;/p&gt;&lt;p class=&quot;ql-indent-2&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <nextOrFinishButtonLabel>Open</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Renewal_Success_Screen</name>
         <label>Renewal Success Screen</label>
-        <locationX>402</locationX>
-        <locationY>1706</locationY>
+        <locationX>666</locationX>
+        <locationY>1814</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -966,8 +1063,8 @@ IF(
     <screens>
         <name>RenewalScreen</name>
         <label>Contract Manual Renewal</label>
-        <locationX>226</locationX>
-        <locationY>134</locationY>
+        <locationX>490</locationX>
+        <locationY>242</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -992,18 +1089,18 @@ IF(
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>100</locationX>
+        <locationX>144</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>RenewalScreen</targetReference>
+            <targetReference>Has_Exsiting_Open_Opportunity</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
         <name>Generate_Table</name>
         <label>Generate Table</label>
-        <locationX>50</locationX>
-        <locationY>866</locationY>
+        <locationX>314</locationX>
+        <locationY>974</locationY>
         <connector>
             <targetReference>Availability_Issue_Screen</targetReference>
         </connector>
