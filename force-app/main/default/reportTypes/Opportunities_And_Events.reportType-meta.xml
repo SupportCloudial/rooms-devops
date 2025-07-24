@@ -4,10 +4,6 @@
     <category>opportunities</category>
     <deployed>true</deployed>
     <description>Opportunities And Events</description>
-    <join>
-        <outerJoin>false</outerJoin>
-        <relationship>UnifiedMeetings</relationship>
-    </join>
     <label>Opportunities And Events</label>
     <sections>
         <columns>
@@ -645,104 +641,14 @@
             <field>Account_Address__c</field>
             <table>Opportunity</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Primary_Contact__c</field>
+            <table>Opportunity</table>
+        </columns>
         <masterLabel>Opportunities</masterLabel>
     </sections>
     <sections>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Detail.Type</field>
-            <table>Opportunity.UnifiedMeetings</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Detail.Owner</field>
-            <table>Opportunity.UnifiedMeetings</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Detail.Subject</field>
-            <table>Opportunity.UnifiedMeetings</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Detail.Attentance_Status__c</field>
-            <table>Opportunity.UnifiedMeetings</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Detail.call_date__c</field>
-            <table>Opportunity.UnifiedMeetings</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Detail.Call_status__c</field>
-            <table>Opportunity.UnifiedMeetings</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Detail.CreatedDate</field>
-            <table>Opportunity.UnifiedMeetings</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Detail.ActivityDate</field>
-            <table>Opportunity.UnifiedMeetings</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Detail.Description</field>
-            <table>Opportunity.UnifiedMeetings</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Detail.ActivityTimeOnly</field>
-            <table>Opportunity.UnifiedMeetings</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Detail.EventSubtype</field>
-            <table>Opportunity.UnifiedMeetings</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Detail.From__c</field>
-            <table>Opportunity.UnifiedMeetings</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Detail.LastModifiedDate</field>
-            <table>Opportunity.UnifiedMeetings</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Detail.LastModifiedBy</field>
-            <table>Opportunity.UnifiedMeetings</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Detail.Location</field>
-            <table>Opportunity.UnifiedMeetings</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Detail.Who</field>
-            <table>Opportunity.UnifiedMeetings</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Detail.What</field>
-            <table>Opportunity.UnifiedMeetings</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Detail.ReminderDateTime</field>
-            <table>Opportunity.UnifiedMeetings</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Detail.ActivityDateTime</field>
-            <table>Opportunity.UnifiedMeetings</table>
-        </columns>
         <masterLabel>Unified Meetings</masterLabel>
     </sections>
 </ReportType>

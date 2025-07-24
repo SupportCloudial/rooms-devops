@@ -520,6 +520,11 @@
             <field>Renewed_But_Not_Due__c</field>
             <table>Contract</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Send_Expiry_Notification__c</field>
+            <table>Contract</table>
+        </columns>
         <masterLabel>Contracts</masterLabel>
     </sections>
     <sections>
@@ -1151,6 +1156,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Account_Address__c</field>
+            <table>Contract.Opportunities__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Primary_Contact__c</field>
             <table>Contract.Opportunities__r</table>
         </columns>
         <masterLabel>Opportunities</masterLabel>
