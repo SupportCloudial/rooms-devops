@@ -151,6 +151,10 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Account_Address__c</fieldItem>
                 <identifier>RecordAccount_Address__cField</identifier>
             </fieldInstance>
@@ -205,6 +209,16 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Current_Location__c</fieldItem>
                 <identifier>RecordCurrent_Location__cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>required</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Primary_Contact__c</fieldItem>
+                <identifier>RecordPrimary_Contact_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-6f512ede-510f-4217-b5b2-effd95cf7ad3</name>
