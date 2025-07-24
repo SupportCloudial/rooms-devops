@@ -38,17 +38,23 @@
                         <valueListItems>
                             <value>Contract.Renewal</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Agreement_Type__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Periodic</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Activated</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Contract.Change_Opportunity</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2</booleanFilter>
+                                <booleanFilter>(1 OR 2) AND 3</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Agreement_Type__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -58,6 +64,11 @@
                                     <leftValue>{!Record.Agreement_Type__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Monthly</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Activated</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
