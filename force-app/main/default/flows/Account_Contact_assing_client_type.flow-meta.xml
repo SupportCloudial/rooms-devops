@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>61.0</apiVersion>
+    <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
         <name>assign_account</name>
         <label>assign account</label>
-        <locationX>248</locationX>
-        <locationY>431</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>accountid</assignToReference>
             <operator>Assign</operator>
@@ -21,8 +21,8 @@
     <assignments>
         <name>Assign_contact_id</name>
         <label>Assign contact id</label>
-        <locationX>248</locationX>
-        <locationY>1547</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>contactid</assignToReference>
             <operator>Assign</operator>
@@ -37,8 +37,8 @@
     <assignments>
         <name>Assign_opp_id</name>
         <label>Assign opp id</label>
-        <locationX>182</locationX>
-        <locationY>839</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignmentItems>
             <assignToReference>oppId</assignToReference>
             <operator>Assign</operator>
@@ -53,8 +53,8 @@
     <decisions>
         <name>Converted_to_new_Account</name>
         <label>Converted to new Account ?</label>
-        <locationX>380</locationX>
-        <locationY>323</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Converted_to_new_Opportunity</targetReference>
         </defaultConnector>
@@ -78,8 +78,8 @@
     <decisions>
         <name>Converted_to_new_Contact</name>
         <label>Converted to new Contact ?</label>
-        <locationX>380</locationX>
-        <locationY>1439</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes2</name>
@@ -100,8 +100,8 @@
     <decisions>
         <name>Converted_to_new_Opportunity</name>
         <label>Converted to new Opportunity ?</label>
-        <locationX>380</locationX>
-        <locationY>731</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>Converted_to_new_Contact</targetReference>
         </defaultConnector>
@@ -125,8 +125,8 @@
     <decisions>
         <name>Which_record_type_to_create</name>
         <label>Which record type to create ?</label>
-        <locationX>182</locationX>
-        <locationY>947</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <defaultConnector>
             <targetReference>get_on_demand_opp_record_type_id</targetReference>
         </defaultConnector>
@@ -154,6 +154,7 @@
             <label>Standard</label>
         </rules>
     </decisions>
+    <description>27/07: Update Primary Contact LookUp when a lead is converted to opportunity</description>
     <environments>Default</environments>
     <interviewLabel>Account &amp; Contact - assing client type {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Account &amp; Contact - assing client type</label>
@@ -179,8 +180,8 @@
     <recordLookups>
         <name>get_on_demand_opp_record_type_id</name>
         <label>get on demand opp record type id</label>
-        <locationX>314</locationX>
-        <locationY>1055</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Pre_fill_fields_on_On_demand_Opportunity</targetReference>
@@ -207,8 +208,8 @@
     <recordLookups>
         <name>get_standard_opp_record_type_id</name>
         <label>get standard opp record type id</label>
-        <locationX>50</locationX>
-        <locationY>1055</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Pre_fill_fields_on_standard_Opportunity</targetReference>
@@ -235,8 +236,8 @@
     <recordUpdates>
         <name>Pre_fill_fields_on_On_demand_Opportunity</name>
         <label>Pre fill fields on On demand Opportunity</label>
-        <locationX>314</locationX>
-        <locationY>1163</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Converted_to_new_Contact</targetReference>
         </connector>
@@ -248,6 +249,12 @@
                 <elementReference>oppId</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>Primary_Contact__c</field>
+            <value>
+                <elementReference>$Record.ConvertedContactId</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
@@ -271,8 +278,8 @@
     <recordUpdates>
         <name>Pre_fill_fields_on_standard_Opportunity</name>
         <label>Pre fill fields on standard Opportunity</label>
-        <locationX>50</locationX>
-        <locationY>1163</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Converted_to_new_Contact</targetReference>
         </connector>
@@ -284,6 +291,12 @@
                 <elementReference>oppId</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>Primary_Contact__c</field>
+            <value>
+                <elementReference>$Record.ConvertedContactId</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>RecordTypeId</field>
             <value>
@@ -301,8 +314,8 @@
     <recordUpdates>
         <name>Update_Account_Type</name>
         <label>Update Account Type</label>
-        <locationX>248</locationX>
-        <locationY>539</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Converted_to_new_Opportunity</targetReference>
         </connector>
@@ -325,8 +338,8 @@
     <recordUpdates>
         <name>Update_Contact_Type</name>
         <label>Update Contact Type</label>
-        <locationX>248</locationX>
-        <locationY>1655</locationY>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -344,7 +357,7 @@
         <object>Contact</object>
     </recordUpdates>
     <start>
-        <locationX>254</locationX>
+        <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Converted_to_new_Account</targetReference>
