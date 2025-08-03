@@ -207,6 +207,29 @@
             <label>No, Send To Manager</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Should_Run_Flow</name>
+        <label>Should Run Flow?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Run_Flow</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Setup.Org_Default_Config__c.Run_Scheduled_Flows__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Is_Owner_Active</targetReference>
+            </connector>
+            <label>Yes, Run Flow</label>
+        </rules>
+    </decisions>
+    <description>03/08: Added Run Flow Active Checkbox</description>
     <environments>Default</environments>
     <formulas>
         <name>AccountLink</name>
@@ -268,7 +291,7 @@ TEXT(YEAR({!$Record.EndDate}))</expression>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Is_Owner_Active</targetReference>
+            <targetReference>Should_Run_Flow</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
