@@ -22,7 +22,7 @@
     <assignments>
         <name>Update_Non_Web_Lead_Location_Area</name>
         <label>Update Non-Web Lead Location Area</label>
-        <locationX>2338</locationX>
+        <locationX>2426</locationX>
         <locationY>503</locationY>
         <assignmentItems>
             <assignToReference>$Record.Location_Area__c</assignToReference>
@@ -240,7 +240,7 @@
     <decisions>
         <name>Is_New_Non_Web_Lead</name>
         <label>Is New Non-Web Lead?</label>
-        <locationX>2470</locationX>
+        <locationX>2558</locationX>
         <locationY>395</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -262,7 +262,7 @@
     <decisions>
         <name>Is_New_Web_Lead</name>
         <label>Is New Web Lead?</label>
-        <locationX>2019</locationX>
+        <locationX>2063</locationX>
         <locationY>287</locationY>
         <defaultConnector>
             <targetReference>Is_New_Non_Web_Lead</targetReference>
@@ -463,7 +463,7 @@ Other → 	Open Space (standart)</description>
     <formulas>
         <name>FromIntegrationUser</name>
         <dataType>Boolean</dataType>
-        <expression>IF({!$User.Username} = &quot;integrationuser@rooms.com&quot;, True, False)</expression>
+        <expression>IF(BEGINS({!$User.Username}, &quot;integrationuser@rooms.com&quot;), True, False)</expression>
     </formulas>
     <formulas>
         <name>IsHotdesk</name>
@@ -513,7 +513,7 @@ Other → 	Open Space (standart)</description>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>1893</locationX>
+        <locationX>1937</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Is_New_Web_Lead</targetReference>
