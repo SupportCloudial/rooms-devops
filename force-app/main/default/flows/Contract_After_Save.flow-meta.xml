@@ -271,6 +271,52 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Prepare_Location_After_Contract_Termination</name>
+        <label>Prepare Location Update</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varLocation.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Location__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varLocation.Occupied_Desks__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>TotalDeskCountAfterTermination</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Should_Update_Location</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Prepare_Location_After_Contract_Update</name>
+        <label>Prepare Location Update</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>varLocation.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Location__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>varLocation.Occupied_Desks__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>TotalDeskCountAfterUpdate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Should_Update_Location</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Prepare_Location_Update</name>
         <label>Prepare Location Update</label>
         <locationX>0</locationX>
@@ -286,14 +332,7 @@
             <assignToReference>varLocation.Occupied_Desks__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.Location__r.Occupied_Desks__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>varLocation.Occupied_Desks__c</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <elementReference>$Record.Calculated_Number_Of_Desks__c</elementReference>
+                <elementReference>Occupied_Desks</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -393,10 +432,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.Status</leftValueReference>
-                <operator>IsChanged</operator>
+                <leftValueReference>$Record__Prior</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -485,6 +524,7 @@
             <label>Yes, update order products</label>
         </rules>
     </decisions>
+    <description>01/09 - Added Contract Creation logic for Location Occupied Desks.</description>
     <environments>Default</environments>
     <formulas>
         <name>AdvanceIteration</name>
@@ -588,15 +628,21 @@ DATE(
         <expression>ISNEW()</expression>
     </formulas>
     <formulas>
+        <name>Occupied_Desks</name>
+        <dataType>Number</dataType>
+        <expression>BLANKVALUE({!$Record.Location__r.Occupied_Desks__c},0) + BLANKVALUE({!$Record.Calculated_Number_Of_Desks__c},0)</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
         <name>TotalDeskCountAfterTermination</name>
         <dataType>Number</dataType>
-        <expression>$Record.Location__r.Occupied_Desks__c - $Record__Prior.Calculated_Number_Of_Desks__c</expression>
+        <expression>BLANKVALUE({!$Record.Location__r.Occupied_Desks__c},0) - BLANKVALUE({!$Record__Prior.Calculated_Number_Of_Desks__c},0)</expression>
         <scale>2</scale>
     </formulas>
     <formulas>
         <name>TotalDeskCountAfterUpdate</name>
         <dataType>Number</dataType>
-        <expression>$Record.Location__r.Occupied_Desks__c + ($Record.Calculated_Number_Of_Desks__c - $Record__Prior.Calculated_Number_Of_Desks__c)</expression>
+        <expression>{!$Record.Location__r.Occupied_Desks__c} + ({!$Record.Calculated_Number_Of_Desks__c} - {!$Record__Prior.Calculated_Number_Of_Desks__c})</expression>
         <scale>2</scale>
     </formulas>
     <interviewLabel>Contract After Save {!$Flow.CurrentDateTime}</interviewLabel>
