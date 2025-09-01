@@ -332,13 +332,20 @@
         <locationY>0</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Yes</name>
-            <conditionLogic>and</conditionLogic>
+            <name>Contract_Activated</name>
+            <conditionLogic>( 1 AND 2 ) OR ( 2 AND 3 )</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Status</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Activated</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>IsNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -361,6 +368,13 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <elementReference>$Record__Prior.Calculated_Number_Of_Desks__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>IsNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -567,6 +581,23 @@ DATE(
     TEXT({!$Record.Renewal_Total_Iterations__c}),
     &quot;0&quot;  
 )</expression>
+    </formulas>
+    <formulas>
+        <name>IsNew</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
+    </formulas>
+    <formulas>
+        <name>TotalDeskCountAfterTermination</name>
+        <dataType>Number</dataType>
+        <expression>$Record.Location__r.Occupied_Desks__c - $Record__Prior.Calculated_Number_Of_Desks__c</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>TotalDeskCountAfterUpdate</name>
+        <dataType>Number</dataType>
+        <expression>$Record.Location__r.Occupied_Desks__c + ($Record.Calculated_Number_Of_Desks__c - $Record__Prior.Calculated_Number_Of_Desks__c)</expression>
+        <scale>2</scale>
     </formulas>
     <interviewLabel>Contract After Save {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Contract After Save</label>
