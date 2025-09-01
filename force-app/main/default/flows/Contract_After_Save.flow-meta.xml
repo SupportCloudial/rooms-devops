@@ -344,7 +344,51 @@
             <connector>
                 <targetReference>Prepare_Location_Update</targetReference>
             </connector>
-            <label>Yes</label>
+            <label>Contract Activated</label>
+        </rules>
+        <rules>
+            <name>Contract_Updated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Activated</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Calculated_Number_Of_Desks__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.Calculated_Number_Of_Desks__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Prepare_Location_After_Contract_Update</targetReference>
+            </connector>
+            <label>Contract Updated</label>
+        </rules>
+        <rules>
+            <name>Contract_Terminated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Activated</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Prepare_Location_After_Contract_Termination</targetReference>
+            </connector>
+            <label>Contract Terminated</label>
         </rules>
     </decisions>
     <decisions>
