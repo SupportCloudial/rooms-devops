@@ -349,7 +349,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Contract_Activated</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>( 1 AND 2 ) OR ( 2 AND 3 )</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.Status</leftValueReference>
                 <operator>IsChanged</operator>
@@ -362,6 +362,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Activated</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>IsNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -384,6 +391,13 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <elementReference>$Record__Prior.Calculated_Number_Of_Desks__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>IsNew</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -590,6 +604,11 @@ DATE(
     TEXT({!$Record.Renewal_Total_Iterations__c}),
     &quot;0&quot;  
 )</expression>
+    </formulas>
+    <formulas>
+        <name>IsNew</name>
+        <dataType>Boolean</dataType>
+        <expression>ISNEW()</expression>
     </formulas>
     <formulas>
         <name>TotalDeskCountAfterTermination</name>
