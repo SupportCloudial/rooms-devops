@@ -358,6 +358,13 @@
                     <elementReference>$Flow.CurrentDate</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>ShouldProcessContractTermination</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Change_Contract_Status</targetReference>
             </connector>
@@ -471,6 +478,50 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Should_Create_Opportunity_Auto_Renewal</name>
+        <label>Should Create Opportunity Auto Renewal?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_create_opportunity_auto_renewal</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ContractOpportunityAutoRenewalCondition</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Original_Order_line_Items</targetReference>
+            </connector>
+            <label>Yes, create opportunity auto renewal</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Should_End_Contract</name>
+        <label>Should End Contract?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_End_Contract</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ShouldProcessContractTermination</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>End_contract</targetReference>
+            </connector>
+            <label>Yes, End Contract</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Should_Update_Location</name>
         <label>Should Update Location?</label>
         <locationX>0</locationX>
@@ -524,7 +575,7 @@
             <label>Yes, update order products</label>
         </rules>
     </decisions>
-    <description>01/09 - Added Contract Creation logic for Location Occupied Desks.</description>
+    <description>03/09 - Contract Termination Date bug fix.</description>
     <environments>Default</environments>
     <formulas>
         <name>AdvanceIteration</name>
@@ -547,6 +598,11 @@ IF(
         <name>CalculatedStartDate</name>
         <dataType>Date</dataType>
         <expression>{!$Record.EndDate}+1</expression>
+    </formulas>
+    <formulas>
+        <name>ContractOpportunityAutoRenewalCondition</name>
+        <dataType>Boolean</dataType>
+        <expression>AND( {!$Record.Auto_Renewal__c}, ISPICKVAL( {!$Record.Renewal_Status__c}, &apos;Not Due&apos;), TEXT({!$Record.Current_Renewal_Iteration__c}) != TEXT({!$Record.Renewal_Total_Iterations__c}), ISPICKVAL( {!$Record.Status}, &apos;Activated&apos;))</expression>
     </formulas>
     <formulas>
         <name>DecisionAutoRenewal</name>
@@ -632,6 +688,24 @@ DATE(
         <dataType>Number</dataType>
         <expression>BLANKVALUE({!$Record.Location__r.Occupied_Desks__c},0) + BLANKVALUE({!$Record.Calculated_Number_Of_Desks__c},0)</expression>
         <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>ShouldProcessContractTermination</name>
+        <dataType>Boolean</dataType>
+        <expression>OR(
+    AND(
+        ISNEW(),
+        NOT(ISNULL({!$Record.EndDate}))
+    ),
+    AND(
+        ISCHANGED({!$Record.EndDate}),
+        NOT(ISNULL({!$Record.EndDate}))
+    ),
+    AND(
+        ISCHANGED({!$Record.Contract_Termination_Date__c}),
+        NOT(ISNULL({!$Record.Contract_Termination_Date__c}))
+    )
+)</expression>
     </formulas>
     <formulas>
         <name>TotalDeskCountAfterTermination</name>
@@ -1315,7 +1389,7 @@ DATE(
         <scheduledPaths>
             <name>wait_for_end_date</name>
             <connector>
-                <targetReference>End_contract</targetReference>
+                <targetReference>Should_End_Contract</targetReference>
             </connector>
             <label>wait for end date</label>
             <offsetNumber>1</offsetNumber>
@@ -1326,7 +1400,7 @@ DATE(
         <scheduledPaths>
             <name>Autorenew_start</name>
             <connector>
-                <targetReference>Get_Original_Order_line_Items</targetReference>
+                <targetReference>Should_Create_Opportunity_Auto_Renewal</targetReference>
             </connector>
             <label>Autorenew start</label>
             <offsetNumber>8</offsetNumber>
