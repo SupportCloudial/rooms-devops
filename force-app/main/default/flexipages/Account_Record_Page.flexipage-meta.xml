@@ -10,10 +10,7 @@
                             <value>Edit</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Global.NewEvent</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Global.NewTask</value>
+                            <value>CustomButton.Account.New_Opportunity</value>
                         </valueListItems>
                         <valueListItems>
                             <value>FeedItem.ContentNote</value>

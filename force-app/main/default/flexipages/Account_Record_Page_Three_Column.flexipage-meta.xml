@@ -10,6 +10,9 @@
                             <value>Edit</value>
                         </valueListItems>
                         <valueListItems>
+                            <value>CustomButton.Account.New_Opportunity</value>
+                        </valueListItems>
+                        <valueListItems>
                             <value>Delete</value>
                         </valueListItems>
                     </valueList>
@@ -196,18 +199,30 @@
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Account_Name_From_Monday__c</fieldItem>
                 <identifier>RecordAccount_Name_From_Monday__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.ID_of_Account__c</fieldItem>
                 <identifier>RecordID_of_Account__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
             <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.Account_Billing_Name__c</fieldItem>
                 <identifier>RecordAccount_Billing_Name__cField</identifier>
             </fieldInstance>
@@ -709,6 +724,10 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>label</name>
+                    <value>Tabs</value>
+                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>tabs</name>
                     <value>Facet-c0026d0e-b04d-4ece-a1ff-0a3ad1c0aa12</value>
