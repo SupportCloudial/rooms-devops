@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- This field will be used on reports to notify the date on which a manual price adjustment is required - This is for contracts sourced from DM only --></help>
+    <label><!-- Price Adjustment Date DM --></label>
+    <name>Price_Adjustment_Date_DM__c</name>
+</CustomFieldTranslation>

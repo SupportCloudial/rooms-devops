@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Change Action Effective End Date --></label>
+    <name>Change_Action_Effective_End_Date__c</name>
+</CustomFieldTranslation>

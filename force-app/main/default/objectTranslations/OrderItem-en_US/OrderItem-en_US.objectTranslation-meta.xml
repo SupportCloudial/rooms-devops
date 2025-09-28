@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Contract Product</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Contract Products</value>
+    </caseValues>
+    <layouts>
+        <layout>Order Product Layout</layout>
+        <sections>
+            <label><!-- Order product informations --></label>
+            <section>Order product informations</section>
+        </sections>
+        <sections>
+            <label><!-- Related Informations --></label>
+            <section>Related Informations</section>
+        </sections>
+    </layouts>
+    <startsWith>Vowel</startsWith>
+</CustomObjectTranslation>
