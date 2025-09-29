@@ -9,9 +9,9 @@
         <groupingString>InApproval</groupingString>
     </standardValue>
     <standardValue>
-        <fullName>Active</fullName>
+        <fullName>Actived</fullName>
         <default>false</default>
-        <label>Active</label>
+        <label>Actived</label>
         <groupingString>Activated</groupingString>
     </standardValue>
     <standardValue>
