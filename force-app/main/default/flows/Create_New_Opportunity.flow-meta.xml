@@ -64,6 +64,30 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
+        <name>Open_Existing_Opportunity</name>
+        <label>Open Existing Opportunity</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>c:fsc_openUrl</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>mode</name>
+            <value>
+                <stringValue>replace</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>url</name>
+            <value>
+                <elementReference>ExistingOpenOpportunityURL</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>c:fsc_openUrl</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <name>Open_Opportunity</name>
         <label>Open Opportunity</label>
         <locationX>0</locationX>
@@ -81,6 +105,30 @@
             <name>url</name>
             <value>
                 <elementReference>NewOpportunityURL</elementReference>
+            </value>
+        </inputParameters>
+        <nameSegment>c:fsc_openUrl</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Open_Start_Page</name>
+        <label>Open Start Page</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>c:fsc_openUrl</actionName>
+        <actionType>component</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>mode</name>
+            <value>
+                <stringValue>replace</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>url</name>
+            <value>
+                <elementReference>StartPageURL</elementReference>
             </value>
         </inputParameters>
         <nameSegment>c:fsc_openUrl</nameSegment>
@@ -113,7 +161,7 @@
         <inputParameters>
             <name>inputCollection</name>
             <value>
-                <elementReference>Assign_New_Opportunity_Products</elementReference>
+                <elementReference>OpportunityProductsCol</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -129,6 +177,22 @@
     <apiVersion>65.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <name>Add_Product_To_Col</name>
+        <label>Add Product To Col</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>OpportunityProductsCol</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>OpportunityProduct</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Reset_Product_Variables</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_AccountId</name>
         <label>Assign AccountId</label>
         <locationX>0</locationX>
@@ -141,7 +205,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Create_New_Opportunity</targetReference>
+            <targetReference>Existing_Open_Opportunity</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -157,7 +221,23 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Create_New_Opportunity</targetReference>
+            <targetReference>Existing_Open_Opportunity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Contract_Product</name>
+        <label>Assign Contract Product</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>ContractProduct</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Existing_Contract_Product</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Existing_Contract_Product</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -173,7 +253,40 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Create_New_Opportunity</targetReference>
+            <targetReference>Existing_Open_Opportunity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Opportunity_Product</name>
+        <label>Assign Opportunity Product</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>OpportunityProduct</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>New_Products</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Existing_Product_Filter</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Reset_Product_Variables</name>
+        <label>Reset Product Variables</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>OpportunityProduct</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ContractProduct</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>New_Products</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -253,8 +366,45 @@
                 <elementReference>OriginalContract.Renewal_Kickoff_Months__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Assign_New_Opportunity_from_Contract.Pricebook2Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>OriginalContract.Opportunity__r.Pricebook2Id</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>New_Opportunity_VR_Check</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Opportunity_Product_Picklist_Values</name>
+        <label>Update Opportunity Product Picklist Values</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>OpportunityProduct.Access_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ContractProduct.Access_Type__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OpportunityProduct.Product_Sub_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ContractProduct.Product_Sub_Type_Name__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>OpportunityProduct.Products_Type__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ContractProduct.Product_Type__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Add_Product_To_Col</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -271,6 +421,22 @@
         </assignmentItems>
         <connector>
             <targetReference>One_Active_Contract</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Original_Contract_From_Active_Input_Contract</name>
+        <label>Update Original Contract From Active Input Contract</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>OriginalContract</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Input_Contract</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assign_New_Opportunity_from_Contract</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -328,6 +494,51 @@
             <targetReference>Found_Active_Contracts</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>Add_Remove_Product</name>
+        <choiceText>Add/Remove Product</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Add/Remove Product</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>New_Contract</name>
+        <choiceText>New Contract</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>New Contract</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Renew_Contract</name>
+        <choiceText>Renew Contract</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Renew Contract</stringValue>
+        </value>
+    </choices>
+    <collectionProcessors>
+        <name>Existing_Product_Filter</name>
+        <elementSubtype>FilterCollectionProcessor</elementSubtype>
+        <label>Existing Product Filter</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNextValueToReference>currentItem_Existing_Product_Filter</assignNextValueToReference>
+        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
+        <collectionReference>Existing_Order_Products</collectionReference>
+        <conditionLogic>and</conditionLogic>
+        <conditions>
+            <leftValueReference>currentItem_Existing_Product_Filter.Product2Id</leftValueReference>
+            <operator>EqualTo</operator>
+            <rightValue>
+                <elementReference>New_Products.Product2Id</elementReference>
+            </rightValue>
+        </conditions>
+        <connector>
+            <targetReference>Existing_Contract_Product</targetReference>
+        </connector>
+    </collectionProcessors>
     <collectionProcessors>
         <name>Filter_Original_Contract</name>
         <elementSubtype>FilterCollectionProcessor</elementSubtype>
@@ -378,6 +589,13 @@
         </value>
     </constants>
     <constants>
+        <name>OpportunityStandardRT</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>012J7000000066kIAA</stringValue>
+        </value>
+    </constants>
+    <constants>
         <name>Product_Update</name>
         <dataType>String</dataType>
         <value>
@@ -400,6 +618,28 @@
             <targetReference>No_Active_Contracts_Found</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Process_From_Active_Contract</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Input_Contract</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Input_Contract.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Active</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Original_Contract_From_Active_Input_Contract</targetReference>
+            </connector>
+            <label>Process From Active Contract</label>
+        </rules>
         <rules>
             <name>One_Active_Contract_Process</name>
             <conditionLogic>or</conditionLogic>
@@ -460,6 +700,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Found_Existing_Contract_Product</name>
+        <label>Found Existing Contract Product?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Add_Product_To_Col</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Existing_Contract_Product_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ContractProduct</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Opportunity_Product_Picklist_Values</targetReference>
+            </connector>
+            <label>Yes, Existing Contract Product Found</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Has_OLI_VR_Error</name>
         <label>Has OLI VR Error?</label>
         <locationX>0</locationX>
@@ -482,6 +747,31 @@
                 <targetReference>Create_New_Opportunity_Products</targetReference>
             </connector>
             <label>No VR Error on OLIs</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Has_Open_Opportunity</name>
+        <label>Has Open Opportunity?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Supported_Input_sObject</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Open_Opportunity_Exist</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Existing_Open_Opportunity</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Existing_Open_Opportunity_Screen</targetReference>
+            </connector>
+            <label>Yes, Open Opportunity Exist</label>
         </rules>
     </decisions>
     <decisions>
@@ -591,6 +881,32 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_New_Contract</name>
+        <label>Is New Contract?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Active_Contracts</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_New_Contract</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>What_action_do_you_want_to_do</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>New_Contract</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Create_New_Opportunity</targetReference>
+            </connector>
+            <label>Yes, New Contract</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_Renewal</name>
         <label>Is Renewal?</label>
         <locationX>0</locationX>
@@ -636,7 +952,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Input_sObject_Type</targetReference>
+                <targetReference>Create_New_Opportunity</targetReference>
             </connector>
             <label>No Active Contracts</label>
         </rules>
@@ -654,13 +970,6 @@
             <name>Yes_Supported_Input_sObject</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>InputProcessType</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>IsValidInputSObject</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
@@ -668,7 +977,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Active_Contracts</targetReference>
+                <targetReference>Process_Type_Selection_Screen</targetReference>
             </connector>
             <label>Yes, Supported Input sObject</label>
         </rules>
@@ -704,12 +1013,18 @@
         <expression>IF(ISBLANK({!recordId}), &apos;&apos;, &apos; from &apos;+{!Entity_Definition.PluralLabel})</expression>
     </formulas>
     <formulas>
+        <name>ExistingOpenOpportunityURL</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!$Api.Partner_Server_URL_540}, FIND(&apos;/services&apos;, {!$Api.Partner_Server_URL_540}) - 1) +
+&apos;/lightning/r/Opportunity/&apos; + {!Existing_Open_Opportunity.Id} + &apos;/view&apos;</expression>
+    </formulas>
+    <formulas>
         <name>InputProcessType</name>
         <dataType>String</dataType>
-        <expression>CASE({!ProcessType},
-{!Product_Update},{!Product_Update},
-{!Renewal},{!Renewal},
-{!Monthly_Opportunity},{!Monthly_Opportunity},
+        <expression>CASE({!What_action_do_you_want_to_do},
+{!Add_Remove_Product}, {!Product_Update},
+{!Renew_Contract}, {!Renewal},
+{!Monthly_Opportunity}, {!Monthly_Opportunity},
 NULL)</expression>
     </formulas>
     <formulas>
@@ -729,15 +1044,46 @@ NULL)</expression>
     <formulas>
         <name>NewOpportunityCreationLink</name>
         <dataType>String</dataType>
-        <expression>&apos;https://rooms--dev.sandbox.lightning.force.com/lightning/o/Opportunity/new?count=1&amp;nooverride=1&amp;useRecordTypeCheck=1&amp;navigationLocation=RELATED_LIST&amp;backgroundContext=%2Flightning%2Fr%2FAccount%2F&apos;+{!accountId}+&apos;%2Fview&apos;</expression>
+        <expression>LEFT({!$Api.Partner_Server_URL_540}, FIND(&apos;/services&apos;, {!$Api.Partner_Server_URL_540}) - 1) +
+&apos;/lightning/o/Opportunity/new?count=1&amp;nooverride=1&amp;useRecordTypeCheck=1&amp;navigationLocation=RELATED_LIST&amp;backgroundContext=%2Flightning%2Fr%2FAccount%2F&apos; +
+{!accountId} +
+&apos;%2Fview&apos;</expression>
     </formulas>
     <formulas>
         <name>NewOpportunityURL</name>
         <dataType>String</dataType>
-        <expression>LEFT({!$Api.Partner_Server_URL_260}, FIND( &apos;/services&apos;, {!$Api.Partner_Server_URL_260}))+{!Assign_New_Opportunity_from_Contract.Id}+&apos;/view&apos;</expression>
+        <expression>LEFT({!$Api.Partner_Server_URL_540}, FIND(&apos;/services&apos;, {!$Api.Partner_Server_URL_540}) - 1) +
+&apos;/lightning/r/Opportunity/&apos; + {!Assign_New_Opportunity_from_Contract.Id} + &apos;/view&apos;</expression>
+    </formulas>
+    <formulas>
+        <name>OrgBaseURL</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!$Api.Partner_Server_URL_260}, FIND( &apos;/services&apos;, {!$Api.Partner_Server_URL_260}))</expression>
+    </formulas>
+    <formulas>
+        <name>StartPageURL</name>
+        <dataType>String</dataType>
+        <expression>IF( CONTAINS({!OrgBaseURL}, &apos;sandbox&apos;),
+LEFT({!OrgBaseURL}, FIND(&apos;sandbox&apos;, {!OrgBaseURL}) - 1) +&apos;sandbox.lightning.force.com&apos;,
+&apos;rooms.lightning.force.com&apos;)
++&apos;/lightning/r/Opportunity/&apos;+{!recordId}+&apos;/view&apos;</expression>
     </formulas>
     <interviewLabel>Create New Opportunity {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Create New Opportunity</label>
+    <loops>
+        <name>Existing_Contract_Product</name>
+        <label>Existing Contract Product</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>Existing_Product_Filter</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_Contract_Product</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Found_Existing_Contract_Product</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <loops>
         <name>Filtered_Original_Contract</name>
         <label>Filtered Original Contract</label>
@@ -750,6 +1096,20 @@ NULL)</expression>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Assign_New_Opportunity_from_Contract</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>New_Products</name>
+        <label>New Products</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <collectionReference>Assign_New_Opportunity_Products</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_Opportunity_Product</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>VR_Check_for_OLI</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
@@ -797,7 +1157,7 @@ NULL)</expression>
             <isGoTo>true</isGoTo>
             <targetReference>Error_Screen</targetReference>
         </faultConnector>
-        <inputReference>Assign_New_Opportunity_Products</inputReference>
+        <inputReference>OpportunityProductsCol</inputReference>
     </recordCreates>
     <recordCreates>
         <name>Create_Opportunity</name>
@@ -862,7 +1222,7 @@ NULL)</expression>
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Supported_Input_sObject</targetReference>
+            <targetReference>Input_sObject_Type</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -874,6 +1234,41 @@ NULL)</expression>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>EntityDefinition</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Existing_Open_Opportunity</name>
+        <label>Existing Open Opportunity</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Has_Open_Opportunity</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>accountId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsClosed</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>RecordTypeId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>OpportunityStandardRT</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Opportunity</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -946,6 +1341,15 @@ NULL)</expression>
         <object>Opportunity</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordRollbacks>
+        <name>Roll_Back_Changes</name>
+        <label>Roll Back Changes</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Open_Start_Page</targetReference>
+        </connector>
+    </recordRollbacks>
     <screens>
         <name>Contract_Renewal_Success_Screen</name>
         <label>Contract Renewal Success Screen</label>
@@ -959,7 +1363,7 @@ NULL)</expression>
         </connector>
         <fields>
             <name>SuccessMessage</name>
-            <fieldText>&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;200 Success&lt;/strong&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;: Your new Opportunity is ready. Click &quot;Open Opportunity&quot; to continue.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;Your new Opportunity is ready. Click &quot;Open Opportunity&quot; to continue.&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -1129,6 +1533,9 @@ NULL)</expression>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Roll_Back_Changes</targetReference>
+        </connector>
         <fields>
             <name>Error_Screen_Section1</name>
             <fieldType>RegionContainer</fieldType>
@@ -1369,6 +1776,115 @@ NULL)</expression>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Existing_Open_Opportunity_Screen</name>
+        <label>Existing Open Opportunity Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Open_Existing_Opportunity</targetReference>
+        </connector>
+        <fields>
+            <name>ExistingOpenOpportunityMessage</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;An open opportunity exist for this account. Please click open opportunity button to view the opportunity.&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <nextOrFinishButtonLabel>Open Opportunity</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Process_Type_Selection_Screen</name>
+        <label>Process Type Selection Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Is_New_Contract</targetReference>
+        </connector>
+        <fields>
+            <name>Process_Type_Selection_Screen_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Process_Type_Selection_Screen_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Process_Type_Selection_Screen_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>What_action_do_you_want_to_do</name>
+                    <choiceReferences>Add_Remove_Product</choiceReferences>
+                    <choiceReferences>Renew_Contract</choiceReferences>
+                    <choiceReferences>New_Contract</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>What action do you want to do?</fieldText>
+                    <fieldType>RadioButtons</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>5</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Process_Type_Selection_Screen_Section1_Column3</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -1554,7 +2070,7 @@ NULL)</expression>
                     <formulaExpression>CASE({!InputProcessType},
 {!Renewal}, {!OriginalContract.EndDate} + 1,
 {!Monthly_Opportunity}, TODAY() + 14,
-{!OriginalContract.EndDate})</formulaExpression>
+{!OriginalContract.StartDate})</formulaExpression>
                 </value>
             </transformValueActions>
             <transformValueActions>
@@ -1611,7 +2127,7 @@ DATE(
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>VR_Check_for_OLI</targetReference>
+            <targetReference>New_Products</targetReference>
         </connector>
         <dataType>SObject</dataType>
         <isCollection>true</isCollection>
@@ -1619,13 +2135,6 @@ DATE(
         <scale>0</scale>
         <storeOutputAutomatically>true</storeOutputAutomatically>
         <transformValues>
-            <transformValueActions>
-                <outputFieldApiName>Access_Type__c</outputFieldApiName>
-                <transformType>Map</transformType>
-                <value>
-                    <elementReference>Existing_Order_Products[$EachItem].Access_Type__c</elementReference>
-                </value>
-            </transformValueActions>
             <transformValueActions>
                 <outputFieldApiName>Capicity_Desks__c</outputFieldApiName>
                 <transformType>Map</transformType>
@@ -1680,13 +2189,6 @@ DATE(
                 <transformType>Map</transformType>
                 <value>
                     <elementReference>Existing_Order_Products[$EachItem].Product2Id</elementReference>
-                </value>
-            </transformValueActions>
-            <transformValueActions>
-                <outputFieldApiName>Products_Type__c</outputFieldApiName>
-                <transformType>Map</transformType>
-                <value>
-                    <elementReference>Existing_Order_Products[$EachItem].Product_Type__c</elementReference>
                 </value>
             </transformValueActions>
             <transformValueActions>
@@ -1753,24 +2255,10 @@ DATE(
                 </value>
             </transformValueActions>
             <transformValueActions>
-                <outputFieldApiName>Product_Sub_Type__c</outputFieldApiName>
-                <transformType>Map</transformType>
-                <value>
-                    <elementReference>Existing_Order_Products[$EachItem].Product_Sub_Type_Name__c</elementReference>
-                </value>
-            </transformValueActions>
-            <transformValueActions>
                 <outputFieldApiName>End_date__c</outputFieldApiName>
                 <transformType>Map</transformType>
                 <value>
                     <elementReference>Assign_New_Opportunity_from_Contract.End_Date__c</elementReference>
-                </value>
-            </transformValueActions>
-            <transformValueActions>
-                <outputFieldApiName>Entry_Date__c</outputFieldApiName>
-                <transformType>Map</transformType>
-                <value>
-                    <elementReference>OriginalContract.EndDate</elementReference>
                 </value>
             </transformValueActions>
             <transformValueActions>
@@ -1794,6 +2282,13 @@ DATE(
                     <elementReference>Assign_New_Opportunity_from_Contract.Id</elementReference>
                 </value>
             </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Entry_Date__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <elementReference>OriginalContract.StartDate</elementReference>
+                </value>
+            </transformValueActions>
         </transformValues>
     </transforms>
     <variables>
@@ -1812,6 +2307,22 @@ DATE(
         <objectType>Contract</objectType>
     </variables>
     <variables>
+        <name>ContractProduct</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>OrderItem</objectType>
+    </variables>
+    <variables>
+        <name>currentItem_Existing_Product_Filter</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>OrderItem</objectType>
+    </variables>
+    <variables>
         <name>currentItem_Filter_Original_Contract</name>
         <dataType>SObject</dataType>
         <isCollection>false</isCollection>
@@ -1826,6 +2337,22 @@ DATE(
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Contract</objectType>
+    </variables>
+    <variables>
+        <name>OpportunityProduct</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>OpportunityLineItem</objectType>
+    </variables>
+    <variables>
+        <name>OpportunityProductsCol</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>OpportunityLineItem</objectType>
     </variables>
     <variables>
         <name>OriginalContract</name>

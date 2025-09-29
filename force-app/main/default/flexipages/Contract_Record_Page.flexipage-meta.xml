@@ -29,10 +29,14 @@
                             <value>Contract.Change_Order</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>CustomButton.Contract.Add_Remove_Products</value>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>CustomButton.Contract.New_Opportunity</value>
+                            <value>Contract.Change_Opportunity</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Active</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
