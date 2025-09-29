@@ -34,7 +34,7 @@
                                 <criteria>
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Active</rightValue>
+                                    <rightValue>Activated</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
