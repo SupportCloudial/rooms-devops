@@ -907,6 +907,32 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_Products_Col_Updated</name>
+        <label>Is Products Col Updated?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Contract_Renewal_Success_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Products_Col_Is_Updated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>OpportunityProductsCol</leftValueReference>
+                <operator>IsEmpty</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>VR_Check_for_OLI</targetReference>
+            </connector>
+            <label>Yes, Products Col Is Updated</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_Renewal</name>
         <label>Is Renewal?</label>
         <locationX>0</locationX>
@@ -1109,7 +1135,7 @@ LEFT({!OrgBaseURL}, FIND(&apos;sandbox&apos;, {!OrgBaseURL}) - 1) +&apos;sandbox
             <targetReference>Assign_Opportunity_Product</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>VR_Check_for_OLI</targetReference>
+            <targetReference>Is_Products_Col_Updated</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
