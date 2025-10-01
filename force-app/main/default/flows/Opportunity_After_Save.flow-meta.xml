@@ -1135,7 +1135,7 @@ TEXT(MONTH(TODAY())) &amp; &quot;/&quot; &amp; TEXT(YEAR(TODAY()) - 2000)</expre
         <inputAssignments>
             <field>Status</field>
             <value>
-                <stringValue>Activated</stringValue>
+                <stringValue>Active</stringValue>
             </value>
         </inputAssignments>
         <object>Contract</object>
