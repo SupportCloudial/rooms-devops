@@ -55,7 +55,7 @@
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>Related_Opportunity</leftValueReference>
-                <operator>IsBlank</operator>
+                <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -137,7 +137,7 @@
         </connector>
         <object>Event</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
-        <triggerType>RecordAfterSave</triggerType>
+        <triggerType>RecordBeforeSave</triggerType>
     </start>
     <status>Active</status>
 </Flow>
