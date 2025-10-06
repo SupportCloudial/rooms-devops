@@ -290,22 +290,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Update_Active_Contracts_Col</name>
-        <label>Update Active Contracts Col</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>ActiveContractsCol</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Active_Contracts</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Is_Renewal</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Update_Opportunity_Picklist_Values</name>
         <label>Update Opportunity Picklist Values</label>
         <locationX>0</locationX>
@@ -484,6 +468,13 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <assignmentItems>
+            <assignToReference>ActiveContractsCol</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Active_Contracts</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>TotalNumberofActiveContracts</assignToReference>
             <operator>AssignCount</operator>
             <value>
@@ -496,7 +487,7 @@
     </assignments>
     <choices>
         <name>Add_Remove_Product</name>
-        <choiceText>Add/Remove Product</choiceText>
+        <choiceText>{!AddRemoveProductLabel}</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>Add/Remove Product</stringValue>
@@ -504,7 +495,7 @@
     </choices>
     <choices>
         <name>New_Contract</name>
-        <choiceText>New Contract</choiceText>
+        <choiceText>Create a new opportunity</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>New Contract</stringValue>
@@ -512,7 +503,7 @@
     </choices>
     <choices>
         <name>Renew_Contract</name>
-        <choiceText>Renew Contract</choiceText>
+        <choiceText>{!RenewContractLabel}</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>Renew Contract</stringValue>
@@ -899,6 +890,13 @@
                     <elementReference>New_Contract</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Contract_sObject</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <isGoTo>true</isGoTo>
                 <targetReference>Create_New_Opportunity</targetReference>
@@ -945,7 +943,7 @@
             <name>Yes_Renewal</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
+                <leftValueReference>InputProcessType</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Renewal</stringValue>
@@ -967,6 +965,35 @@
             <targetReference>Error_Screen</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Renewal_Without_Non_Auto_Renewal</name>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditions>
+                <leftValueReference>What_action_do_you_want_to_do</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Renewal</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>What_action_do_you_want_to_do_on_contract</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Renewal</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>TotalNonAutoRenewalContracts</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Non_Auto_Renewal_Missing_Screen</targetReference>
+            </connector>
+            <label>Renewal Without Non Auto-Renewal</label>
+        </rules>
         <rules>
             <name>No_Active_Contracts</name>
             <conditionLogic>and</conditionLogic>
@@ -1010,12 +1037,12 @@
     </decisions>
     <description>DO NOT REMOVE: This flow cannot be used as action due to text input parameter. Only use it as detail or list button as sub-flow.
 
-09-09-2025: Renjith Created</description>
+06-10-2025: Renjith updated changes from 869aqbwrm</description>
     <dynamicChoiceSets>
         <name>ActiveContractsChoiceCol</name>
         <collectionReference>ActiveContractsCol</collectionReference>
         <dataType>String</dataType>
-        <displayField>ContractNumber</displayField>
+        <displayField>Date_Label__c</displayField>
         <object>Contract</object>
         <valueField>Id</valueField>
     </dynamicChoiceSets>
@@ -1023,11 +1050,16 @@
         <name>NonRenewalActiveContractsChoiceCol</name>
         <collectionReference>Non_Auto_Renewal_Contracts</collectionReference>
         <dataType>String</dataType>
-        <displayField>ContractNumber</displayField>
+        <displayField>Date_Label__c</displayField>
         <object>Contract</object>
         <valueField>Id</valueField>
     </dynamicChoiceSets>
     <environments>Default</environments>
+    <formulas>
+        <name>AddRemoveProductLabel</name>
+        <dataType>String</dataType>
+        <expression>IF({!Contract_sObject} || {!Opportunity_sObject}, &apos;Add/Remove product or change rooms&apos;, &apos;Add/Remove product or change rooms to existing contract&apos;)</expression>
+    </formulas>
     <formulas>
         <name>CalcualtedEndDate</name>
         <dataType>Date</dataType>
@@ -1047,11 +1079,11 @@
     <formulas>
         <name>InputProcessType</name>
         <dataType>String</dataType>
-        <expression>CASE({!What_action_do_you_want_to_do},
+        <expression>CASE(IF({!Contract_sObject}, {!What_action_do_you_want_to_do_on_contract}, {!What_action_do_you_want_to_do}),
 {!Add_Remove_Product}, {!Product_Update},
 {!Renew_Contract}, {!Renewal},
 {!Monthly_Opportunity}, {!Monthly_Opportunity},
-NULL)</expression>
+{!New_Contract})</expression>
     </formulas>
     <formulas>
         <name>IsValidInputSObject</name>
@@ -1085,6 +1117,11 @@ NULL)</expression>
         <name>OrgBaseURL</name>
         <dataType>String</dataType>
         <expression>LEFT({!$Api.Partner_Server_URL_260}, FIND( &apos;/services&apos;, {!$Api.Partner_Server_URL_260}))</expression>
+    </formulas>
+    <formulas>
+        <name>RenewContractLabel</name>
+        <dataType>String</dataType>
+        <expression>IF({!Account_sObject}, &apos;Renew an active contract&apos;, &apos;Renew this contract&apos;)</expression>
     </formulas>
     <formulas>
         <name>StartPageURL</name>
@@ -1206,7 +1243,7 @@ LEFT({!OrgBaseURL}, FIND(&apos;sandbox&apos;, {!OrgBaseURL}) - 1) +&apos;sandbox
         <locationY>0</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Update_Active_Contracts_Col</targetReference>
+            <targetReference>Is_Renewal</targetReference>
         </connector>
         <filterLogic>(1 OR 2 OR 3) AND 4</filterLogic>
         <filters>
@@ -1409,9 +1446,10 @@ LEFT({!OrgBaseURL}, FIND(&apos;sandbox&apos;, {!OrgBaseURL}) - 1) +&apos;sandbox
         <label>Contract Selection Screen</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <allowBack>false</allowBack>
+        <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
+        <backButtonLabel>Back</backButtonLabel>
         <connector>
             <targetReference>Filter_Original_Contract</targetReference>
         </connector>
@@ -1831,6 +1869,35 @@ LEFT({!OrgBaseURL}, FIND(&apos;sandbox&apos;, {!OrgBaseURL}) - 1) +&apos;sandbox
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Non_Auto_Renewal_Missing_Screen</name>
+        <label>Non Auto-Renewal Missing Screen</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <backButtonLabel>Back</backButtonLabel>
+        <connector>
+            <targetReference>Create_New_Opportunity</targetReference>
+        </connector>
+        <fields>
+            <name>NonAutoRenewalMissingMessage</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;No relevant contracts found for renewal. Please click next to create a new opportunity.&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <styleProperties>
+                <verticalAlignment>
+                    <stringValue>top</stringValue>
+                </verticalAlignment>
+                <width>
+                    <stringValue>12</stringValue>
+                </width>
+            </styleProperties>
+        </fields>
+        <nextOrFinishButtonLabel>Next</nextOrFinishButtonLabel>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Process_Type_Selection_Screen</name>
         <label>Process Type Selection Screen</label>
         <locationX>0</locationX>
@@ -1876,6 +1943,51 @@ LEFT({!OrgBaseURL}, FIND(&apos;sandbox&apos;, {!OrgBaseURL}) - 1) +&apos;sandbox
                             <stringValue>12</stringValue>
                         </width>
                     </styleProperties>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Account_sObject</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
+                <fields>
+                    <name>What_action_do_you_want_to_do_on_contract</name>
+                    <choiceReferences>Add_Remove_Product</choiceReferences>
+                    <choiceReferences>Renew_Contract</choiceReferences>
+                    <dataType>String</dataType>
+                    <fieldText>What action do you want to do?</fieldText>
+                    <fieldType>RadioButtons</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
+                    <visibilityRule>
+                        <conditionLogic>or</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Opportunity_sObject</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>Contract_sObject</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -2253,20 +2365,6 @@ DATE(
                 </value>
             </transformValueActions>
             <transformValueActions>
-                <outputFieldApiName>End_Date_Time__c</outputFieldApiName>
-                <transformType>Map</transformType>
-                <value>
-                    <elementReference>Existing_Order_Products[$EachItem].End_Date_Time__c</elementReference>
-                </value>
-            </transformValueActions>
-            <transformValueActions>
-                <outputFieldApiName>Entry_Date_Time__c</outputFieldApiName>
-                <transformType>Map</transformType>
-                <value>
-                    <elementReference>Existing_Order_Products[$EachItem].Start_Date_Time__c</elementReference>
-                </value>
-            </transformValueActions>
-            <transformValueActions>
                 <outputFieldApiName>Include_In_Deposit_Calculations__c</outputFieldApiName>
                 <transformType>Map</transformType>
                 <value>
@@ -2278,13 +2376,6 @@ DATE(
                 <transformType>Map</transformType>
                 <value>
                     <elementReference>Existing_Order_Products[$EachItem].Id</elementReference>
-                </value>
-            </transformValueActions>
-            <transformValueActions>
-                <outputFieldApiName>End_date__c</outputFieldApiName>
-                <transformType>Map</transformType>
-                <value>
-                    <elementReference>Assign_New_Opportunity_from_Contract.End_Date__c</elementReference>
                 </value>
             </transformValueActions>
             <transformValueActions>
@@ -2312,7 +2403,32 @@ DATE(
                 <outputFieldApiName>Entry_Date__c</outputFieldApiName>
                 <transformType>Map</transformType>
                 <value>
-                    <elementReference>OriginalContract.StartDate</elementReference>
+                    <formulaDataType>Date</formulaDataType>
+                    <formulaExpression>{!Existing_Order_Products[$EachItem].EndDate}+1</formulaExpression>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>End_date__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <formulaDataType>Date</formulaDataType>
+                    <formulaExpression>ADDMONTHS({!Existing_Order_Products[$EachItem].EndDate}, {!Existing_Order_Products[$EachItem].Period_In_Months__c})</formulaExpression>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>Entry_Date_Time__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <formulaDataType>DateTime</formulaDataType>
+                    <formulaExpression>{!Existing_Order_Products[$EachItem].End_Date_Time__c} + 1</formulaExpression>
+                </value>
+            </transformValueActions>
+            <transformValueActions>
+                <outputFieldApiName>End_Date_Time__c</outputFieldApiName>
+                <transformType>Map</transformType>
+                <value>
+                    <formulaDataType>DateTime</formulaDataType>
+                    <formulaExpression>ADDMONTHS({!Existing_Order_Products[$EachItem].End_Date_Time__c}, {!Existing_Order_Products[$EachItem].Period_In_Months__c})</formulaExpression>
                 </value>
             </transformValueActions>
         </transformValues>
