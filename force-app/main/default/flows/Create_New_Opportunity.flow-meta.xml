@@ -967,16 +967,9 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Renewal_Without_Non_Auto_Renewal</name>
-            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>What_action_do_you_want_to_do</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>Renewal</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>What_action_do_you_want_to_do_on_contract</leftValueReference>
+                <leftValueReference>InputProcessType</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>Renewal</elementReference>
@@ -1035,9 +1028,7 @@
             <label>Yes, Supported Input sObject</label>
         </rules>
     </decisions>
-    <description>DO NOT REMOVE: This flow cannot be used as action due to text input parameter. Only use it as detail or list button as sub-flow.
-
-06-10-2025: Renjith updated changes from 869aqbwrm</description>
+    <description>07-10-2025: Renjith updated changes from 869aqbwrm</description>
     <dynamicChoiceSets>
         <name>ActiveContractsChoiceCol</name>
         <collectionReference>ActiveContractsCol</collectionReference>
@@ -2503,13 +2494,6 @@ DATE(
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Contract</objectType>
-    </variables>
-    <variables>
-        <name>ProcessType</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>recordId</name>
