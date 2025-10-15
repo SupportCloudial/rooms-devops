@@ -80,7 +80,7 @@ private class BrazeSyncJobTest {
                 //ConvertedOpportunityId = opps[0].Id
             ));
         }
-        //leads[0].ConvertedOpportunityId = opps[1].Id;
+        leads[0].ConvertedOpportunityId = opps[1].Id;
         insert leads;
     }
 
