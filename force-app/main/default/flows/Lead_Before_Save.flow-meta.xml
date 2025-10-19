@@ -3,10 +3,26 @@
     <apiVersion>61.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <name>Assign_Formatted_Phone</name>
+        <label>Assign Formatted Phone</label>
+        <locationX>1931</locationX>
+        <locationY>395</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.MobilePhone</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Formatted_MobilePhone</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_New_Web_Lead</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Update_Classroom_To_Others</name>
         <label>Update Classroom To Others</label>
         <locationX>842</locationX>
-        <locationY>719</locationY>
+        <locationY>1019</locationY>
         <assignmentItems>
             <assignToReference>$Record.Product_Type_From_Web__c</assignToReference>
             <operator>Assign</operator>
@@ -23,7 +39,7 @@
         <name>Update_Non_Web_Lead_Location_Area</name>
         <label>Update Non-Web Lead Location Area</label>
         <locationX>2426</locationX>
-        <locationY>503</locationY>
+        <locationY>803</locationY>
         <assignmentItems>
             <assignToReference>$Record.Location_Area__c</assignToReference>
             <operator>Assign</operator>
@@ -36,7 +52,7 @@
         <name>Update_On_Demand_Location_Details</name>
         <label>Update On Demand Location Details</label>
         <locationX>50</locationX>
-        <locationY>827</locationY>
+        <locationY>1127</locationY>
         <assignmentItems>
             <assignToReference>$Record.Desired_Location__c</assignToReference>
             <operator>Assign</operator>
@@ -77,7 +93,7 @@
         <name>Update_Standard_Location_Details</name>
         <label>Update Standard Location Details</label>
         <locationX>1898</locationX>
-        <locationY>719</locationY>
+        <locationY>1019</locationY>
         <assignmentItems>
             <assignToReference>$Record.Desired_Location__c</assignToReference>
             <operator>Assign</operator>
@@ -118,7 +134,7 @@
         <name>Update_To_Daily_Service</name>
         <label>Update To Daily Service</label>
         <locationX>578</locationX>
-        <locationY>719</locationY>
+        <locationY>1019</locationY>
         <assignmentItems>
             <assignToReference>$Record.Product_Type_From_Web__c</assignToReference>
             <operator>Assign</operator>
@@ -135,7 +151,7 @@
         <name>Update_To_Event</name>
         <label>Update To Event</label>
         <locationX>314</locationX>
-        <locationY>719</locationY>
+        <locationY>1019</locationY>
         <assignmentItems>
             <assignToReference>$Record.Product_Type_From_Web__c</assignToReference>
             <operator>Assign</operator>
@@ -152,7 +168,7 @@
         <name>Update_To_Meeting_Room</name>
         <label>Update To Meeting Room</label>
         <locationX>50</locationX>
-        <locationY>719</locationY>
+        <locationY>1019</locationY>
         <assignmentItems>
             <assignToReference>$Record.Product_Type_From_Web__c</assignToReference>
             <operator>Assign</operator>
@@ -168,7 +184,7 @@
         <name>Update_To_Office_1_4</name>
         <label>Update To Office 1-4</label>
         <locationX>1370</locationX>
-        <locationY>719</locationY>
+        <locationY>1019</locationY>
         <assignmentItems>
             <assignToReference>$Record.Product_Type_From_Web__c</assignToReference>
             <operator>Assign</operator>
@@ -185,7 +201,7 @@
         <name>Update_To_Open_Space</name>
         <label>Update To Open Space</label>
         <locationX>1106</locationX>
-        <locationY>719</locationY>
+        <locationY>1019</locationY>
         <assignmentItems>
             <assignToReference>$Record.Product_Type_From_Web__c</assignToReference>
             <operator>Assign</operator>
@@ -202,7 +218,7 @@
         <name>Update_To_Others</name>
         <label>Update To Others</label>
         <locationX>1634</locationX>
-        <locationY>719</locationY>
+        <locationY>1019</locationY>
         <assignmentItems>
             <assignToReference>$Record.Product_Type_From_Web__c</assignToReference>
             <operator>Assign</operator>
@@ -216,10 +232,49 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Check_if_MobilePhone_needs_formatting</name>
+        <label>Check if MobilePhone needs formatting</label>
+        <locationX>2063</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>Is_New_Web_Lead</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Needs_Formatting</name>
+            <conditionLogic>( 1 AND 2 ) OR (  1 AND NOT ( 3 )  )</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.MobilePhone</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>HasSpecialChars</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.MobilePhone</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>+972</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Formatted_Phone</targetReference>
+            </connector>
+            <label>Needs Formatting</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Found_Location</name>
         <label>Found Location?</label>
         <locationX>1568</locationX>
-        <locationY>503</locationY>
+        <locationY>803</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_Location_Exist</name>
@@ -241,7 +296,7 @@
         <name>Is_New_Non_Web_Lead</name>
         <label>Is New Non-Web Lead?</label>
         <locationX>2558</locationX>
-        <locationY>395</locationY>
+        <locationY>695</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_New_Non_Web_Lead</name>
@@ -263,7 +318,7 @@
         <name>Is_New_Web_Lead</name>
         <label>Is New Web Lead?</label>
         <locationX>2063</locationX>
-        <locationY>287</locationY>
+        <locationY>587</locationY>
         <defaultConnector>
             <targetReference>Is_New_Non_Web_Lead</targetReference>
         </defaultConnector>
@@ -302,7 +357,7 @@ Other → 	Open Space (standart)</description>
         <name>Spacing_values</name>
         <label>Spacing values?</label>
         <locationX>974</locationX>
-        <locationY>611</locationY>
+        <locationY>911</locationY>
         <defaultConnector>
             <targetReference>Update_Standard_Location_Details</targetReference>
         </defaultConnector>
@@ -441,6 +496,7 @@ Other → 	Open Space (standart)</description>
             <label>Space Unknown</label>
         </rules>
     </decisions>
+    <description>19/10: Salesforce - Braze Integration for Lead &amp; Opportunity Updates: Mobile Phone formatting</description>
     <environments>Default</environments>
     <formulas>
         <name>AutomaticProductTypeValue</name>
@@ -461,9 +517,85 @@ Other → 	Open Space (standart)</description>
 )</expression>
     </formulas>
     <formulas>
+        <name>CleanPhone</name>
+        <dataType>String</dataType>
+        <expression>SUBSTITUTE(
+    SUBSTITUTE(
+        SUBSTITUTE(
+            SUBSTITUTE(
+                SUBSTITUTE(
+                    SUBSTITUTE(
+                        SUBSTITUTE({!$Record.MobilePhone}, &quot; &quot;, &quot;&quot;),
+                        &quot;-&quot;, &quot;&quot;
+                    ),
+                    &quot;(&quot;, &quot;&quot;
+                ),
+                &quot;)&quot;, &quot;&quot;
+            ),
+            &quot;.&quot;, &quot;&quot;
+        ),
+        &quot;/&quot;, &quot;&quot;
+    ),
+    &quot;+&quot;, &quot;&quot;
+)</expression>
+    </formulas>
+    <formulas>
+        <name>Formatted_MobilePhone</name>
+        <dataType>String</dataType>
+        <expression>IF(
+    ISBLANK({!CleanPhone}),
+    &quot;&quot;,
+    /* Step 1: Remove duplicate 972 at start */
+    IF(
+        LEFT({!CleanPhone},6)=&quot;972972&quot;,
+        /* Remove duplicate and leading zero if present */
+        &quot;+972&quot; &amp;
+        IF(
+            MID({!CleanPhone},7,1)=&quot;0&quot;,
+            MID({!CleanPhone},8,LEN({!CleanPhone})-7),
+            MID({!CleanPhone},7,LEN({!CleanPhone})-6)
+        ),
+        /* Step 2: Starts with 972, single country code */
+        IF(
+            LEFT({!CleanPhone},3)=&quot;972&quot;,
+            &quot;+972&quot; &amp;
+            IF(
+                MID({!CleanPhone},4,1)=&quot;0&quot;,
+                MID({!CleanPhone},5,LEN({!CleanPhone})-4),
+                MID({!CleanPhone},4,LEN({!CleanPhone})-3)
+            ),
+            /* Step 3: No country code, add +972 and remove leading zero if present */
+            &quot;+972&quot; &amp;
+            IF(
+                LEFT({!CleanPhone},1)=&quot;0&quot;,
+                RIGHT({!CleanPhone},LEN({!CleanPhone})-1),
+                {!CleanPhone}
+            )
+        )
+    )
+)</expression>
+    </formulas>
+    <formulas>
         <name>FromIntegrationUser</name>
         <dataType>Boolean</dataType>
         <expression>IF(BEGINS({!$User.Username}, &quot;integrationuser@rooms.com&quot;), True, False)</expression>
+    </formulas>
+    <formulas>
+        <name>HasSpecialChars</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(
+  ISBLANK({!$Record.MobilePhone}),
+  FALSE,
+  OR(
+    CONTAINS({!$Record.MobilePhone}, &quot; &quot;),
+    CONTAINS({!$Record.MobilePhone}, &quot;-&quot;),
+    CONTAINS({!$Record.MobilePhone}, &quot;(&quot;),
+    CONTAINS({!$Record.MobilePhone}, &quot;)&quot;),
+    CONTAINS({!$Record.MobilePhone}, &quot;.&quot;),
+    CONTAINS({!$Record.MobilePhone}, &quot;/&quot;),
+    CONTAINS({!$Record.MobilePhone}, &quot;+&quot;)
+  )
+)</expression>
     </formulas>
     <formulas>
         <name>IsHotdesk</name>
@@ -495,7 +627,7 @@ Other → 	Open Space (standart)</description>
         <name>Site_Matching_Location</name>
         <label>Site Matching Location</label>
         <locationX>1568</locationX>
-        <locationY>395</locationY>
+        <locationY>695</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Found_Location</targetReference>
@@ -516,7 +648,7 @@ Other → 	Open Space (standart)</description>
         <locationX>1937</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Is_New_Web_Lead</targetReference>
+            <targetReference>Check_if_MobilePhone_needs_formatting</targetReference>
         </connector>
         <object>Lead</object>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>

@@ -1,18 +1,11 @@
 public class BrazeRequestWrapper {
     public List<Attribute> attributes;
     public List<Event> events;
-    public List<Opportunity> opportunities;
     
     // Constructor — builds payload based on record type
-    public BrazeRequestWrapper(Lead lead, String recordType) {
+    public BrazeRequestWrapper() {
         attributes = new List<Attribute>();
         events = new List<Event>();
-        opportunities = new List<Opportunity>();
-        if(recordType == 'Opportunity') {
-			opportunities = [SELECT Id, Name, StageName FROM Opportunity WHERE Id =: lead.ConvertedOpportunityId];
-        }
-        attributes.add(new Attribute(lead, recordType));
-        events.add(new Event(lead, recordType, opportunities));
     }
 
     public class Attribute {
@@ -22,13 +15,15 @@ public class BrazeRequestWrapper {
         public String email;
         public String phone;
         public String time_zone;
-        public Datetime first_lead_date;
         public String lead_status;
         public String lost_reason;
         public String desired_location;
+        public String email_subscribe;
+        public String sms_subscribe;
+        public Datetime first_lead_date;
         
         public Attribute(
-            Lead lead, String recordType
+            Lead lead, String recordType, List<Opportunity> oppList
         ) {
             this.external_id = lead.MobilePhone;
             this.first_name = lead.FirstName;
@@ -37,10 +32,12 @@ public class BrazeRequestWrapper {
             this.phone = lead.MobilePhone;
             this.time_zone = UserInfo.getTimeZone().getID();
             this.first_lead_date = lead.CreatedDate;
-            this.desired_location = lead.Desired_Location__c;
-            if(recordType == 'Opportunity') {
-                this.lead_status = lead.Status;
-                this.lost_reason = lead.Lost_Reason__c;
+            this.desired_location = lead.Desired_Location__c != null ? lead.Desired_Location__r.Name : '';
+            this.lead_status = lead.Status;
+            this.email_subscribe = lead.HasOptedOutOfEmail ? 'unsubscribed' : 'opted_in';
+            this.sms_subscribe = lead.HasOptedOutOfFax ? 'unsubscribed' : 'opted_in';
+            if(recordType == 'Opportunity' && oppList[0].StageName == 'Closed Lost') {
+                this.lost_reason = oppList[0].Loss_Reason__c;
             }
         }
     }

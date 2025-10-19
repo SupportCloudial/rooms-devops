@@ -61,7 +61,7 @@ private class BrazeSyncJobTest {
             oppsToUpdate.add(new Opportunity(
                 Id = opp.Id,
 				StageName = 'Closed Won',
-                Loss_Reason__c = 'Test',
+                Loss_Reason__c = 'High Price',
                 Contract_Type__c = 'Monthly',
                 Track_CPI_Date__c = System.today()
             ));
@@ -73,14 +73,17 @@ private class BrazeSyncJobTest {
         List<Lead> leads = new List<Lead>();
         for(Integer i = 0; i < 2; i++) {
             leads.add(new Lead(
-                LastName = 'TestLead' + i,
-                Company = 'TestCompany',
-                IsConverted = true
-                //ConvertedAccountId = acc.Id,
-                //ConvertedOpportunityId = opps[0].Id
+                FirstName = 'John' + i,
+                LastName = 'Doe' + i,
+                Email = i + 'john.doe@test.com',
+                MobilePhone = '9876543210',
+                Company = 'Test Co.',
+                Status = 'New',
+                Desired_Location__c = loc.Id,
+                HasOptedOutOfEmail = false,
+            	HasOptedOutOfFax = true
             ));
         }
-        //leads[0].ConvertedOpportunityId = opps[1].Id;
         insert leads;
     }
 
@@ -97,32 +100,6 @@ private class BrazeSyncJobTest {
         BrazeSyncJob.BrazeFlowBatchRequest req = new BrazeSyncJob.BrazeFlowBatchRequest();
         req.recordIds = leadIds;
         req.recordType = 'Lead';
-
-        Test.startTest();
-        // Set mock dynamically
-    	BrazeHttpMock.setMock(201, 'Created', '{"message":"Lead synced successfully"}');
-        
-        BrazeSyncJob.sendToBraze(new List<BrazeSyncJob.BrazeFlowBatchRequest>{ req });
-        Test.stopTest();
-
-        // Assert that a batch job was queued
-        List<AsyncApexJob> jobs = [SELECT Id, Status, JobType FROM AsyncApexJob WHERE JobType = 'BatchApex'];
-        System.assert(!jobs.isEmpty(), 'Expected a batch job to be queued');
-    }
-
-    @isTest
-    static void testSendToBrazeWithOpportunities() {
-        // Get Lead Ids
-        List<Lead> leads = [SELECT Id FROM Lead];
-        List<Id> leadIds = new List<Id>();
-        for(Lead l : leads){
-            leadIds.add(l.Id);
-        }
-
-        // Prepare BrazeFlowBatchRequest for Opportunities
-        BrazeSyncJob.BrazeFlowBatchRequest req = new BrazeSyncJob.BrazeFlowBatchRequest();
-        req.recordIds = leadIds;
-        req.recordType = 'Opportunity';
 
         Test.startTest();
         // Set mock dynamically
@@ -163,58 +140,6 @@ private class BrazeSyncJobTest {
     }
 
     @isTest
-    static void testSendToBrazeWithOpportunities_Fail() {
-        // Get Lead Ids
-        List<Lead> leads = [SELECT Id FROM Lead];
-        List<Id> leadIds = new List<Id>();
-        for(Lead l : leads){
-            leadIds.add(l.Id);
-        }
-
-        // Prepare BrazeFlowBatchRequest for Opportunities
-        BrazeSyncJob.BrazeFlowBatchRequest req = new BrazeSyncJob.BrazeFlowBatchRequest();
-        req.recordIds = leadIds;
-        req.recordType = 'Opportunity';
-
-        Test.startTest();
-        // Set mock dynamically
-    	BrazeHttpMock.setMock(401, 'Server Error', '{"message":"Error"}');
-        
-        BrazeSyncJob.sendToBraze(new List<BrazeSyncJob.BrazeFlowBatchRequest>{ req });
-        Test.stopTest();
-
-        // Assert that a batch job was queued
-        List<AsyncApexJob> jobs = [SELECT Id, Status, JobType FROM AsyncApexJob WHERE JobType = 'BatchApex'];
-        System.assert(!jobs.isEmpty(), 'Expected a batch job to be queued');
-    }
-    
-    @isTest
-    static void testSendToBrazeWithOpportunities_NullResponse() {
-        // Get Lead Ids
-        List<Lead> leads = [SELECT Id FROM Lead];
-        List<Id> leadIds = new List<Id>();
-        for(Lead l : leads){
-            leadIds.add(l.Id);
-        }
-
-        // Prepare BrazeFlowBatchRequest for Opportunities
-        BrazeSyncJob.BrazeFlowBatchRequest req = new BrazeSyncJob.BrazeFlowBatchRequest();
-        req.recordIds = leadIds;
-        req.recordType = 'Opportunity';
-
-        Test.startTest();
-        // Set mock dynamically
-    	BrazeHttpMock.setMock(500, 'Server Error', '');
-        
-        BrazeSyncJob.sendToBraze(new List<BrazeSyncJob.BrazeFlowBatchRequest>{ req });
-        Test.stopTest();
-
-        // Assert that a batch job was queued
-        List<AsyncApexJob> jobs = [SELECT Id, Status, JobType FROM AsyncApexJob WHERE JobType = 'BatchApex'];
-        System.assert(!jobs.isEmpty(), 'Expected a batch job to be queued');
-    }
-
-    @isTest
     static void testSendToBrazeWithEmptyIds() {
         BrazeSyncJob.BrazeFlowBatchRequest req = new BrazeSyncJob.BrazeFlowBatchRequest();
         req.recordIds = new List<Id>(); // empty
@@ -227,5 +152,41 @@ private class BrazeSyncJobTest {
         // Should not have queued any batch job
         List<AsyncApexJob> jobs = [SELECT Id FROM AsyncApexJob WHERE JobType = 'BatchApex'];
         System.assertEquals(0, jobs.size(), 'No batch job should be queued for empty recordIds');
+    }
+    
+    @IsTest
+    static void testBrazeRequestWrapper() {
+        // Create a Lead with all key fields
+        Lead testLead = [SELECT Id, FirstName, LastName, Email, MobilePhone, Status, Lost_Reason__c, Desired_Location__c, Desired_Location__r.Name, ConvertedOpportunityId, OwnerId, CreatedDate, HasOptedOutOfEmail, HasOptedOutOfFax FROM Lead LIMIT 1];
+		Opportunity oppLost = new Opportunity();
+        Opportunity oppWon = new Opportunity();
+        for(Opportunity opp: [SELECT Id, Name, StageName, Loss_Reason__c FROM Opportunity]) {
+            if( opp.StageName == 'Closed Lost' ) {
+                oppLost = opp;
+            }else if( opp.StageName == 'Closed Won' ) {
+                oppWon = opp;
+            }
+        }
+        BrazeRequestWrapper wrapper = new BrazeRequestWrapper();
+        System.assertNotEquals(null, wrapper.attributes);
+        System.assertNotEquals(null, wrapper.events);
+
+        BrazeRequestWrapper.Attribute leadAttr = new BrazeRequestWrapper.Attribute(testLead, 'Lead', new List<Opportunity>());
+        System.assertEquals(testLead.Email, leadAttr.email);
+        System.assertEquals('opted_in', leadAttr.email_subscribe);
+        System.assertEquals('unsubscribed', leadAttr.sms_subscribe);
+        System.assertEquals('BSR City', leadAttr.desired_location);
+        System.assertEquals(UserInfo.getTimeZone().getID(), leadAttr.time_zone);
+
+        BrazeRequestWrapper.Attribute oppAttrLost = new BrazeRequestWrapper.Attribute(testLead, 'Opportunity', new List<Opportunity>{ oppLost });
+        System.assertEquals('High Price', oppAttrLost.lost_reason);
+
+        BrazeRequestWrapper.Event oppEventWon = new BrazeRequestWrapper.Event(testLead, 'Opportunity', new List<Opportunity>{ oppWon });
+        System.assertEquals('opportunity_closed_won', oppEventWon.name);
+        System.assertEquals('Closed Won', oppEventWon.properties.get('opportunity_stage'));
+
+        BrazeRequestWrapper.Event oppEventLost = new BrazeRequestWrapper.Event(testLead, 'Opportunity', new List<Opportunity>{ oppLost });
+        System.assertEquals('opportunity_closed_lost', oppEventLost.name);
+        System.assertEquals('Closed Lost', oppEventLost.properties.get('opportunity_stage'));
     }
 }
