@@ -12,7 +12,7 @@ global class BrazeSyncCalloutBatch implements Database.Batchable<sObject>, Datab
     // Start method: query records
     global Database.QueryLocator start(Database.BatchableContext BC){
         return Database.getQueryLocator([
-            SELECT Id, FirstName, LastName, Email, MobilePhone, Status, Lost_Reason__c, Desired_Location__c, ConvertedOpportunityId, OwnerId, CreatedDate
+            SELECT Id, FirstName, LastName, Email, MobilePhone, Status, Lost_Reason__c, Desired_Location__c, Desired_Location__r.Name, ConvertedOpportunityId, OwnerId, CreatedDate, HasOptedOutOfEmail, HasOptedOutOfFax
             FROM Lead WHERE Id IN :recordIds
         ]);
     }
@@ -24,7 +24,7 @@ global class BrazeSyncCalloutBatch implements Database.Batchable<sObject>, Datab
         for(sObject rec : scope){
             try {
                 Lead leadRec = (Lead) rec;
-                Log.setLogName('Braze Sync ' + recordType);
+                Log.setLogName('Braze Sync Callout Batch');
                 Log.setObject(recordType);
                 Log.setRelatedLead(leadRec.Id);
                 BrazeRequestWrapper payload = new BrazeRequestWrapper();

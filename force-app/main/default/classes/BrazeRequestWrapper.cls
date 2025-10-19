@@ -19,6 +19,7 @@ public class BrazeRequestWrapper {
         public String lost_reason;
         public String desired_location;
         public String email_subscribe;
+        public String sms_subscribe;
         public Datetime first_lead_date;
         
         public Attribute(
@@ -31,8 +32,10 @@ public class BrazeRequestWrapper {
             this.phone = lead.MobilePhone;
             this.time_zone = UserInfo.getTimeZone().getID();
             this.first_lead_date = lead.CreatedDate;
-            this.desired_location = lead.Desired_Location__c;
+            this.desired_location = lead.Desired_Location__c != null ? lead.Desired_Location__r.Name : '';
             this.lead_status = lead.Status;
+            this.email_subscribe = lead.HasOptedOutOfEmail ? 'unsubscribed' : 'opted_in';
+            this.sms_subscribe = lead.HasOptedOutOfFax ? 'unsubscribed' : 'opted_in';
             if(recordType == 'Opportunity' && oppList[0].StageName == 'Closed Lost') {
                 this.lost_reason = oppList[0].Loss_Reason__c;
             }
