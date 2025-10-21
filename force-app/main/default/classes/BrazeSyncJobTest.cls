@@ -189,4 +189,50 @@ private class BrazeSyncJobTest {
         System.assertEquals('opportunity_closed_lost', oppEventLost.name);
         System.assertEquals('Closed Lost', oppEventLost.properties.get('opportunity_stage'));
     }
+    
+    @isTest
+    static void testPhoneFixBatch_Lead() {
+        // --- Test Data ---
+        List<Lead> leads = new List<Lead>{
+            new Lead(LastName='Test1', Company='Test Co', MobilePhone='054-4576526'), // Israeli - should format
+            new Lead(LastName='Test2', Company='Test Co', MobilePhone='+972544576526'), // Already formatted
+            new Lead(LastName='Test3', Company='Test Co', MobilePhone='+447856123456'), // Non-Israeli
+            new Lead(LastName='Test4', Company='Test Co', MobilePhone='Call me later')  // Invalid (text)
+        };
+        insert leads;
+
+        // --- Run Batch for Leads ---
+        Test.startTest();
+        Database.executeBatch(new PhoneFixBatch('Lead'), 50);
+        Test.stopTest();
+
+        // --- Validate ---
+        List<Lead> updatedLeads = [SELECT Id, MobilePhone FROM Lead WHERE Id IN :leads];
+
+        System.assertEquals('+972544576526', updatedLeads[0].MobilePhone, 'Should be formatted to +972');
+        System.assertEquals('+972544576526', updatedLeads[1].MobilePhone, 'Should remain unchanged');
+    }
+
+    @isTest
+    static void testPhoneFixBatch_Contact() {
+        // --- Test Data ---
+        List<Contact> contacts = new List<Contact>{
+            new Contact(LastName='Contact1', MobilePhone='058-7654321'), // Israeli
+            new Contact(LastName='Contact2', MobilePhone='972587654321'), // Israeli without +
+            new Contact(LastName='Contact3', MobilePhone='+11234567890'), // Non-Israeli
+            new Contact(LastName='Contact4', MobilePhone='invalid phone') // Text
+        };
+        insert contacts;
+
+        // --- Run Batch for Contacts ---
+        Test.startTest();
+        Database.executeBatch(new PhoneFixBatch('Contact'), 50);
+        Test.stopTest();
+
+        // --- Validate ---
+        List<Contact> updatedContacts = [SELECT Id, MobilePhone FROM Contact WHERE Id IN :contacts];
+
+        System.assertEquals('+972587654321', updatedContacts[0].MobilePhone, 'Should be formatted');
+        System.assertEquals('+972587654321', updatedContacts[1].MobilePhone, 'Should be formatted');
+    }
 }
