@@ -552,7 +552,7 @@
             <label>Yes, update order products</label>
         </rules>
     </decisions>
-    <description>03/09 - Contract Termination Date bug fix.</description>
+    <description>23/10: Added the Contract Termination Date before canceling the contract, validation fix.</description>
     <environments>Default</environments>
     <formulas>
         <name>AdvanceIteration</name>
@@ -580,6 +580,28 @@ IF(
         <name>ContractOpportunityAutoRenewalCondition</name>
         <dataType>Boolean</dataType>
         <expression>AND( {!$Record.Auto_Renewal__c}, ISPICKVAL( {!$Record.Renewal_Status__c}, &apos;Not Due&apos;), TEXT({!$Record.Current_Renewal_Iteration__c}) != TEXT({!$Record.Renewal_Total_Iterations__c}), ISPICKVAL( {!$Record.Status}, &apos;Activated&apos;))</expression>
+    </formulas>
+    <formulas>
+        <name>ContractTerminationDate</name>
+        <dataType>Date</dataType>
+        <expression>IF(
+    ISBLANK({!$Record.Contract_Termination_Date__c}),
+    IF(
+        NOT(ISBLANK({!$Record.EndDate})),
+        {!$Record.EndDate},
+        TODAY()
+    ),
+    {!$Record.Contract_Termination_Date__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>ContractTerminationReason</name>
+        <dataType>String</dataType>
+        <expression>IF(
+  ISBLANK(TEXT({!$Record.Contract_Termination_Reason__c})),
+  &quot;Optimization Process&quot;,
+  TEXT({!$Record.Contract_Termination_Reason__c})
+)</expression>
     </formulas>
     <formulas>
         <name>DecisionAutoRenewal</name>
@@ -1222,6 +1244,18 @@ DATE(
         <connector>
             <targetReference>Determine_Contract_Update_Path</targetReference>
         </connector>
+        <inputAssignments>
+            <field>Contract_Termination_Date__c</field>
+            <value>
+                <elementReference>ContractTerminationDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contract_Termination_Reason__c</field>
+            <value>
+                <elementReference>ContractTerminationReason</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>Status</field>
             <value>
