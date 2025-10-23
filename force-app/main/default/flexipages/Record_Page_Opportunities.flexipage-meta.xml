@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>&lt;20-08-2025&gt;&lt;869a0m9d8&gt;&lt;Renjith&gt;</description>
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
@@ -466,23 +467,6 @@
                         <leftValue>{!Record.RecordType.Name}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Standard Opportunity</rightValue>
-                    </criteria>
-                </visibilityRule>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>required</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Lease_Termination_Notice_Monthes__c</fieldItem>
-                <identifier>RecordLease_Termination_Notice_Monthes_cField</identifier>
-                <visibilityRule>
-                    <criteria>
-                        <leftValue>{!Record.Contract_Type__c}</leftValue>
-                        <operator>EQUAL</operator>
-                        <rightValue>Monthly</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -1246,10 +1230,16 @@
                 <componentName>flexipage:fieldSection</componentName>
                 <identifier>flexipage_fieldSection2</identifier>
                 <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.RecordType.Name}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Standard Opportunity</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Contract_Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Periodic</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
