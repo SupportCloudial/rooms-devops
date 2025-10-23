@@ -16,63 +16,6 @@
                             <value>headlessPricingAction</value>
                         </valueListItems>
                         <valueListItems>
-                            <value>Contract.Manual_Contract_Renewal</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Renewed_Contract__r.Name}</leftValue>
-                                    <operator>EQUAL</operator>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Agreement_Type__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Periodic</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!$User.Profile.Name}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>System Administrator</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Contract.Renewal</value>
-                            <visibilityRule>
-                                <booleanFilter>1 AND 2</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Agreement_Type__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Periodic</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Status}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Activated</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
-                            <value>Contract.Change_Opportunity</value>
-                            <visibilityRule>
-                                <booleanFilter>(1 OR 2) AND 3</booleanFilter>
-                                <criteria>
-                                    <leftValue>{!Record.Agreement_Type__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Periodic</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Agreement_Type__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Monthly</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Status}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Activated</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Contract.Push_Start_Date</value>
                             <visibilityRule>
                                 <criteria>
@@ -84,6 +27,16 @@
                         </valueListItems>
                         <valueListItems>
                             <value>Contract.Change_Order</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Contract.Change_Opportunity</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Activated</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>

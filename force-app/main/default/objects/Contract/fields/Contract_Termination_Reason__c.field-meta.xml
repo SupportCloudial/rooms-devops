@@ -50,6 +50,11 @@
                 <default>false</default>
                 <label>No Relevant Solution for New Needs (Location/Mix/Needs)</label>
             </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
