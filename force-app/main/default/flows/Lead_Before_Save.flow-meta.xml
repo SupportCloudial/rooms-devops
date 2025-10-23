@@ -15,14 +15,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Is_New_Web_Lead</targetReference>
+            <targetReference>Is_It_a_New_Book_a_Space_Lead</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Update_Classroom_To_Others</name>
         <label>Update Classroom To Others</label>
         <locationX>842</locationX>
-        <locationY>1019</locationY>
+        <locationY>2219</locationY>
         <assignmentItems>
             <assignToReference>$Record.Product_Type_From_Web__c</assignToReference>
             <operator>Assign</operator>
@@ -36,10 +36,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Update_Desired_Location_with_Sandbox_Location_Id</name>
+        <label>Update Desired Location with Sandbox Location Id</label>
+        <locationX>1441</locationX>
+        <locationY>1343</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Desired_Location__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Matching_Location_Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Is_New_Web_Lead</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Update_Non_Web_Lead_Location_Area</name>
         <label>Update Non-Web Lead Location Area</label>
         <locationX>2426</locationX>
-        <locationY>803</locationY>
+        <locationY>2003</locationY>
         <assignmentItems>
             <assignToReference>$Record.Location_Area__c</assignToReference>
             <operator>Assign</operator>
@@ -52,7 +68,7 @@
         <name>Update_On_Demand_Location_Details</name>
         <label>Update On Demand Location Details</label>
         <locationX>50</locationX>
-        <locationY>1127</locationY>
+        <locationY>2327</locationY>
         <assignmentItems>
             <assignToReference>$Record.Desired_Location__c</assignToReference>
             <operator>Assign</operator>
@@ -93,7 +109,7 @@
         <name>Update_Standard_Location_Details</name>
         <label>Update Standard Location Details</label>
         <locationX>1898</locationX>
-        <locationY>1019</locationY>
+        <locationY>2219</locationY>
         <assignmentItems>
             <assignToReference>$Record.Desired_Location__c</assignToReference>
             <operator>Assign</operator>
@@ -134,7 +150,7 @@
         <name>Update_To_Daily_Service</name>
         <label>Update To Daily Service</label>
         <locationX>578</locationX>
-        <locationY>1019</locationY>
+        <locationY>2219</locationY>
         <assignmentItems>
             <assignToReference>$Record.Product_Type_From_Web__c</assignToReference>
             <operator>Assign</operator>
@@ -151,7 +167,7 @@
         <name>Update_To_Event</name>
         <label>Update To Event</label>
         <locationX>314</locationX>
-        <locationY>1019</locationY>
+        <locationY>2219</locationY>
         <assignmentItems>
             <assignToReference>$Record.Product_Type_From_Web__c</assignToReference>
             <operator>Assign</operator>
@@ -168,7 +184,7 @@
         <name>Update_To_Meeting_Room</name>
         <label>Update To Meeting Room</label>
         <locationX>50</locationX>
-        <locationY>1019</locationY>
+        <locationY>2219</locationY>
         <assignmentItems>
             <assignToReference>$Record.Product_Type_From_Web__c</assignToReference>
             <operator>Assign</operator>
@@ -184,7 +200,7 @@
         <name>Update_To_Office_1_4</name>
         <label>Update To Office 1-4</label>
         <locationX>1370</locationX>
-        <locationY>1019</locationY>
+        <locationY>2219</locationY>
         <assignmentItems>
             <assignToReference>$Record.Product_Type_From_Web__c</assignToReference>
             <operator>Assign</operator>
@@ -201,7 +217,7 @@
         <name>Update_To_Open_Space</name>
         <label>Update To Open Space</label>
         <locationX>1106</locationX>
-        <locationY>1019</locationY>
+        <locationY>2219</locationY>
         <assignmentItems>
             <assignToReference>$Record.Product_Type_From_Web__c</assignToReference>
             <operator>Assign</operator>
@@ -218,7 +234,7 @@
         <name>Update_To_Others</name>
         <label>Update To Others</label>
         <locationX>1634</locationX>
-        <locationY>1019</locationY>
+        <locationY>2219</locationY>
         <assignmentItems>
             <assignToReference>$Record.Product_Type_From_Web__c</assignToReference>
             <operator>Assign</operator>
@@ -237,12 +253,12 @@
         <locationX>2063</locationX>
         <locationY>287</locationY>
         <defaultConnector>
-            <targetReference>Is_New_Web_Lead</targetReference>
+            <targetReference>Is_It_a_New_Book_a_Space_Lead</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>Already Formatted</defaultConnectorLabel>
         <rules>
             <name>Needs_Formatting</name>
-            <conditionLogic>( 1 AND 2 ) OR (  1 AND NOT ( 3 )  )</conditionLogic>
+            <conditionLogic>( 1 AND 2 AND 3 ) OR (  1 AND 3 )</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.MobilePhone</leftValueReference>
                 <operator>IsNull</operator>
@@ -258,10 +274,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.MobilePhone</leftValueReference>
-                <operator>StartsWith</operator>
+                <leftValueReference>ValidPhoneNumber</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>+972</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -274,7 +290,7 @@
         <name>Found_Location</name>
         <label>Found Location?</label>
         <locationX>1568</locationX>
-        <locationY>803</locationY>
+        <locationY>2003</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_Location_Exist</name>
@@ -293,10 +309,106 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Is_It_a_New_Book_a_Space_Lead</name>
+        <label>Is It a New Book a Space Lead?</label>
+        <locationX>2063</locationX>
+        <locationY>587</locationY>
+        <defaultConnector>
+            <targetReference>Is_New_Web_Lead</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_New_Book_a_Space_Lead</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Book_A_Space_Id__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.SubSource__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Book A Space</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Desired_Location__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Organization_Data</targetReference>
+            </connector>
+            <label>Yes, New Book a Space Lead</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Matching_Location_Record_Found</name>
+        <label>Is Matching Location Record Found?</label>
+        <locationX>1573</locationX>
+        <locationY>1235</locationY>
+        <defaultConnector>
+            <targetReference>Is_New_Web_Lead</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Matching_Location_Record_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Matching_Location_Record</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Desired_Location_with_Sandbox_Location_Id</targetReference>
+            </connector>
+            <label>Yes, Matching Location Record Found</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Matching_Metadata_Record_Found</name>
+        <label>Is Matching Metadata Record Found?</label>
+        <locationX>1727</locationX>
+        <locationY>1019</locationY>
+        <defaultConnector>
+            <targetReference>Is_New_Web_Lead</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Matching_Metadata_Record_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Location_Name_from_Custom_Metadata</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Matching_Location_Record</targetReference>
+            </connector>
+            <label>Yes, Matching Metadata Record Found</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_New_Non_Web_Lead</name>
         <label>Is New Non-Web Lead?</label>
         <locationX>2558</locationX>
-        <locationY>695</locationY>
+        <locationY>1895</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_New_Non_Web_Lead</name>
@@ -318,7 +430,7 @@
         <name>Is_New_Web_Lead</name>
         <label>Is New Web Lead?</label>
         <locationX>2063</locationX>
-        <locationY>587</locationY>
+        <locationY>1787</locationY>
         <defaultConnector>
             <targetReference>Is_New_Non_Web_Lead</targetReference>
         </defaultConnector>
@@ -347,6 +459,38 @@
         </rules>
     </decisions>
     <decisions>
+        <name>It_is_Sandbox</name>
+        <label>It is Sandbox?</label>
+        <locationX>1892</locationX>
+        <locationY>803</locationY>
+        <defaultConnector>
+            <targetReference>Is_New_Web_Lead</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_It_is_Sandbox</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Organization_Data</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Organization_Data.IsSandbox</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Location_Name_from_Custom_Metadata</targetReference>
+            </connector>
+            <label>Yes, It is Sandbox</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>sppacing values should be change with the following order:
 Coworkingspace - 	Open Space  (Standart)
 Meetingroom - Meeting Room (ondemand)
@@ -357,7 +501,7 @@ Other → 	Open Space (standart)</description>
         <name>Spacing_values</name>
         <label>Spacing values?</label>
         <locationX>974</locationX>
-        <locationY>911</locationY>
+        <locationY>2111</locationY>
         <defaultConnector>
             <targetReference>Update_Standard_Location_Details</targetReference>
         </defaultConnector>
@@ -496,7 +640,7 @@ Other → 	Open Space (standart)</description>
             <label>Space Unknown</label>
         </rules>
     </decisions>
-    <description>19/10: Salesforce - Braze Integration for Lead &amp; Opportunity Updates: Mobile Phone formatting</description>
+    <description>16/10: Salesforce - Braze Integration for Lead &amp; Opportunity Updates: Valid Mobile Phone formatting</description>
     <environments>Default</environments>
     <formulas>
         <name>AutomaticProductTypeValue</name>
@@ -602,6 +746,15 @@ Other → 	Open Space (standart)</description>
         <dataType>String</dataType>
         <expression>IF(ISPICKVAL({!$Record.Product_Type_From_Web__c}, &apos;Hot Desk&apos;), &apos;Hot Desk&apos;, TEXT({!$Record.Product_Type_From_Web__c}))</expression>
     </formulas>
+    <formulas>
+        <name>ValidPhoneNumber</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+  NOT(ISBLANK({!$Record.MobilePhone})),
+  NOT(REGEX({!$Record.MobilePhone}, &quot;.*[A-Za-z].*&quot;)),
+  REGEX({!$Record.MobilePhone}, &quot;^(\\+972|972|0)5[0-9]{8}$&quot;)
+)</expression>
+    </formulas>
     <interviewLabel>Lead Before Save {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Lead Before Save</label>
     <processMetadataValues>
@@ -624,10 +777,65 @@ Other → 	Open Space (standart)</description>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
+        <name>Get_Location_Name_from_Custom_Metadata</name>
+        <label>Get Location Name from Custom Metadata</label>
+        <locationX>1727</locationX>
+        <locationY>911</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Matching_Metadata_Record_Found</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Desired_Location__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Location_Setting__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Matching_Location_Record</name>
+        <label>Get Matching Location Record</label>
+        <locationX>1573</locationX>
+        <locationY>1127</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Matching_Location_Record_Found</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Location_Name_from_Custom_Metadata.Label</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Locations__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_Organization_Data</name>
+        <label>Get Organization Data</label>
+        <locationX>1892</locationX>
+        <locationY>695</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>It_is_Sandbox</targetReference>
+        </connector>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Organization</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Site_Matching_Location</name>
         <label>Site Matching Location</label>
         <locationX>1568</locationX>
-        <locationY>695</locationY>
+        <locationY>1895</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Found_Location</targetReference>
@@ -654,7 +862,7 @@ Other → 	Open Space (standart)</description>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>IntrestedInVar</name>
         <dataType>String</dataType>
