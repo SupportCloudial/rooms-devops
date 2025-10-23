@@ -258,7 +258,7 @@
         <defaultConnectorLabel>Already Formatted</defaultConnectorLabel>
         <rules>
             <name>Needs_Formatting</name>
-            <conditionLogic>( 1 AND 2 AND 3 ) OR (  1 AND 3 )</conditionLogic>
+            <conditionLogic>( 1 AND 2 ) OR ( 1 AND NOT ( 3 ) )</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.MobilePhone</leftValueReference>
                 <operator>IsNull</operator>
@@ -274,10 +274,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>ValidPhoneNumber</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>$Record.MobilePhone</leftValueReference>
+                <operator>StartsWith</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <stringValue>+972</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -862,7 +862,7 @@ Other → 	Open Space (standart)</description>
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>IntrestedInVar</name>
         <dataType>String</dataType>
