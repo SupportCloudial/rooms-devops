@@ -746,15 +746,7 @@ Other → 	Open Space (standart)</description>
         <dataType>String</dataType>
         <expression>IF(ISPICKVAL({!$Record.Product_Type_From_Web__c}, &apos;Hot Desk&apos;), &apos;Hot Desk&apos;, TEXT({!$Record.Product_Type_From_Web__c}))</expression>
     </formulas>
-    <formulas>
-        <name>ValidPhoneNumber</name>
-        <dataType>Boolean</dataType>
-        <expression>AND(
-  NOT(ISBLANK({!$Record.MobilePhone})),
-  NOT(REGEX({!$Record.MobilePhone}, &quot;.*[A-Za-z].*&quot;)),
-  REGEX({!$Record.MobilePhone}, &quot;^(\\+972|972|0)5[0-9]{8}$&quot;)
-)</expression>
-    </formulas>
+    
     <interviewLabel>Lead Before Save {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Lead Before Save</label>
     <processMetadataValues>
