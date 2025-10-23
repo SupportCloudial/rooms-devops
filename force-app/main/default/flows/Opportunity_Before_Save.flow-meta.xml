@@ -3,6 +3,38 @@
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
+        <name>Assign_Big_Deal_Owner</name>
+        <label>Assign Big Deal Owner</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Location__r.Big_Deal_Salesperson_15_sales__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Record_Is_New</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_sales_person_related_to_location_to_owner</name>
+        <label>Assign sales person related to location to owner</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.OwnerId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Location__r.Salesperson__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Record_Is_New</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Set_Notice_Period_To_1</name>
         <label>Set Notice Period To 1</label>
         <locationX>0</locationX>
@@ -14,7 +46,46 @@
                 <stringValue>1</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Should_Run_Assign_Owner_Logic</targetReference>
+        </connector>
     </assignments>
+    <assignments>
+        <name>Update_Index_Date</name>
+        <label>Update Index Date</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Track_CPI_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DateOfIndex</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Should_Update_Track_CPI_Timestamp</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Update_Track_CPI_Timestamp</name>
+        <label>Update Track CPI Timestamp</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Track_CPI_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <constants>
+        <name>StandardOpportunityRT</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>012J7000000066kIAA</stringValue>
+        </value>
+    </constants>
     <customErrors>
         <name>Attendance_Not_Updated_Error</name>
         <label>Attendance Not Updated Error</label>
@@ -26,6 +97,57 @@
             <isFieldError>true</isFieldError>
         </customErrorMessages>
     </customErrors>
+    <customErrors>
+        <name>Populate_Attendance_Status</name>
+        <label>Populate Attendance Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Is_Renewal_Iterations_is_Required</targetReference>
+        </connector>
+        <customErrorMessages>
+            <errorMessage>Please choose a value of Attendance Status for all related Tour events before closing the opportunity</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <customErrors>
+        <name>Renewal_Iterations_is_Required_When_Type_is_Periodic</name>
+        <label>Renewal Iterations is Required When Type is Periodic</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Should_Update_Index_Date</targetReference>
+        </connector>
+        <customErrorMessages>
+            <errorMessage>Renewal Iterations field is required when Contract Type is Periodic</errorMessage>
+            <isFieldError>false</isFieldError>
+        </customErrorMessages>
+    </customErrors>
+    <decisions>
+        <name>Assign_Owner</name>
+        <label>Assign Owner</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Assign_sales_person_related_to_location_to_owner</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Other</defaultConnectorLabel>
+        <rules>
+            <name>Big_Deal</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Interested_in__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Private Office for 15+</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Big_Deal_Owner</targetReference>
+            </connector>
+            <label>Big Deal</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Attendance_Updated</name>
         <label>Attendance Updated?</label>
@@ -52,10 +174,174 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Found_Null_Events</name>
+        <label>Found Null Events?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Is_Renewal_Iterations_is_Required</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>No_Tour_Attendance_is_not_Populated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_events</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Populate_Attendance_Status</targetReference>
+            </connector>
+            <label>No, Tour Attendance is not Populated</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Is_Renewal_Iterations_is_Required</name>
+        <label>Is Renewal Iterations is Required?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Should_Update_Index_Date</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Renewal_Iterations_is_Required</name>
+            <conditionLogic>(1 OR 2 OR 3 OR 4) AND 5 AND 6 AND 7</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Contract Review</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Contract sent</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Deposit and Documents received</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Closed Won</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Renewal_Iterations__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Contract_Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Periodic</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Automatic_Renewal__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Renewal_Iterations_is_Required_When_Type_is_Periodic</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Yes, Renewal Iterations is Required</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Record_Is_New</name>
+        <label>Record Is New?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Not_New</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Tour_Attendance_is_Populated</targetReference>
+            </connector>
+            <label>Not New</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Should_Run_Assign_Owner_Logic</name>
+        <label>Should Run Assign Owner Logic?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Record_Is_New</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Run_Assign_Owner_Logic</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>StandardOpportunityRT</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>New</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Tour scheduled</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Owner</targetReference>
+            </connector>
+            <label>Yes, Run Assign Owner Logic</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Should_Set_Notice_Period_To_1</name>
         <label>Should Set Notice Period To 1?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Should_Run_Assign_Owner_Logic</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_Set_Notice_Period_To_1</name>
@@ -78,6 +364,89 @@
                 <targetReference>Set_Notice_Period_To_1</targetReference>
             </connector>
             <label>Yes, Set Notice Period To 1</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Should_Update_Index_Date</name>
+        <label>Should Update Index Date?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Should_Update_Track_CPI_Timestamp</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Update_Index_Date</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Contract sent</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Track_CPI__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Index_Date</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Yes, Update Index Date</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Should_Update_Track_CPI_Timestamp</name>
+        <label>Should Update Track CPI Timestamp?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Update_CPI_Timestamp</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>IsChanged</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Contract sent</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Track_CPI__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>StandardOpportunityRT</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Track_CPI_Date__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Track_CPI_Timestamp</targetReference>
+            </connector>
+            <label>Yes, Update CPI Timestamp</label>
         </rules>
     </decisions>
     <decisions>
@@ -112,7 +481,58 @@
             <label>Yes, Stage Changed From Tour Scheduled</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Tour_Attendance_is_Populated</name>
+        <label>Tour Attendance is Populated?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Is_Renewal_Iterations_is_Required</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Check_Events</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.StageName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Contract Review</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordTypeId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>StandardOpportunityRT</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_events</targetReference>
+            </connector>
+            <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
+            <label>Check Events</label>
+        </rules>
+    </decisions>
+    <description>21/08: Flow Merge</description>
     <environments>Default</environments>
+    <formulas>
+        <name>DateOfIndex</name>
+        <dataType>Date</dataType>
+        <expression>IF(
+    DAY({!$Flow.CurrentDate}) &gt;= 15,
+    DATE(
+        YEAR({!$Flow.CurrentDate}),
+        MONTH({!$Flow.CurrentDate}),
+        15
+    ),
+    DATE(
+        YEAR({!$Flow.CurrentDate}) - IF(MONTH({!$Flow.CurrentDate}) = 1, 1, 0),
+        IF(MONTH({!$Flow.CurrentDate}) = 1, 12, MONTH({!$Flow.CurrentDate}) - 1),
+        15
+    )
+)</expression>
+    </formulas>
     <interviewLabel>Opportunity Before Save {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Opportunity Before Save</label>
     <loops>
@@ -148,6 +568,48 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_events</name>
+        <label>Get events</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Found_Null_Events</targetReference>
+        </connector>
+        <filterLogic>1 AND 2 AND (3 OR 4)</filterLogic>
+        <filters>
+            <field>WhatId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Attentance_Status__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Subject</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Tour</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Tour</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Event</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>Related_Tours</name>
         <label>Related Tours</label>
