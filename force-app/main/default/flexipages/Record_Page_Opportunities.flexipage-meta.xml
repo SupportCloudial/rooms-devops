@@ -149,16 +149,6 @@
                 <identifier>RecordStageNameField</identifier>
             </fieldInstance>
         </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.Account_Address__c</fieldItem>
-                <identifier>RecordAccount_Address__cField</identifier>
-            </fieldInstance>
-        </itemInstances>
         <name>Facet-7368b899-a2e0-4e46-b412-78cffec8db8d</name>
         <type>Facet</type>
     </flexiPageRegions>
