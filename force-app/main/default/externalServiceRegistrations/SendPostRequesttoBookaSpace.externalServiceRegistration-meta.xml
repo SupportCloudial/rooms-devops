@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExternalServiceRegistration xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>SendPostRequesttoBookaSpace</label>
+    <namedCredentialReference>Book_a_Space</namedCredentialReference>
+    <operations>
+        <active>true</active>
+        <name>sendx5fpostx5frequestx5ftox5fbookx5fax5fspace</name>
+    </operations>
+    <registrationProviderType>SchemaInferred</registrationProviderType>
+    <schema>{&quot;openapi&quot;:&quot;3.0.1&quot;,&quot;info&quot;:{&quot;title&quot;:&quot;SendPostRequesttoBookaSpace&quot;,&quot;description&quot;:&quot;&quot;},&quot;paths&quot;:{&quot;&quot;:{&quot;post&quot;:{&quot;description&quot;:&quot;&quot;,&quot;operationId&quot;:&quot;Send_Post_Request_to_Book_a_Space&quot;,&quot;requestBody&quot;:{&quot;description&quot;:&quot;&quot;,&quot;content&quot;:{&quot;application/json&quot;:{&quot;schema&quot;:{&quot;type&quot;:&quot;object&quot;,&quot;properties&quot;:{&quot;PeopleCount&quot;:{&quot;type&quot;:&quot;integer&quot;,&quot;format&quot;:&quot;int64&quot;},&quot;Status&quot;:{&quot;type&quot;:&quot;string&quot;},&quot;Email&quot;:{&quot;type&quot;:&quot;string&quot;},&quot;LeadCreatedDate&quot;:{&quot;type&quot;:&quot;string&quot;,&quot;format&quot;:&quot;date-time&quot;},&quot;FirstName&quot;:{&quot;type&quot;:&quot;string&quot;},&quot;SalesforceId&quot;:{&quot;type&quot;:&quot;string&quot;},&quot;LocationId&quot;:{&quot;type&quot;:&quot;string&quot;},&quot;SubSource&quot;:{&quot;type&quot;:&quot;string&quot;},&quot;City&quot;:{&quot;type&quot;:&quot;string&quot;},&quot;MobilePhone&quot;:{&quot;type&quot;:&quot;string&quot;},&quot;RoomType&quot;:{&quot;type&quot;:&quot;string&quot;},&quot;LeadSource&quot;:{&quot;type&quot;:&quot;string&quot;},&quot;LastName&quot;:{&quot;type&quot;:&quot;string&quot;},&quot;Notes&quot;:{&quot;type&quot;:&quot;string&quot;}}}}},&quot;required&quot;:true},&quot;responses&quot;:{&quot;2XX&quot;:{&quot;description&quot;:&quot;&quot;,&quot;content&quot;:{&quot;application/json&quot;:{&quot;schema&quot;:{&quot;type&quot;:&quot;object&quot;,&quot;properties&quot;:{&quot;offerRequestId&quot;:{&quot;type&quot;:&quot;integer&quot;,&quot;format&quot;:&quot;int64&quot;},&quot;responseMessage&quot;:{&quot;type&quot;:&quot;string&quot;},&quot;status&quot;:{&quot;type&quot;:&quot;integer&quot;,&quot;format&quot;:&quot;int64&quot;},&quot;responseCode&quot;:{&quot;type&quot;:&quot;integer&quot;,&quot;format&quot;:&quot;int64&quot;}}}}}}}}}}}</schema>
+    <schemaType>OpenApi3</schemaType>
+    <serviceBinding>{&quot;host&quot;:&quot;&quot;,&quot;basePath&quot;:&quot;/&quot;,&quot;allowedSchemes&quot;:[],&quot;requestMediaTypes&quot;:[],&quot;responseMediaTypes&quot;:[],&quot;compatibleMediaTypes&quot;:{},&quot;extensions&quot;:{}}</serviceBinding>
+    <status>Complete</status>
+    <systemVersion>8</systemVersion>
+</ExternalServiceRegistration>
