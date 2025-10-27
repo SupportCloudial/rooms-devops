@@ -3,7 +3,7 @@
     <apiVersion>64.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
     <assignments>
-        <name>Contract_Owner_Assignment</name>
+        <name>Assign_Contract_Owner</name>
         <label>Assign Contract Owner</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -11,15 +11,102 @@
             <assignToReference>$Record.OwnerId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>GetContractOwner</elementReference>
+                <elementReference>Find_Site_Manager.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Calculated_End_Date_Check</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Change_Contract_Status</name>
+        <label>Change Contract Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Contract_Termination_Date__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ContractTerminationDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Contract_Termination_Reason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ContractTerminationReason</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>$Record.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Terminated</stringValue>
             </value>
         </assignmentItems>
     </assignments>
+    <decisions>
+        <name>Calculated_End_Date_Check</name>
+        <label>Calculated End Date Check</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Calculated_End_Date_Is_Passed_Due</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CalculatedEndDate</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Flow.CurrentDate</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ShouldProcessContractTermination</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Change_Contract_Status</targetReference>
+            </connector>
+            <label>Calculated End Date Is Passed Due</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Found_Site_Manager</name>
+        <label>Found Site Manager?</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Calculated_End_Date_Check</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_Active_Site_Manager_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Find_Site_Manager</leftValueReference>
+                <operator>IsBlank</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Contract_Owner</targetReference>
+            </connector>
+            <label>Yes, Active Site Manager Found</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Should_Update_Contract_Owner</name>
         <label>Should Update Contract Owner?</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Calculated_End_Date_Check</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Yes_Update_Contract_Owner</name>
@@ -35,33 +122,73 @@
                 <leftValueReference>$Record.Location__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>$Record.Location__r.OwnerId</leftValueReference>
-                <operator>StartsWith</operator>
+                <leftValueReference>$Record.Location__r.Site_Manager__c</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue>005</stringValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Contract_Owner_Assignment</targetReference>
+                <targetReference>Find_Site_Manager</targetReference>
             </connector>
             <label>Yes, Update Contract Owner</label>
         </rules>
     </decisions>
-    <description>10/09: Changes related to Location</description>
+    <description>27/10: Added Status, Contract Termination Date and Reason changes.</description>
     <environments>Default</environments>
     <formulas>
-        <name>GetContractOwner</name>
+        <name>CalculatedEndDate</name>
+        <dataType>Date</dataType>
+        <expression>IF(ISNULL( {!$Record.Contract_Termination_Date__c} ), {!$Record.EndDate}, {!$Record.Contract_Termination_Date__c})</expression>
+    </formulas>
+    <formulas>
+        <name>ContractTerminationDate</name>
+        <dataType>Date</dataType>
+        <expression>IF(
+    ISBLANK({!$Record.Contract_Termination_Date__c}),
+    IF(
+        NOT(ISBLANK({!$Record.EndDate})),
+        {!$Record.EndDate},
+        TODAY()
+    ),
+    {!$Record.Contract_Termination_Date__c}
+)</expression>
+    </formulas>
+    <formulas>
+        <name>ContractTerminationReason</name>
         <dataType>String</dataType>
-        <expression>IF(ISBLANK({!$Record.Opportunity__r.Location__r.OwnerId}), {!$Record.Opportunity__r.OwnerId}, {!$Record.Opportunity__r.Location__r.OwnerId})</expression>
+        <expression>IF(
+  ISBLANK(TEXT({!$Record.Contract_Termination_Reason__c})),
+  &quot;Optimization Process&quot;,
+  TEXT({!$Record.Contract_Termination_Reason__c})
+)</expression>
     </formulas>
     <formulas>
         <name>LocationSiteManagerName</name>
         <dataType>String</dataType>
         <expression>{!$Record.Location__r.Site_Manager__r.FirstName}+&apos; &apos;+{!$Record.Location__r.Site_Manager__r.LastName}</expression>
+    </formulas>
+    <formulas>
+        <name>ShouldProcessContractTermination</name>
+        <dataType>Boolean</dataType>
+        <expression>OR(
+    AND(
+        ISNEW(),
+        NOT(ISNULL({!$Record.EndDate}))
+    ),
+    AND(
+        ISCHANGED({!$Record.EndDate}),
+        NOT(ISNULL({!$Record.EndDate}))
+    ),
+    AND(
+        ISCHANGED({!$Record.Contract_Termination_Date__c}),
+        NOT(ISNULL({!$Record.Contract_Termination_Date__c}))
+    )
+)</expression>
     </formulas>
     <interviewLabel>Contract Before Save {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Contract Before Save</label>
@@ -84,6 +211,34 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Find_Site_Manager</name>
+        <label>Find Site Manager</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Found_Site_Manager</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>LocationSiteManagerName</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>User</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
@@ -94,5 +249,5 @@
         <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

@@ -307,38 +307,6 @@
         </connector>
     </assignments>
     <decisions>
-        <name>Calculated_End_Date_Check</name>
-        <label>Calculated End Date Check</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>Determine_Contract_Update_Path</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Do Nothing And End Flow</defaultConnectorLabel>
-        <rules>
-            <name>Calculated_End_Date_Is_Passed_Due</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>$Record.Calculated_End_Date__c</leftValueReference>
-                <operator>LessThanOrEqualTo</operator>
-                <rightValue>
-                    <elementReference>$Flow.CurrentDate</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ShouldProcessContractTermination</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Change_Contract_Status</targetReference>
-            </connector>
-            <label>Calculated End Date Is Passed Due</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Determine_Contract_Update_Path</name>
         <label>Determine Contract Update Path</label>
         <locationX>0</locationX>
@@ -526,7 +494,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>Calculated_End_Date_Check</targetReference>
+            <targetReference>Determine_Contract_Update_Path</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -552,7 +520,7 @@
             <label>Yes, update order products</label>
         </rules>
     </decisions>
-    <description>03/09 - Contract Termination Date bug fix.</description>
+    <description>27/10: Removed the Contract Termination Date changes and moved them to Contract Before Save.</description>
     <environments>Default</environments>
     <formulas>
         <name>AdvanceIteration</name>
@@ -1215,22 +1183,6 @@ DATE(
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Change_Contract_Status</name>
-        <label>Change Contract Status</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <connector>
-            <targetReference>Determine_Contract_Update_Path</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>Terminated</stringValue>
-            </value>
-        </inputAssignments>
-        <inputReference>$Record</inputReference>
-    </recordUpdates>
-    <recordUpdates>
         <description>Contract Status cannot be &quot;Acivated on creation. this will change the value post-creation</description>
         <name>Change_Renewal_Contract_Status</name>
         <label>Change Renewal Contract Status</label>
@@ -1295,7 +1247,7 @@ DATE(
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Calculated_End_Date_Check</targetReference>
+            <targetReference>Determine_Contract_Update_Path</targetReference>
         </connector>
         <filterLogic>(1 AND 2 AND 3) OR (4 AND 2)</filterLogic>
         <filters>
