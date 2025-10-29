@@ -258,26 +258,12 @@
         <defaultConnectorLabel>Already Formatted</defaultConnectorLabel>
         <rules>
             <name>Needs_Formatting</name>
-            <conditionLogic>( 1 AND 2 ) OR ( 1 AND NOT ( 3 ) )</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>$Record.MobilePhone</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>HasSpecialChars</leftValueReference>
+                <leftValueReference>ShouldFormatMobilePhone</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>$Record.MobilePhone</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>+972</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -640,7 +626,7 @@ Other → 	Open Space (standart)</description>
             <label>Space Unknown</label>
         </rules>
     </decisions>
-    <description>16/10: Salesforce - Braze Integration for Lead &amp; Opportunity Updates: Valid Mobile Phone formatting</description>
+    <description>29/10: Salesforce - Updates: Mobile Phone formatting v2</description>
     <environments>Default</environments>
     <formulas>
         <name>AutomaticProductTypeValue</name>
@@ -687,36 +673,48 @@ Other → 	Open Space (standart)</description>
         <name>Formatted_MobilePhone</name>
         <dataType>String</dataType>
         <expression>IF(
-    ISBLANK({!CleanPhone}),
-    &quot;&quot;,
-    /* Step 1: Remove duplicate 972 at start */
+  ISBLANK({!CleanPhone}),
+  &quot;&quot;,
+  IF(
+    {!Is_Valid_Israeli_Number},
+    /* 🇮🇱 Israeli Number Formatting */
+    &quot;+972&quot; &amp;
+    /* Step 1: Normalize any duplicate or prefixed formats */
     IF(
-        LEFT({!CleanPhone},6)=&quot;972972&quot;,
-        /* Remove duplicate and leading zero if present */
-        &quot;+972&quot; &amp;
+      LEFT({!CleanPhone},6) = &quot;972972&quot;,
+      MID({!CleanPhone},7, LEN({!CleanPhone}) - 6),
+      IF(
+        LEFT({!CleanPhone},4) = &quot;9720&quot;,
+        /* Case: 9720XXXXXXXXX → remove both 972 + 0 */
+        MID({!CleanPhone},5, LEN({!CleanPhone}) - 4),
         IF(
-            MID({!CleanPhone},7,1)=&quot;0&quot;,
-            MID({!CleanPhone},8,LEN({!CleanPhone})-7),
-            MID({!CleanPhone},7,LEN({!CleanPhone})-6)
-        ),
-        /* Step 2: Starts with 972, single country code */
-        IF(
-            LEFT({!CleanPhone},3)=&quot;972&quot;,
-            &quot;+972&quot; &amp;
-            IF(
-                MID({!CleanPhone},4,1)=&quot;0&quot;,
-                MID({!CleanPhone},5,LEN({!CleanPhone})-4),
-                MID({!CleanPhone},4,LEN({!CleanPhone})-3)
-            ),
-            /* Step 3: No country code, add +972 and remove leading zero if present */
-            &quot;+972&quot; &amp;
-            IF(
-                LEFT({!CleanPhone},1)=&quot;0&quot;,
-                RIGHT({!CleanPhone},LEN({!CleanPhone})-1),
-                {!CleanPhone}
-            )
+          LEFT({!CleanPhone},3) = &quot;972&quot;,
+          /* Case: 972XXXXXXXXX → remove 972 and then leading 0 if present */
+          IF(
+            MID({!CleanPhone},4,1) = &quot;0&quot;,
+            MID({!CleanPhone},5, LEN({!CleanPhone}) - 4),
+            MID({!CleanPhone},4, LEN({!CleanPhone}) - 3)
+          ),
+          /* Local case: starts with 0 or 5 */
+          IF(
+            LEFT({!CleanPhone},1) = &quot;0&quot;,
+            RIGHT({!CleanPhone}, LEN({!CleanPhone}) - 1),
+            {!CleanPhone}
+          )
         )
+      )
+    ),
+    /* 🌍 Non-Israeli Number */
+    IF(
+      AND(
+        REGEX({!CleanPhone}, &quot;^[0-9]+$&quot;),
+        LEN({!CleanPhone}) &gt;= 8,
+        LEN({!CleanPhone}) &lt;= 15
+      ),
+      &quot;+&quot; &amp; {!CleanPhone},
+      {!CleanPhone}
     )
+  )
 )</expression>
     </formulas>
     <formulas>
@@ -742,11 +740,38 @@ Other → 	Open Space (standart)</description>
 )</expression>
     </formulas>
     <formulas>
+        <name>Is_Valid_Israeli_Number</name>
+        <dataType>Boolean</dataType>
+        <expression>OR(
+  /* Landline prefixes 02,03,04,08,09 */
+  REGEX({!CleanPhone}, &quot;^0(2|3|4|8|9)[0-9]{7}$&quot;),
+
+  /* Mobile prefixes 050–059 */
+  REGEX({!CleanPhone}, &quot;^05[0-9]{8}$&quot;),
+
+  /* Mobile number missing the leading 0 (e.g. 5xxxxxxxx) */
+  REGEX({!CleanPhone}, &quot;^5[0-9]{8}$&quot;),
+
+  /* International format (972 or 9720) followed by 8–9 digits */
+  REGEX({!CleanPhone}, &quot;^9720?(2|3|4|8|9|5[0-9])[0-9]{6,7}$&quot;),
+
+  /* Already includes +972 */
+  REGEX({!$Record.MobilePhone}, &quot;^\\+972(2|3|4|8|9|5[0-9])[0-9]{6,7}$&quot;)
+)</expression>
+    </formulas>
+    <formulas>
         <name>IsHotdesk</name>
         <dataType>String</dataType>
         <expression>IF(ISPICKVAL({!$Record.Product_Type_From_Web__c}, &apos;Hot Desk&apos;), &apos;Hot Desk&apos;, TEXT({!$Record.Product_Type_From_Web__c}))</expression>
     </formulas>
-    
+    <formulas>
+        <name>ShouldFormatMobilePhone</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+  NOT(ISBLANK({!$Record.MobilePhone})),
+  NOT(REGEX({!$Record.MobilePhone}, &quot;.*[A-Za-z].*&quot;))
+)</expression>
+    </formulas>
     <interviewLabel>Lead Before Save {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Lead Before Save</label>
     <processMetadataValues>
