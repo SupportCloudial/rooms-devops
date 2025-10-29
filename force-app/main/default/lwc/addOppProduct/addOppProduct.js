@@ -90,7 +90,7 @@ export default class AddOppProduct extends LightningElement {
     //create custom labels for the columns:
     columns = [
             { label: this.labels.Name, fieldName: 'Name' },
-            { label: this.labels.Availability, fieldName: 'Availability' },
+            //{ label: this.labels.Availability, fieldName: 'Availability' },
             //{ label: this.labels.Availability, type: 'button', cellAttributes: { alignment: 'center' }, typeAttributes: {label: { fieldName: 'AvailabilityIcon' }, name: 'availability', variant:'base', title:{ fieldName: 'Availability' }}, initialWidth: 45},
             { label: this.labels.Floor, fieldName: 'Floor' },
             { label: this.labels.DeskCount, fieldName: 'CapacityDesks', type: 'number', cellAttributes: { alignment: 'left' } },

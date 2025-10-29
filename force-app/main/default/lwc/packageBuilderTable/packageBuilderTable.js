@@ -242,7 +242,7 @@ export default class PackageBuilderTable extends LightningElement {
         fieldName: "Name",
         initialWidth: 100
       },
-      {
+      /*{
         label: this.labels.Availability,
         type: "button",
         cellAttributes: { alignment: "center" },
@@ -253,7 +253,7 @@ export default class PackageBuilderTable extends LightningElement {
           title: { fieldName: "Availability" }
         },
         initialWidth: 50
-      },
+      },*/
       //{ label: this.labels.Availability, type: 'button-icon', typeAttributes: {iconName: { fieldName: 'AvailabilityIcon' }, name: 'availability', iconClass: { fieldName: 'AvailabilityCls' }}},
       /*{ label: this.labels.Availability,typeAttributes:
                 { 
