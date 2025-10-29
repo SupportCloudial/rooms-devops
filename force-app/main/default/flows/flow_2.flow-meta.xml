@@ -5,8 +5,8 @@
     <assignments>
         <name>Assign_the_NewOrderItemRecord_to_the_backage_OrderItem</name>
         <label>Assign the NewOrderItemRecord to the backage OrderItem</label>
-        <locationX>754</locationX>
-        <locationY>1979</locationY>
+        <locationX>138</locationX>
+        <locationY>1079</locationY>
         <assignmentItems>
             <assignToReference>OrderLineMultipleRecord</assignToReference>
             <operator>Add</operator>
@@ -21,8 +21,8 @@
     <assignments>
         <name>Assign_value_to_NewOrderItemRecord</name>
         <label>Assign values to NewOrderItemRecord</label>
-        <locationX>754</locationX>
-        <locationY>1871</locationY>
+        <locationX>138</locationX>
+        <locationY>971</locationY>
         <assignmentItems>
             <assignToReference>NewOrderLineItemRecord.ServiceDate</assignToReference>
             <operator>Assign</operator>
@@ -202,17 +202,6 @@
             <targetReference>Assign_the_NewOrderItemRecord_to_the_backage_OrderItem</targetReference>
         </connector>
     </assignments>
-    <customErrors>
-        <name>Display_the_error</name>
-        <label>Display the error</label>
-        <locationX>1018</locationX>
-        <locationY>1403</locationY>
-        <customErrorMessages>
-            <errorMessage>⚠️ Warning:
-Some products are no longer available on the selected dates. Please choose different dates or products. 🔴</errorMessage>
-            <isFieldError>false</isFieldError>
-        </customErrorMessages>
-    </customErrors>
     <decisions>
         <name>Assign_owner</name>
         <label>Assign owner</label>
@@ -236,91 +225,6 @@ Some products are no longer available on the selected dates. Please choose diffe
                 <targetReference>assign_big_deal_owner</targetReference>
             </connector>
             <label>big deal</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Check_for_termination_date</name>
-        <label>Check for termination date</label>
-        <locationX>930</locationX>
-        <locationY>1295</locationY>
-        <defaultConnector>
-            <targetReference>Display_the_error</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Product not available</defaultConnectorLabel>
-        <rules>
-            <name>Product_available</name>
-            <conditionLogic>1 AND 2</conditionLogic>
-            <conditions>
-                <leftValueReference>loop_over_the_order_line_item.Contract__r.Contract_Termination_Date__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>loop_over_all_products.Entry_Date__c</leftValueReference>
-                <operator>GreaterThanOrEqualTo</operator>
-                <rightValue>
-                    <elementReference>loop_over_the_order_line_item.Contract__r.Contract_Termination_Date__c</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>loop_over_the_order_line_item</targetReference>
-            </connector>
-            <label>Product available</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Is_there_an_overlaping_dates</name>
-        <label>Is there an overlaping dates ?</label>
-        <locationX>1106</locationX>
-        <locationY>1187</locationY>
-        <defaultConnector>
-            <targetReference>loop_over_the_order_line_item</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Yes</name>
-            <conditionLogic>(4 AND 5)  or (4 and 3)  or (5 AND 1 AND 3) or (1 AND 2)</conditionLogic>
-            <conditions>
-                <leftValueReference>loop_over_all_products.Entry_Date__c</leftValueReference>
-                <operator>LessThanOrEqualTo</operator>
-                <rightValue>
-                    <elementReference>loop_over_the_order_line_item.EndDate</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>loop_over_all_products.End_date__c</leftValueReference>
-                <operator>GreaterThanOrEqualTo</operator>
-                <rightValue>
-                    <elementReference>loop_over_the_order_line_item.ServiceDate</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>loop_over_all_products.Entry_Date__c</leftValueReference>
-                <operator>LessThanOrEqualTo</operator>
-                <rightValue>
-                    <elementReference>loop_over_the_order_line_item.EndDate</elementReference>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>loop_over_all_products.End_date__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>loop_over_the_order_line_item.EndDate</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Check_for_termination_date</targetReference>
-            </connector>
-            <label>Yes</label>
         </rules>
     </decisions>
     <decisions>
@@ -348,6 +252,7 @@ Some products are no longer available on the selected dates. Please choose diffe
             <label>Closed Won</label>
         </rules>
     </decisions>
+    <description>29/10: Removed custom validation check - when products are not available.</description>
     <environments>Default</environments>
     <formulas>
         <name>ContractDuration</name>
@@ -406,24 +311,10 @@ Some products are no longer available on the selected dates. Please choose diffe
         <collectionReference>get_opportunity_product_related</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>get_order_product_with_the_product_wanted_to_add</targetReference>
+            <targetReference>Assign_value_to_NewOrderItemRecord</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Create_the_Order_line_items</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
-        <name>loop_over_the_order_line_item</name>
-        <label>Loop over the order line for the current product.</label>
-        <locationX>754</locationX>
-        <locationY>1079</locationY>
-        <collectionReference>get_order_product_with_the_product_wanted_to_add</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>Is_there_an_overlaping_dates</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Assign_value_to_NewOrderItemRecord</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -723,7 +614,7 @@ Some products are no longer available on the selected dates. Please choose diffe
         <name>Create_the_Order_line_items</name>
         <label>Create the Order line items</label>
         <locationX>50</locationX>
-        <locationY>2171</locationY>
+        <locationY>1271</locationY>
         <connector>
             <targetReference>Activate_Contract</targetReference>
         </connector>
@@ -757,60 +648,11 @@ Some products are no longer available on the selected dates. Please choose diffe
         <object>OpportunityLineItem</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>get_order_product_with_the_product_wanted_to_add</name>
-        <label>get order product with the product wanted to add</label>
-        <locationX>754</locationX>
-        <locationY>971</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>loop_over_the_order_line_item</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Product2Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>loop_over_all_products.Product2.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Contract__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <elementReference>$Record.Original_Contract__c</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Status__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Active</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Product_Type__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Standard Products</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Product_Name__c</field>
-            <operator>NotEqualTo</operator>
-            <value>
-                <stringValue>Hot Desk</stringValue>
-            </value>
-        </filters>
-        <getFirstRecordOnly>false</getFirstRecordOnly>
-        <object>OrderItem</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordUpdates>
         <name>Activate_Contract</name>
         <label>Activate Contract</label>
         <locationX>50</locationX>
-        <locationY>2279</locationY>
+        <locationY>1379</locationY>
         <connector>
             <targetReference>Add_contract_to_opp</targetReference>
         </connector>
@@ -825,7 +667,7 @@ Some products are no longer available on the selected dates. Please choose diffe
         <inputAssignments>
             <field>Status</field>
             <value>
-                <stringValue>Activated</stringValue>
+                <stringValue>Active</stringValue>
             </value>
         </inputAssignments>
         <object>Contract</object>
@@ -834,7 +676,7 @@ Some products are no longer available on the selected dates. Please choose diffe
         <name>Add_contract_to_opp</name>
         <label>Add contract to opp</label>
         <locationX>50</locationX>
-        <locationY>2387</locationY>
+        <locationY>1487</locationY>
         <inputAssignments>
             <field>ContractId</field>
             <value>
