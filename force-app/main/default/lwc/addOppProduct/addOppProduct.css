@@ -2,7 +2,7 @@
     display: flex;
     justify-content: flex-end; /* pushes button to the right */
     margin-top: 10px; /* adjust as needed */
-}
+} 
 
 .table-height {
     height: 40vh;     /* 40% of viewport height */
