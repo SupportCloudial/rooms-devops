@@ -756,7 +756,11 @@ Other → 	Open Space (standart)</description>
   REGEX({!CleanPhone}, &quot;^9720?(2|3|4|8|9|5[0-9])[0-9]{6,7}$&quot;),
 
   /* Already includes +972 */
-  REGEX({!$Record.MobilePhone}, &quot;^\\+972(2|3|4|8|9|5[0-9])[0-9]{6,7}$&quot;)
+  REGEX({!$Record.MobilePhone}, &quot;^\\+972(2|3|4|8|9|5[0-9])[0-9]{6,7}$&quot;),
+
+/* Double country code (972972...) */
+REGEX({!CleanPhone}, &quot;^972972(2|3|4|8|9|5[0-9])[0-9]{6,7}$&quot;)
+
 )</expression>
     </formulas>
     <formulas>
